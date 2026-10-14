@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Locally</title>
+
+  <!-- PWA & Favicon Branding -->
+  <link rel="icon" type="image/png" href="locally-logo.png">
+  <link rel="apple-touch-icon" href="locally-logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000;
+    }
+    /* Shifts iframe up by 55px to hide Jotform top bar */
+    .app-container {
+      width: 100%;
+      height: calc(100% + 55px);
+      margin-top: -55px;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Replace URL below with your actual Jotform App URL if needed -->
+    <iframe src="https://app.jotform.com/261602592513554" allow="geolocation; camera"></iframe>
+  </div>
+</body>
+</html>
