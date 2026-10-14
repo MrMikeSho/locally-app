@@ -23,11 +23,20 @@
       overflow: hidden;
       background-color: #000;
     }
-    /* Shifts iframe up by 55px to hide Jotform top bar */
-    .app-container {
+    /* Outer shell clips both top and bottom overflow */
+    .screen-mask {
       width: 100%;
-      height: calc(100% + 55px);
-      margin-top: -55px;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Shifts iframe up by 55px (top bar) and extends height to push bottom badge out of bounds */
+    .app-container {
+      position: absolute;
+      top: -55px;
+      left: 0;
+      width: 100%;
+      height: calc(100% + 130px);
     }
     iframe {
       width: 100%;
@@ -37,9 +46,10 @@
   </style>
 </head>
 <body>
-  <div class="app-container">
-    <!-- Replace URL below with your actual Jotform App URL if needed -->
-    <iframe src="https://app.jotform.com/261602592513554" allow="geolocation; camera"></iframe>
+  <div class="screen-mask">
+    <div class="app-container">
+      <iframe src="https://app.jotform.com/261602592513554" allow="geolocation; camera"></iframe>
+    </div>
   </div>
 </body>
 </html>
