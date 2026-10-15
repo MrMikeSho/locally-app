@@ -30,13 +30,13 @@
       position: relative;
       overflow: hidden;
     }
-    /* Shifts iframe up by 55px (top bar) and extends height to push bottom badge out of bounds */
+    /* Pushes iframe down/up and extends height to push bottom Jotform badge out of view */
     .app-container {
       position: absolute;
-      top: -55px;
+      top: 0px;
       left: 0;
       width: 100%;
-      height: calc(100% + 130px);
+      height: calc(100% + 180px);
     }
     iframe {
       width: 100%;
