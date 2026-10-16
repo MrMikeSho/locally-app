@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Locally</title>
-  
+
   <!-- PWA Meta Tags -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#070b12" />
 
-  <!-- Supabase JS Library -->
+  <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -19,72 +19,65 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
     html, body {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #ffffff;
+      background: #070b12;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* Full Screen App Frame */
+    /* App Container: Offsets bottom by 55px to clip Jotform free banner */
+    #app-container {
+      width: 100%;
+      height: calc(100% + 55px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+
+    /* Embedded Jotform Frame keeping your exact original UI */
     #app-frame {
       width: 100%;
       height: 100%;
       border: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Embedded Native App Frame -->
-  <iframe id="app-frame" src="https://app.jotform.com/261602592513554" title="Locally"></iframe>
+  <!-- Wrapped App Frame -->
+  <div id="app-container">
+    <iframe id="app-frame" src="https://app.jotform.com/261602592513554" title="Locally"></iframe>
+  </div>
 
   <script>
-    // 1. Initialize Supabase Client
+    // 1. Supabase Initialization (Your credentials)
     const SUPABASE_URL = 'https://mzgpapxnusushsqezasr.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Z3BhcHhudXN1c2hzcWV6YXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxMTAwMDB9';
-
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const REDIRECT_TO = 'https://mrmikesho.github.io/locally-app';
 
-    // Global auth helpers for Google and Facebook
-    window.locallyAuth = {
-      signInWithGoogle: async function() {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: { redirectTo: REDIRECT_TO }
-        });
-        if (error) alert('Error signing in with Google: ' + error.message);
-      },
-      signInWithFacebook: async function() {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'facebook',
-          options: { redirectTo: REDIRECT_TO }
-        });
-        if (error) alert('Error signing in with Facebook: ' + error.message);
-      },
-      signOut: async function() {
-        await supabase.auth.signOut();
-        location.reload();
-      }
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 2. Global Google Auth Trigger ("Continue to Locally")
+    window.signInWithLocallyGoogle = async function() {
+      const { error } = await sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: REDIRECT_TO }
+      });
+      if (error) alert('Sign in error: ' + error.message);
     };
 
-    // Process incoming OAuth redirects on page reload
-    async function handleAuthCallback() {
-      const { data: { session } } = await supabase.auth.getSession();
+    // 3. Listen for incoming auth session
+    sb.auth.onAuthStateChange((event, session) => {
       if (session) {
-        console.log('User signed in as:', session.user.email);
+        console.log('Logged in to Locally as:', session.user.email);
       }
-    }
-
-    handleAuthCallback();
+    });
   </script>
+
 </body>
 </html>
