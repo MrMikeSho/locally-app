@@ -46,7 +46,7 @@
     
     /* Header Small Logo */
     .hlogo { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
-      background: url('IMG_1116.jpeg') center/cover no-repeat, linear-gradient(135deg, #2b3a55, #4fb4de); }
+      background: url('A New Design_179198542.png') center/cover no-repeat, linear-gradient(135deg, #2b3a55, #4fb4de); }
     .hicons { display: flex; gap: 16px; }
     .hicons button { color: #fff; padding: 4px; }
 
@@ -57,9 +57,9 @@
     
     .intro { display: flex; gap: 14px; padding: 0 16px; margin-top: -42px; position: relative; z-index: 2; align-items: flex-start; }
     
-    /* Main App Logo Badge */
+    /* Main App Logo Badge (Highlighted Area) */
     .biglogo { width: 80px; height: 80px; border: 2px solid var(--line); border-radius: 20px; flex-shrink: 0; overflow: hidden;
-      background: url('IMG_1116.jpeg') center/cover no-repeat, linear-gradient(135deg, #4a4f7a, #9a90bf); }
+      background: url('A New Design_179198542.png') center/cover no-repeat, linear-gradient(135deg, #4a4f7a, #9a90bf); }
     
     .intro h1 { font-size: 28px; font-weight: 700; line-height: 1.1; margin-top: 6px; }
     .intro p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: #aab5c0; }
@@ -263,7 +263,6 @@
 
     let session = null;
     
-    // Default rentals mapped directly to your 3 uploaded files
     const SAMPLE = [
       { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, image_url: 'IMG_1148.jpeg', description: 'Bright loft with big windows and a quiet reading corner.' },
       { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, image_url: 'IMG_1149.webp', description: 'Spacious flat with a modern kitchen and plenty of light.' },
@@ -275,7 +274,6 @@
       try {
         const { data, error } = await sb.from('listings').select('*').order('id');
         if (!error && data && data.length) {
-          // Fallback to sample images if database items lack an image_url
           listings = data.map((item, idx) => ({
             ...item,
             image_url: item.image_url || SAMPLE[idx % SAMPLE.length].image_url
