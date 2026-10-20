@@ -30,641 +30,319 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      min-height: 100vh; padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+      min-height: 100vh; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
     button, input, textarea { font: inherit; color: inherit; }
     button { background: none; border: none; cursor: pointer; }
     a { color: inherit; text-decoration: none; }
     .hidden { display: none !important; }
     svg { display: block; }
 
-    /* ---------- Header ---------- */
+    /* Header */
     #hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
-      padding: calc(env(safe-area-inset-top) + 12px) 18px 12px; transition: background .25s; }
+      padding: calc(env(safe-area-inset-top) + 10px) 16px 10px; transition: background .25s; }
     #hdr.solid { background: rgba(2,7,12,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .hbrand { display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 700; opacity: 0; transition: opacity .25s; }
+    .hbrand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; opacity: 0; transition: opacity .25s; }
     #hdr.solid .hbrand { opacity: 1; }
-    .hlogo { width: 66px; height: 36px; border-radius: 4px; flex-shrink: 0;
-      background: url('images/logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
-    .hicons { display: flex; gap: 22px; }
+    
+    /* Header Small Logo */
+    .hlogo { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+      background: url('IMG_1116.jpeg') center/cover no-repeat, linear-gradient(135deg, #2b3a55, #4fb4de); }
+    .hicons { display: flex; gap: 16px; }
     .hicons button { color: #fff; padding: 4px; }
 
-    /* ---------- Home hero ---------- */
-    .hero { height: 300px; position: relative;
-      background: url('images/hero.jpg') center/cover, linear-gradient(160deg, #3a5070, #0b1522); }
-    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(2,7,12,.45), rgba(2,7,12,.1) 40%, rgba(2,7,12,.0) 70%, var(--bg)); }
-    .intro { display: flex; gap: 22px; padding: 0 18px; margin-top: -50px; position: relative; z-index: 2; }
-    .biglogo { width: 112px; height: 112px; border: 2px solid #123a45; border-radius: 20px; flex-shrink: 0; overflow: hidden; background: var(--bg); }
-    .biglogo div { height: 62px; margin-top: 4px; background: url('images/logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
-    .intro h1 { font-size: 34px; font-weight: 700; line-height: 1.05; margin-top: 8px; }
-    .intro p { margin-top: 6px; font-size: 14px; line-height: 1.75; color: #dfe6ec; }
-    .sub { padding: 34px 18px 0; font-size: 14px; line-height: 1.6; color: #9aa6b2; }
+    /* Top Hero Banner */
+    .hero { height: 210px; position: relative;
+      background: url('IMG_1147.webp') center/cover no-repeat, linear-gradient(160deg, #1e293b, #0b1522); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(2,7,12,.2), var(--bg)); }
+    
+    .intro { display: flex; gap: 14px; padding: 0 16px; margin-top: -42px; position: relative; z-index: 2; align-items: flex-start; }
+    
+    /* Main App Logo Badge */
+    .biglogo { width: 80px; height: 80px; border: 2px solid var(--line); border-radius: 20px; flex-shrink: 0; overflow: hidden;
+      background: url('IMG_1116.jpeg') center/cover no-repeat, linear-gradient(135deg, #4a4f7a, #9a90bf); }
+    
+    .intro h1 { font-size: 28px; font-weight: 700; line-height: 1.1; margin-top: 6px; }
+    .intro p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: #aab5c0; }
+    .sub { padding: 18px 16px 0; font-size: 14px; line-height: 1.5; color: #7f8c99; }
 
-    .navcards { padding: 22px 18px 0; display: flex; flex-direction: column; gap: 16px; }
-    .navcard { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--card); border: 1.5px solid var(--line); border-radius: 26px; width: 100%; text-align: left; }
-    .tile { width: 58px; height: 58px; border-radius: 16px; background: var(--tile); display: grid; place-items: center; flex-shrink: 0; }
+    .navcards { padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+    .navcard { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; width: 100%; text-align: left; }
+    
+    /* Card Thumbnail Icon Tiles */
+    .tile { width: 50px; height: 50px; border-radius: 14px; background: var(--tile); display: grid; place-items: center; flex-shrink: 0; overflow: hidden;
+      background-size: cover; background-position: center; }
+    .tile.browse { background-image: url('browse.jpg'); }
+    .tile.list { background-image: url('IMG_1147.webp'); }
+
     .navcard .t { flex: 1; min-width: 0; }
-    .navcard h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .navcard p { font-size: 12px; color: #aab5c0; line-height: 1.4; }
+    .navcard h3 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .navcard p { font-size: 13px; color: #aab5c0; line-height: 1.3; }
     .navcard .chev { color: var(--accent); }
-    .navcard.simple h3 { margin: 0; }
 
-    h2.section { text-align: center; font-size: 22px; font-weight: 700; margin: 44px 0 20px; }
+    h2.section { text-align: left; font-size: 20px; font-weight: 700; margin: 28px 16px 14px; }
 
-    /* ---------- Search / list ---------- */
-    .searchbar { display: flex; gap: 12px; padding: 0 18px 8px; }
-    .search { flex: 1; display: flex; align-items: center; gap: 12px; padding: 0 18px; height: 56px; background: transparent;
-      border: 1.5px solid var(--line); border-radius: 28px; color: var(--muted); }
-    .search input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 16px; min-width: 0; }
-    .filter-btn { width: 56px; height: 56px; border-radius: 28px; border: 1.5px solid var(--line); display: grid; place-items: center; color: #fff; }
-    .filter-panel { margin: 10px 18px; padding: 18px; background: var(--card); border: 1.5px solid var(--line); border-radius: 22px; }
-    .filter-panel label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-    .filter-panel .row { display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: 600; }
+    /* Search & list */
+    .searchbar { display: flex; gap: 10px; padding: 0 16px 8px; }
+    .search { flex: 1; display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 46px; background: var(--card);
+      border: 1px solid var(--line); border-radius: 23px; color: var(--muted); }
+    .search input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 15px; min-width: 0; }
+    .filter-btn { width: 46px; height: 46px; border-radius: 23px; border: 1px solid var(--line); display: grid; place-items: center; color: #fff; background: var(--card); }
+    .filter-panel { margin: 10px 16px; padding: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+    .filter-panel label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .filter-panel .row { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600; font-size: 14px; }
     .filter-panel input[type=range] { width: 100%; accent-color: var(--accent); }
-    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip { padding: 8px 14px; border-radius: 18px; border: 1px solid var(--line); font-size: 12px; color: var(--muted); }
-    .chip.on { background: var(--accent); border-color: var(--accent); color: #04121c; font-weight: 600; }
 
-    .items { padding: 0 18px; }
-    .item { display: flex; align-items: center; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
-    .thumb { width: 78px; height: 78px; border-radius: 18px; flex-shrink: 0; background-size: cover; background-position: center; }
+    .items { padding: 0 16px; }
+    .item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+    .thumb { width: 68px; height: 68px; border-radius: 14px; flex-shrink: 0; background-size: cover; background-position: center; display: grid; place-items: center; font-size: 28px; }
     .item .info { flex: 1; min-width: 0; }
-    .item h3 { font-size: 16px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
-    .item p { font-size: 14px; color: #c9d2db; margin-bottom: 8px; }
-    .item .st { font-size: 12px; color: var(--muted); }
-    .item .chev { color: var(--accent); }
-    .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+    .item h3 { font-size: 16px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+    .item p { font-size: 14px; color: #c9d2db; margin-bottom: 4px; }
+    .empty { text-align: center; color: var(--muted); padding: 30px 0; font-size: 14px; }
 
-    /* ---------- Forms ---------- */
-    .page { padding-top: calc(env(safe-area-inset-top) + 76px); }
-    .page-title { padding: 6px 18px 14px; font-size: 23px; font-weight: 700; }
-    .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
-    .fgroup { margin-top: 38px; }
-    .fgroup > label.lbl { display: block; font-size: 17px; font-weight: 500; margin-bottom: 14px; }
-    .fgroup > label.lbl .req { color: #e53935; margin-left: 4px; }
-    .frow { display: flex; gap: 10px; }
+    /* Forms */
+    .page { padding-top: calc(env(safe-area-inset-top) + 60px); }
+    .page-title { padding: 6px 16px 12px; font-size: 24px; font-weight: 700; }
+    .formcard { margin: 0 12px; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); }
+    .fgroup { margin-top: 20px; }
+    .fgroup > label.lbl { display: block; font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .frow { display: flex; gap: 8px; }
     .frow > div { flex: 1; min-width: 0; }
-    .frow.pc > div:first-child { flex: .6; }
-    .frow.date > div { flex: 1; }
     .fgroup input[type=text], .fgroup input[type=email], .fgroup input[type=tel], .fgroup input[type=number], .fgroup textarea {
-      width: 100%; height: 58px; padding: 0 20px; background: var(--bg); border: 1.5px solid var(--field); border-radius: 18px; outline: none; font-size: 16px; }
-    .fgroup textarea { height: 120px; padding-top: 16px; resize: vertical; }
+      width: 100%; height: 46px; padding: 0 14px; background: var(--bg); border: 1px solid var(--field); border-radius: 12px; outline: none; font-size: 15px; }
+    .fgroup textarea { height: 90px; padding-top: 10px; resize: vertical; }
     .fgroup input:focus, .fgroup textarea:focus { border-color: var(--accent); }
-    .fgroup input::placeholder { color: #66727e; }
-    .sublbl { display: block; margin-top: 10px; font-size: 12px; color: #75818d; }
-    .calbtn { width: 58px; height: 58px; border-radius: 12px; background: #f1f3f5; display: grid; place-items: center; color: #3a4654; flex: 0 0 58px; }
-    .upload { display: block; text-align: center; border: 1.5px dashed #3a4654; border-radius: 22px; padding: 38px 10px; cursor: pointer; }
-    .upload .big { font-size: 20px; font-weight: 700; margin-top: 8px; }
-    .upload .small { font-size: 14px; margin-top: 8px; }
-    .upload input { display: none; }
-    .submit { width: 100%; height: 68px; margin-top: 52px; border-radius: 34px; background: var(--btn); color: #fff; font-size: 19px; font-weight: 600; }
-    .submit:disabled { opacity: .6; }
-    .notice { margin: 14px 18px 0; padding: 14px 16px; border-radius: 14px; font-size: 12px; display: none; }
-    .notice.ok { display: block; background: #0f2a22; color: #7be0a8; border: 1px solid #1b4a39; }
-    .notice.bad { display: block; background: #2a1316; color: #ff9aa0; border: 1px solid #52222a; }
+    .submit { width: 100%; height: 50px; margin-top: 28px; border-radius: 25px; background: var(--btn); color: #fff; font-size: 16px; font-weight: 600; }
 
-    /* ---------- Search page ---------- */
-    .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
-    .sp-top .search { height: 58px; }
-    .sp-empty { text-align: center; padding-top: 120px; }
-    .sp-empty .circle { width: 92px; height: 92px; border-radius: 50%; background: var(--tile); display: grid; place-items: center; margin: 0 auto 26px; color: var(--accent); }
-    .sp-empty h3 { font-size: 20px; color: #9fabb7; }
-    .sp-empty p { font-size: 15px; color: #6f7c88; margin-top: 8px; }
-    .sp-chips { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; padding: 30px 24px 0; }
-    .sp-chips button { border: 1.5px solid var(--line); border-radius: 16px; padding: 12px 20px; font-size: 16px; color: #aab5c0; }
+    /* Login */
+    .l-top { display: flex; align-items: center; justify-content: center; position: relative; padding: calc(env(safe-area-inset-top) + 14px) 16px 14px; border-bottom: 1px solid var(--line); background: var(--bg); }
+    .l-top button { position: absolute; left: 16px; color: #fff; }
+    .l-top span { font-size: 17px; font-weight: 600; }
+    .login { padding: 30px 20px 0; }
+    .login h1 { text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 24px; }
 
-    /* ---------- Login ---------- */
-    .l-top { display: flex; align-items: center; justify-content: center; position: relative; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1.5px solid var(--line); background: var(--bg); }
-    .l-top button { position: absolute; left: 18px; color: #fff; }
-    .l-top span { font-size: 17px; font-weight: 500; }
-    .login { padding: 70px 36px 0; }
-    .login h1 { text-align: center; font-size: 31px; font-weight: 700; margin-bottom: 42px; }
-    .socials { display: flex; justify-content: center; gap: 14px; }
-    .soc { text-align: center; font-size: 13px; color: #9aa6b2; }
-    .soc div { width: 86px; height: 86px; border: 1.5px solid var(--line); border-radius: 18px; display: grid; place-items: center; margin-bottom: 8px; }
-    .or { display: flex; align-items: center; gap: 22px; margin: 36px 0 30px; font-size: 23px; }
-    .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-    .login label { display: block; font-size: 19px; font-weight: 500; margin-bottom: 12px; }
-    .login input { width: 100%; height: 62px; padding: 0 20px; background: #02060a; border: 1.5px solid var(--field); border-radius: 22px; outline: none; font-size: 16px; margin-bottom: 26px; }
-    .login input:focus { border-color: var(--accent); }
-    .forgot { display: block; margin: -12px 0 0 auto; font-size: 16px; }
-    .login .submit { margin-top: 36px; height: 70px; }
-    .switch { text-align: center; margin-top: 36px; font-size: 16px; }
-    .switch button { color: var(--accent); font-weight: 600; margin-left: 6px; font-size: 16px; }
-
-    /* ---------- Menu ---------- */
+    /* Menu */
     #menu { position: fixed; inset: 0; z-index: 90; background: var(--bg); overflow-y: auto; }
-    .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1px solid #0c141c; }
+    .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 14px) 16px 14px; border-bottom: 1px solid var(--line); }
     .m-top .hbrand { opacity: 1; }
-    .m-x { width: 58px; height: 58px; border-radius: 50%; background: #0b131b; display: grid; place-items: center; color: #fff; }
-    .m-list { padding: 28px 18px; }
-    .m-list a, .m-list button { display: block; width: 100%; text-align: left; font-size: 22px; font-weight: 500; padding: 22px 0; }
-    .m-list a.on { color: var(--accent); }
-    .m-list .small { font-size: 14px; color: var(--muted); padding-top: 40px; }
+    .m-x { width: 40px; height: 40px; border-radius: 50%; background: var(--card); display: grid; place-items: center; color: #fff; }
+    .m-list { padding: 20px 16px; }
+    .m-list a, .m-list button { display: block; width: 100%; text-align: left; font-size: 18px; font-weight: 600; padding: 14px 0; border-bottom: 1px solid var(--line); }
 
-    /* ---------- Broker ---------- */
-    .panel { margin: 4px 18px 12px; padding: 4px 16px; border: 1.5px solid var(--line); border-radius: 22px; background: var(--card); }
-    .rec { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.55; color: #c9d2db; }
-    .rec:last-child { border: none; }
-    .rec b { color: #fff; font-size: 14px; }
-    .rec .meta { color: var(--muted); font-size: 12px; }
-    .rec img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-top: 8px; }
+    /* Detail */
+    .d-hero { height: 220px; background-size: cover; background-position: center; position: relative; display: grid; place-items: center; font-size: 60px; background-color: var(--card); }
+    .d-back { position: absolute; top: calc(env(safe-area-inset-top) + 12px); left: 12px; width: 38px; height: 38px; border-radius: 50%; background: rgba(2,7,12,.7); display: grid; place-items: center; color: #fff; }
+    .d-body { padding: 18px 16px; }
+    .d-body h2 { font-size: 22px; margin-bottom: 6px; }
+    .d-body .price { color: var(--accent); font-size: 20px; font-weight: 700; margin: 8px 0 12px; }
+    .d-body p { color: #aab5c0; line-height: 1.5; font-size: 15px; }
 
-    /* ---------- Detail ---------- */
-    .d-hero { height: 280px; background-size: cover; background-position: center; position: relative; }
-    .d-back { position: absolute; top: calc(env(safe-area-inset-top) + 14px); left: 14px; width: 44px; height: 44px; border-radius: 50%; background: rgba(2,7,12,.7); display: grid; place-items: center; color: #fff; }
-    .d-body { padding: 22px 18px; }
-    .d-body h2 { font-size: 22px; margin-bottom: 8px; }
-    .d-body .price { color: var(--accent); font-size: 19px; font-weight: 700; margin: 10px 0 16px; }
-    .d-body p { color: #aab5c0; line-height: 1.6; font-size: 13px; }
-
-    /* ---------- Tab bar ---------- */
-    #tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: flex; background: var(--card); border-top: 1.5px solid #0f1923; padding-bottom: env(safe-area-inset-bottom); }
-    #tabbar a { flex: 1; text-align: center; padding: 14px 4px 12px; font-size: 13px; color: #6f7c88; position: relative; }
-    #tabbar a svg { margin: 0 auto 6px; }
+    /* Tab bar */
+    #tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: flex; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+    #tabbar a { flex: 1; text-align: center; padding: 10px 4px 8px; font-size: 12px; color: var(--muted); position: relative; }
+    #tabbar a svg { margin: 0 auto 4px; }
     #tabbar a.on { color: var(--accent); font-weight: 600; }
-    #tabbar a.on::before { content: ""; position: absolute; top: -1.5px; left: 50%; transform: translateX(-50%); width: 64px; height: 4px; border-radius: 0 0 4px 4px; background: var(--accent); }
-
-    .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); z-index: 200; background: #12202c; border: 1px solid var(--line); padding: 14px 22px; border-radius: 16px; max-width: 86%; text-align: center; }
+    #tabbar a.on::before { content: ""; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 40px; height: 3px; border-radius: 0 0 3px 3px; background: var(--accent); }
   </style>
 </head>
 <body>
 
-  <!-- ===== Header ===== -->
+  <!-- Header -->
   <header id="hdr">
     <a class="hbrand" href="#/home"><span class="hlogo"></span><span>Locally</span></a>
     <div class="hicons">
-      <button id="h-search" aria-label="Search"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
-      <button id="h-menu" aria-label="Menu"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <button id="h-search" aria-label="Search"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <button id="h-menu" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
 
-  <!-- ===== HOME ===== -->
+  <!-- HOME VIEW -->
   <section class="view" id="view-home">
+    <!-- Top Hero Banner -->
     <div class="hero"></div>
     <div class="intro">
-      <div class="biglogo"><div></div></div>
+      <!-- Main Logo Badge -->
+      <div class="biglogo"></div>
       <div>
         <h1>Locally</h1>
-        <p>A community-focused platform that connects tenants and landlords directly in your area. No more unreliable listings or endless searching; we curate real opportunities based on your exact budget and location.</p>
+        <p>A community platform connecting tenants and landlords directly.</p>
       </div>
     </div>
-    <p class="sub">Explore local rentals, submit your property, or start a guided search with broker support throughout the deal.</p>
+    <p class="sub">Explore local rentals, list your property, or request direct broker support.</p>
 
     <div class="navcards">
       <button class="navcard" id="nc-browse">
-        <div class="tile"><svg width="38" height="38" viewBox="0 0 40 40"><rect x="14" y="4" width="12" height="30" rx="1.5" fill="#d7dce1"/><rect x="4" y="20" width="14" height="14" rx="1.5" fill="#aeb4ba"/><rect x="22" y="16" width="14" height="18" rx="1.5" fill="#6d757c"/><rect x="25" y="20" width="3" height="3" fill="#8ec9ee"/><rect x="30" y="20" width="3" height="3" fill="#8ec9ee"/><rect x="25" y="25" width="3" height="3" fill="#8ec9ee"/><rect x="30" y="25" width="3" height="3" fill="#8ec9ee"/><rect x="7" y="24" width="3" height="3" fill="#fff"/><rect x="12" y="24" width="3" height="3" fill="#fff"/></svg></div>
-        <div class="t"><h3>Browse Properties</h3><p>See current rental opportunities in your local market.</p></div>
-        <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        <!-- Browse Card Thumbnail Tile -->
+        <div class="tile browse"></div>
+        <div class="t"><h3>Browse Properties</h3><p>See current available listings.</p></div>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
       </button>
       <a class="navcard" href="#/list">
-        <div class="tile"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.5 12.5L4 20v-3l2-.5V15l2-.5.5-1.5"/><circle cx="16.3" cy="7.7" r=".6" fill="#4fb4de"/></svg></div>
-        <div class="t"><h3>List Your Property</h3><p>Share your vacancy and attract qualified tenant leads.</p></div>
-        <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
-      </a>
-      <a class="navcard hidden" id="nc-broker" href="#/broker">
-        <div class="tile"><svg width="38" height="38" viewBox="0 0 40 40"><rect x="5" y="13" width="30" height="21" rx="2" fill="#b98a52"/><path d="M14 13V9a2 2 0 012-2h8a2 2 0 012 2v4" fill="none" stroke="#8a6a3f" stroke-width="2"/><rect x="5" y="22" width="30" height="3" fill="#8a6a3f"/><rect x="17" y="19" width="6" height="6" rx="1" fill="#f3d36a"/></svg></div>
-        <div class="t"><h3>Broker Panel</h3><p>Review submissions and manage your active pipeline.</p></div>
-        <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        <div class="tile list"></div>
+        <div class="t"><h3>List Your Property</h3><p>Share vacancies and attract leads.</p></div>
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
 
     <h2 class="section" id="rentals">Available rentals</h2>
     <div class="searchbar">
       <label class="search">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="q" type="search" placeholder="Search" />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Search area or title" />
       </label>
-      <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg></button>
+      <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg></button>
     </div>
     <div class="filter-panel hidden" id="filter-panel">
       <label>Max price per month</label>
       <div class="row"><span>$0</span><span id="price-label">$5,000</span></div>
       <input type="range" id="price" min="300" max="5000" step="50" value="5000" />
-      <label style="margin-top:16px">Status</label>
-      <div class="chips" id="status-chips"></div>
     </div>
     <div class="items" id="list"></div>
   </section>
 
-  <!-- ===== LIST YOUR PROPERTY ===== -->
+  <!-- LIST YOUR PROPERTY VIEW -->
   <section class="view page hidden" id="view-list">
     <h1 class="page-title">List Your Property</h1>
-    <form class="formcard" id="form-list" autocomplete="on">
-      <div class="fgroup" style="margin-top:20px"><label class="lbl">Full name</label>
-        <div class="frow"><div><input type="text" name="first_name" required /><span class="sublbl">First Name</span></div><div><input type="text" name="last_name" required /><span class="sublbl">Last Name</span></div></div></div>
+    <form class="formcard" id="form-list">
+      <div class="fgroup"><label class="lbl">Full name</label>
+        <div class="frow"><div><input type="text" name="first_name" placeholder="First" required /></div><div><input type="text" name="last_name" placeholder="Last" required /></div></div></div>
       <div class="fgroup"><label class="lbl">Email address</label><input type="email" name="email" required /></div>
-      <div class="fgroup"><label class="lbl">Phone number</label>
-        <div class="frow pc"><div><input type="tel" name="area_code" /><span class="sublbl">Area Code</span></div><div><input type="tel" name="phone" /><span class="sublbl">Phone Number</span></div></div></div>
-      <div class="fgroup"><label class="lbl">Property title</label><input type="text" name="property_title" /></div>
-      <div class="fgroup"><label class="lbl">Neighborhood / Area</label><input type="text" name="neighborhood" /></div>
-      <div class="fgroup"><label class="lbl">Property Address<span class="req">*</span></label>
-        <input type="text" name="address" required /><span class="sublbl">Street Address</span>
-        <input type="text" name="address2" style="margin-top:18px" /><span class="sublbl">Street Address Line 2</span>
-        <div class="frow" style="margin-top:18px"><div><input type="text" name="city" /><span class="sublbl">City</span></div><div><input type="text" name="state" /><span class="sublbl">State / Province</span></div><div><input type="text" name="postal" /><span class="sublbl">Postal / Zip Code</span></div></div></div>
-      <div class="fgroup"><label class="lbl">Monthly rent (USD)</label><input type="number" inputmode="decimal" name="monthly_rent" placeholder="e.g., 23" /></div>
-      <div class="fgroup"><label class="lbl">Bedrooms</label><input type="number" inputmode="numeric" name="bedrooms" placeholder="e.g., 23" /></div>
-      <div class="fgroup"><label class="lbl">Bathrooms</label><input type="number" inputmode="decimal" step="0.5" name="bathrooms" placeholder="e.g., 23" /></div>
-      <div class="fgroup"><label class="lbl">Availability date</label>
-        <div class="frow date"><div><input type="number" inputmode="numeric" id="d-m" /><span class="sublbl">Month</span></div><div><input type="number" inputmode="numeric" id="d-d" /><span class="sublbl">Day</span></div><div><input type="number" inputmode="numeric" id="d-y" /><span class="sublbl">Year</span></div>
-          <div style="flex:0 0 58px"><button type="button" class="calbtn" id="cal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 16l2 2 4-4"/></svg></button><input type="date" id="d-pick" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px" /></div></div></div>
-      <div class="fgroup"><label class="lbl">Property description</label><textarea name="description"></textarea></div>
-      <div class="fgroup"><label class="lbl">Property image</label>
-        <label class="upload"><input type="file" name="image" accept="image/*" id="img-file" />
-          <svg width="64" height="64" viewBox="0 0 24 24" style="margin:0 auto" fill="none"><path d="M7 18a4 4 0 01-.5-7.97A5.5 5.5 0 0117 8.5 4.5 4.5 0 0117.5 18z" fill="#4a9bb8"/><path d="M12 15V9m0 0l-3 3m3-3l3 3" stroke="#0b1a24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="big">Browse Files</div><div class="small" id="img-name">Choose a file</div></label></div>
-      <button class="submit" type="submit">Submit</button>
+      <div class="fgroup"><label class="lbl">Property title</label><input type="text" name="property_title" placeholder="e.g. Modern Studio" /></div>
+      <div class="fgroup"><label class="lbl">Monthly rent (USD)</label><input type="number" name="monthly_rent" placeholder="1200" /></div>
+      <button class="submit" type="submit">Submit Listing</button>
     </form>
-    <div class="notice" id="n-list"></div>
   </section>
 
-  <!-- ===== FIND A RENTAL ===== -->
+  <!-- FIND A RENTAL VIEW -->
   <section class="view page hidden" id="view-find">
     <h1 class="page-title">Find a Rental</h1>
-    <form class="formcard" id="form-find" autocomplete="on">
-      <div class="fgroup" style="margin-top:20px"><label class="lbl">Full Name</label>
-        <div class="frow"><div><input type="text" name="first_name" required /><span class="sublbl">First Name</span></div><div><input type="text" name="last_name" required /><span class="sublbl">Last Name</span></div></div></div>
-      <div class="fgroup"><label class="lbl">Email Address</label><input type="email" name="email" placeholder="name@example.com" required /></div>
-      <div class="fgroup"><label class="lbl">Phone Number</label>
-        <div class="frow pc"><div><input type="tel" name="area_code" /><span class="sublbl">Area Code</span></div><div><input type="tel" name="phone" /><span class="sublbl">Phone Number</span></div></div></div>
-      <div class="fgroup"><label class="lbl">Preferred Neighborhood</label><input type="text" name="neighborhood" /></div>
-      <div class="fgroup"><label class="lbl">Monthly Budget (USD)</label><input type="number" inputmode="decimal" name="budget" placeholder="e.g., 23" /></div>
-      <div class="fgroup"><label class="lbl">Bedrooms Needed</label><input type="number" inputmode="numeric" name="bedrooms" placeholder="e.g., 23" /></div>
-      <div class="fgroup"><label class="lbl">Move-in Timeline</label><input type="text" name="timeline" /></div>
-      <div class="fgroup"><label class="lbl">Notes</label><textarea name="notes"></textarea></div>
-      <button class="submit" type="submit">Submit</button>
+    <form class="formcard" id="form-find">
+      <div class="fgroup"><label class="lbl">Full Name</label>
+        <div class="frow"><div><input type="text" name="first_name" placeholder="First" required /></div><div><input type="text" name="last_name" placeholder="Last" required /></div></div></div>
+      <div class="fgroup"><label class="lbl">Email Address</label><input type="email" name="email" required /></div>
+      <div class="fgroup"><label class="lbl">Monthly Budget (USD)</label><input type="number" name="budget" placeholder="1500" /></div>
+      <button class="submit" type="submit">Submit Request</button>
     </form>
-    <div class="notice" id="n-find"></div>
   </section>
 
-  <!-- ===== BROKER PANEL ===== -->
-  <section class="view page hidden" id="view-broker">
-    <h1 class="page-title">Broker Panel</h1>
-    <div id="broker-body"></div>
-  </section>
-
-  <!-- ===== SEARCH ===== -->
-  <section class="view hidden" id="view-search">
-    <div class="sp-top">
-      <button id="sp-back" aria-label="Back" style="color:#fff"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <label class="search"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="sp-q" type="search" placeholder="Search" /></label>
-    </div>
-    <div id="sp-body"></div>
-  </section>
-
-  <!-- ===== LOGIN ===== -->
+  <!-- LOGIN VIEW -->
   <section class="view hidden" id="view-login">
-    <div class="l-top"><button id="l-back" aria-label="Back"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span>Sign in</span></div>
+    <div class="l-top"><button id="l-back">‹</button><span>Sign in</span></div>
     <div class="login">
-      <h1 id="l-title">Log in to continue</h1>
-      <div class="socials">
-        <button class="soc" data-p="google"><div><svg width="34" height="34" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.2A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.8 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg></div>Google</button>
-        <button class="soc" data-p="azure"><div><svg width="32" height="32" viewBox="0 0 24 24"><rect x="1" y="1" width="10.5" height="10.5" fill="#f25022"/><rect x="12.5" y="1" width="10.5" height="10.5" fill="#7fba00"/><rect x="1" y="12.5" width="10.5" height="10.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="10.5" height="10.5" fill="#ffb900"/></svg></div>Microsoft</button>
-        <button class="soc" data-p="apple"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.1-.8-1.6 0-3.1.9-3.9 2.4-1.7 2.9-.4 7.2 1.2 9.6.8 1.2 1.7 2.5 3 2.4 1.2 0 1.700-.8 3.100-.8 1.500 0 1.900.8 3.100.8 1.300 0 2.100-1.200 2.900-2.300.9-1.300 1.300-2.600 1.300-2.700-.1 0-2.500-1-2.500-4zM14 5.500c.7-.8 1.100-1.900 1-3-1 0-2.100.7-2.800 1.500-.6.700-1.200 1.800-1 2.900 1.100.1 2.100-.6 2.800-1.400z"/></svg></div>Apple</button>
-        <button class="soc" data-p="salesforce"><div><svg width="40" height="28" viewBox="0 0 40 28"><path d="M17 4c2-2 5-2.500 7.500-1 1.500-1.500 4-2 6-1 2.500 1 4 3.500 3.500 6 3 .8 5 3.500 4.500 6.500-.5 3-3 5-6 5H9c-3.500 0-6-3-5.500-6.500.4-2.500 2.300-4.300 4.700-4.800C8 6 11.500 3 15 3c.8 0 1.500.3 2 1z" fill="#00a1e0"/></svg></div>Salesforce</button>
-      </div>
-      <div class="or">OR</div>
-      <form id="form-login">
-        <label for="l-email">Email address or username</label>
-        <input id="l-email" type="email" autocomplete="email" required />
-        <label for="l-pass">Password</label>
-        <input id="l-pass" type="password" autocomplete="current-password" required minlength="6" />
-        <button type="button" class="forgot" id="l-forgot">Forgot password?</button>
-        <button class="submit" id="l-submit" type="submit">Log in</button>
-      </form>
-      <div class="notice" id="n-login" style="margin:20px 0 0"></div>
-      <div class="switch"><span id="l-switch-text">Don’t have an account?</span><button id="l-switch" type="button">Sign up</button></div>
+      <h1>Log in to continue</h1>
+      <button class="submit" id="btn-google">Continue with Google</button>
     </div>
   </section>
 
-  <!-- ===== DETAIL ===== -->
+  <!-- DETAIL SHEET VIEW -->
   <section class="view hidden" id="view-detail"></section>
 
-  <!-- ===== MENU ===== -->
+  <!-- MENU SLIDE-OUT -->
   <div id="menu" class="hidden">
     <div class="m-top">
       <div class="hbrand"><span class="hlogo"></span><span>Locally</span></div>
-      <button class="m-x" id="m-close" aria-label="Close"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="m-x" id="m-close">✕</button>
     </div>
     <div class="m-list" id="m-list"></div>
   </div>
 
-  <!-- ===== Tab bar ===== -->
+  <!-- TAB BAR -->
   <nav id="tabbar">
-    <a href="#/home" data-t="home"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>Home</a>
-    <a href="#/list" data-t="list"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a>
-    <a href="#/find" data-t="find"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find a Rental</a>
+    <a href="#/home" data-t="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>Home</a>
+    <a href="#/list" data-t="list"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="15" cy="9" r="5"/><path d="M11.5 12.5L4 20v-3l2-.5V15l2-.5.5-1.5"/></svg>List Property</a>
+    <a href="#/find" data-t="find"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find Rental</a>
   </nav>
 
   <script>
-    // ================= Supabase =================
     const SUPABASE_URL = 'https://mzgpapxnusushsqezasr.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Z3BhcHhudXN1c2hzcWV6YXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxMTAwMDB9';
     const REDIRECT_TO = 'https://mrmikesho.github.io/locally-app';
-    const PRIVACY_URL = 'https://telegra.ph/Privacy-Policy-For-Locally-09-21-2';
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { flowType: 'pkce' } });
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const $ = (id) => document.getElementById(id);
-    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const money = (n) => '$' + Number(n || 0).toLocaleString();
 
-    let session = null, isAdmin = false, loginMode = 'login';
-
-    // ================= Listings =================
+    let session = null;
     const SAMPLE = [
-      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, status: '', image_url: 'images/listing-1.jpg', description: 'Bright loft with big windows and a quiet reading corner.' },
-      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, status: '', image_url: 'images/listing-2.jpg', description: 'Spacious flat with a modern kitchen and plenty of light.' },
-      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, status: '', image_url: 'images/listing-3.jpg', description: 'Efficient studio with wood floors and a full kitchenette.' },
-      { id: 4, title: 'Garden Duplex in West End', area: 'West End', price: 2950, status: '', image_url: 'images/listing-4.jpg', description: 'Two-level duplex with a private garden and sunny patio.' }
+      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, description: 'Bright loft with big windows and a quiet reading corner.' },
+      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, description: 'Spacious flat with a modern kitchen and plenty of light.' },
+      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, description: 'Efficient studio with wood floors and a full kitchenette.' }
     ];
     let listings = SAMPLE.slice();
-    let statusFilter = 'All';
 
     async function loadListings() {
       try {
         const { data, error } = await sb.from('listings').select('*').order('id');
         if (!error && data && data.length) listings = data;
       } catch (e) {}
-      buildChips(); renderList();
-    }
-    const thumbBg = (l) => `background-image:${l.image_url ? `url('${esc(l.image_url)}'),` : ''}linear-gradient(135deg,#243247,#0b1522)`;
-
-    function buildChips() {
-      const sts = ['All', ...new Set(listings.map(l => l.status).filter(Boolean))];
-      $('status-chips').innerHTML = sts.map(s => `<button class="chip ${s === statusFilter ? 'on' : ''}" data-s="${esc(s)}">${esc(s)}</button>`).join('');
-      $('status-chips').querySelectorAll('.chip').forEach(c => c.onclick = () => { statusFilter = c.dataset.s; buildChips(); renderList(); });
+      renderList();
     }
 
-    function rowHtml(l) {
-      return `<div class="item" data-id="${esc(l.id)}"><div class="thumb" style="${thumbBg(l)}"></div>
-        <div class="info"><h3>${esc(l.title)}</h3><p>${esc(l.area)} • ${money(l.price)}/mo</p><div class="st">Status: ${esc(l.status || '')}</div></div>
-        <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M9 5l7 7-7 7"/></svg></div>`;
+    function thumbStyle(l) {
+      return l.image_url ? `background-image:url('${l.image_url}')` : 'background:linear-gradient(135deg,#2b3a55,#0e1522)';
     }
 
     function renderList() {
       const q = $('q').value.trim().toLowerCase();
-      const max = Number($('price').value);
-      $('price-label').textContent = money(max);
-      const rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter));
-      $('list').innerHTML = rows.length ? rows.map(rowHtml).join('') : '<div class="empty">No places match your search.</div>';
-      bindRows($('list'));
+      const max = Number($('price').value);$('price-label').textContent = money(max);
+      const rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max);
+      $('list').innerHTML = rows.length ? rows.map(l => `
+        <div class="item" data-id="${l.id}">
+          <div class="thumb" style="${thumbStyle(l)}"></div>
+          <div class="info">
+            <h3>${l.title}</h3>
+            <p>${l.area} • ${money(l.price)}/mo</p>
+          </div>
+          <div class="chev">›</div>
+        </div>`).join('') : '<div class="empty">No places match your search.</div>';
+      
+      $('list').querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
     }
-    function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
     function renderDetail(id) {
       const l = listings.find(x => String(x.id) === String(id));
       if (!l) { location.hash = '#/home'; return; }
-      $('view-detail').innerHTML = `<div class="d-hero" style="${thumbBg(l)}"><button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
-        <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)}${l.status ? ' • ' + esc(l.status) : ''}</div>
-        <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
-        <a href="#/find" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
-      $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
+      $('view-detail').innerHTML = `
+        <div class="d-hero" style="${thumbStyle(l)}"><button class="d-back" id="d-back">‹</button></div>
+        <div class="d-body">
+          <h2>${l.title}</h2>
+          <div class="st">${l.area}</div>
+          <div class="price">${money(l.price)}/mo</div>
+          <p>${l.description || ''}</p>
+          <a href="#/find" class="submit" style="display:block;text-align:center;line-height:50px;margin-top:24px">Request viewing</a>
+        </div>`;
+      $('d-back').onclick = () => history.back();
     }
 
-    // ================= Router =================
-    const VIEWS = ['home', 'list', 'find', 'broker', 'search', 'login', 'detail'];
-    function tabFor(h) { return h === 'list' || h === 'find' ? h : h === 'home' ? 'home' : null; }
-
+    const VIEWS = ['home', 'list', 'find', 'login', 'detail'];
     function route() {
       const raw = (location.hash || '#/home').replace(/^#\/?/, '');
       const [name, arg] = raw.split('/');
       let v = VIEWS.includes(name) ? name : 'home';
 
-      if ((v === 'list' || v === 'find' || v === 'broker') && !session) {
-        localStorage.setItem('locally_after', '#/' + v);
-        location.replace('#/login'); return;
-      }
-      VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));
-      closeMenu();
+      VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));$('menu').classList.add('hidden');
 
-      const showHdr = ['home', 'list', 'find', 'broker'].includes(v);
-      $('hdr').classList.toggle('hidden', !showHdr);
-      $('tabbar').classList.toggle('hidden', ['search', 'detail'].includes(v));
-      document.body.style.paddingBottom = ['search', 'detail'].includes(v) ? '0' : '';
-
-      let active = tabFor(v);
-      if (v === 'login') active = tabFor((localStorage.getItem('locally_after') || '#/list').replace('#/', '')) || 'list';
-      document.querySelectorAll('#tabbar a').forEach(a => a.classList.toggle('on', a.dataset.t === active));
-
-      onScroll();
-      window.scrollTo(0, 0);
-
-      if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
-      if (v === 'broker') renderBroker();
-      if (v === 'login') setLoginMode('login');
     }
 
-    function onScroll() {
-      const raw = (location.hash || '#/home').replace(/^#\/?/, '').split('/')[0];
-      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : window.scrollY > 200);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', route);
 
-    // ================= Menu =================
-    function openMenu() {
-      const cur = (location.hash || '#/home');
-      const link = (h, t) => `<a href="${h}" class="${cur === h ? 'on' : ''}">${t}</a>`;
-      $('m-list').innerHTML = link('#/home', 'Home') + link('#/list', 'List Your Property') + link('#/find', 'Find a Rental') +
-        (isAdmin ? link('#/broker', 'Broker Panel') : '') +
-        (session ? `<button class="small" id="m-out">Sign out (${esc(session.user.email || '')})</button>` : `<a class="small" href="#/login">Sign in</a>`);
-      if (session) $('m-out').onclick = async () => { await sb.auth.signOut(); session = null; isAdmin = false; location.hash = '#/home'; location.reload(); };
-      $('menu').classList.remove('hidden');
-    }
-    function closeMenu() { $('menu').classList.add('hidden'); }
-    $('h-menu').onclick = openMenu;
-    $('m-close').onclick = closeMenu;
-    $('m-list').addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
-    $('h-search').onclick = () => { location.hash = '#/search'; };
-    $('nc-browse').onclick = () => $('rentals').scrollIntoView({ behavior: 'smooth' });
-    $('filter-toggle').onclick = () => $('filter-panel').classList.toggle('hidden');
-    $('q').addEventListener('input', renderList);
-    $('price').addEventListener('input', renderList);
-
-    // ================= Search page =================
-    const CHIPS = [
-      ['Browse Properties', '#/home'], ['List Your Property', '#/list'], ['Broker Panel', '#/broker'], ['Available rentals', '#/home'],
-      ['Explore local rentals', '#/home'], ['submit your property', '#/list'], ['guided search', '#/find'], ['broker support', '#/find']
-    ];
-    function renderSearch() {
-      const q = $('sp-q').value.trim().toLowerCase();
-      if (!q) {
-        $('sp-body').innerHTML = `<div class="sp-empty"><div class="circle"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-          <h3>What are you looking for?</h3><p>Enter a name to find what you're looking for.</p></div>
-          <div class="sp-chips">${CHIPS.map((c, i) => `<button data-i="${i}">${esc(c[0])}</button>`).join('')}</div>`;
-      } else {
-        const pages = CHIPS.filter(c => c[0].toLowerCase().includes(q));
-        const ls = listings.filter(l => (l.title + ' ' + l.area).toLowerCase().includes(q));
-        $('sp-body').innerHTML = (pages.length ? `<div class="sp-chips" style="padding-top:10px">${pages.map(c => `<button data-i="${CHIPS.indexOf(c)}">${esc(c[0])}</button>`).join('')}</div>` : '') +
-          `<div class="items" style="margin-top:14px">${ls.map(rowHtml).join('')}</div>` +
-          (!pages.length && !ls.length ? '<div class="empty">No results found.</div>' : '');
-        bindRows($('sp-body'));
-      }
-      $('sp-body').querySelectorAll('.sp-chips button').forEach(b => b.onclick = () => { location.hash = CHIPS[b.dataset.i][1]; });
-    }
-    $('sp-q').addEventListener('input', renderSearch);
-    $('sp-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
-
-    // ================= Auth =================
-    function setNotice(id, msg, ok) { const n = $(id); n.className = 'notice ' + (msg ? (ok ? 'ok' : 'bad') : ''); n.textContent = msg || ''; }
-    function setLoginMode(m) {
-      loginMode = m;
-      $('l-title').textContent = m === 'login' ? 'Log in to continue' : 'Create your account';
-      $('l-submit').textContent = m === 'login' ? 'Log in' : 'Sign up';
-      $('l-switch-text').textContent = m === 'login' ? 'Don’t have an account?' : 'Already have an account?';
-      $('l-switch').textContent = m === 'login' ? 'Sign up' : 'Log in';
-      $('l-forgot').classList.toggle('hidden', m !== 'login');
-      $('l-pass').autocomplete = m === 'login' ? 'current-password' : 'new-password';
-      setNotice('n-login', '');
-    }
-    $('l-switch').onclick = () => setLoginMode(loginMode === 'login' ? 'signup' : 'login');
-    $('l-back').onclick = () => { localStorage.removeItem('locally_after'); location.hash = '#/home'; };
-
-    document.querySelectorAll('.soc').forEach(b => b.onclick = async () => {
-      setNotice('n-login', '');
-      const opts = { redirectTo: REDIRECT_TO };
-      if (b.dataset.p === 'azure') opts.scopes = 'email';
-      const { error } = await sb.auth.signInWithOAuth({ provider: b.dataset.p, options: opts });
-      if (error) setNotice('n-login', error.message, false);
-    });
-
-    $('form-login').onsubmit = async (e) => {
-      e.preventDefault();
-      const email = $('l-email').value.trim(), password = $('l-pass').value;
-      $('l-submit').disabled = true; setNotice('n-login', '');
-      try {
-        if (loginMode === 'login') {
-          const { error } = await sb.auth.signInWithPassword({ email, password });
-          if (error) throw error;
-        } else {
-          const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: REDIRECT_TO } });
-          if (error) throw error;
-          if (!data.session) setNotice('n-login', 'Account created. Check your email to confirm, then log in.', true);
-        }
-      } catch (err) { setNotice('n-login', err.message, false); }
-      $('l-submit').disabled = false;
+    $('btn-google').onclick = async () => {
+      await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: REDIRECT_TO } });
     };
 
-    $('l-forgot').onclick = async () => {
-      const email = $('l-email').value.trim();
-      if (!email) return setNotice('n-login', 'Enter your email first, then tap Forgot password.', false);
-      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: REDIRECT_TO });
-      setNotice('n-login', error ? error.message : 'Password reset email sent.', !error);
+    $('h-menu').onclick = () => $('menu').classList.remove('hidden');$('m-close').onclick = () => $('menu').classList.add('hidden');$('nc-browse').onclick = () => {
+      location.hash = '#/home';
+      document.getElementById('rentals').scrollIntoView({ behavior: 'smooth' });
     };
+    $('filter-toggle').onclick = () =>$('filter-panel').classList.toggle('hidden');
+    $('q').addEventListener('input', renderList);$('price').addEventListener('input', renderList);
 
-    async function checkAdmin() {
-      isAdmin = false;
-      if (session) {
-        try {
-          const { data } = await sb.from('admins').select('email').limit(1);
-          isAdmin = !!(data && data.length);
-        } catch (e) {}
-      }
-      $('nc-broker').classList.toggle('hidden', !isAdmin);
-    }
+    sb.auth.onAuthStateChange((_evt, s) => { session = s; });
 
-    sb.auth.onAuthStateChange((evt, s) => {
-      session = s;
-      setTimeout(async () => {
-        await checkAdmin();
-        if (evt === 'SIGNED_IN' && s) {
-          const after = localStorage.getItem('locally_after');
-          if (after) { localStorage.removeItem('locally_after'); location.hash = after; route(); }
-          else if ((location.hash || '') === '#/login') location.hash = '#/home';
-        }
-        if (evt === 'SIGNED_OUT') checkAdmin();
-      }, 0);
-    });
-
-    // ================= Forms =================
-    function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3500); }
-    const num = (v) => (v === '' || v == null ? null : Number(v));
-
-    $('img-file').onchange = (e) => { $('img-name').textContent = e.target.files[0] ? e.target.files[0].name : 'Choose a file'; };
-    $('cal').onclick = () => { const p = $('d-pick'); p.style.pointerEvents = 'auto'; try { p.showPicker(); } catch (e) { p.focus(); p.click(); } };
-    $('d-pick').onchange = (e) => { const [y, m, d] = e.target.value.split('-'); if (y) { $('d-y').value = y; $('d-m').value = Number(m); $('d-d').value = Number(d); } };
-
-    $('form-list').onsubmit = async (e) => {
-      e.preventDefault();
-      const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
-      btn.disabled = true; setNotice('n-list', '');
-      try {
-        let image_url = null;
-        const file = $('img-file').files[0];
-        if (file) {
-          const path = `${session.user.id}/${Date.now()}-${file.name.replace(/[^a-z0-9._-]/gi, '_')}`;
-          const up = await sb.storage.from('property-images').upload(path, file);
-          if (up.error) throw up.error;
-          image_url = sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
-        }
-        const m = $('d-m').value, d = $('d-d').value, y = $('d-y').value;
-        const available_date = (m && d && y) ? `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` : null;
-        const { error } = await sb.from('landlord_submissions').insert({
-          user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
-          property_title: f.property_title, neighborhood: f.neighborhood, address: f.address, address2: f.address2, city: f.city, state: f.state, postal: f.postal,
-          monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url
-        });
-        if (error) throw error;
-        form.reset(); $('img-name').textContent = 'Choose a file';
-        setNotice('n-list', 'Thank you! Your property has been submitted. A broker will be in touch.', true);
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      } catch (err) { setNotice('n-list', 'Could not submit: ' + (err.message || err), false); }
-      btn.disabled = false;
-    };
-
-    $('form-find').onsubmit = async (e) => {
-      e.preventDefault();
-      const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
-      btn.disabled = true; setNotice('n-find', '');
-      try {
-        const { error } = await sb.from('renter_requests').insert({
-          user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
-          neighborhood: f.neighborhood, budget: num(f.budget), bedrooms: num(f.bedrooms), timeline: f.timeline, notes: f.notes
-        });
-        if (error) throw error;
-        form.reset();
-        setNotice('n-find', 'Thank you! Your request has been received. A broker will contact you soon.', true);
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      } catch (err) { setNotice('n-find', 'Could not submit: ' + (err.message || err), false); }
-      btn.disabled = false;
-    };
-
-    // ================= Broker panel =================
-    function renderBroker() {
-      const body = $('broker-body');
-      if (!isAdmin) { body.innerHTML = '<div class="empty">This area is for admins only.</div>'; return; }
-      const gridIcon = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>';
-      body.innerHTML = `<div class="navcards" style="padding-top:0">
-        <button class="navcard simple" id="b-land"><div class="tile">${gridIcon}</div><div class="t"><h3>Landlord Submissions</h3></div></button>
-        <div id="b-land-out"></div>
-        <button class="navcard simple" id="b-rent"><div class="tile">${gridIcon}</div><div class="t"><h3>Renter Requests</h3></div></button>
-        <div id="b-rent-out"></div>
-        <a class="navcard" href="${PRIVACY_URL}" target="_blank" rel="noopener"><div class="tile"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8" stroke-linecap="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.700l1-1"/></svg></div><div class="t"><h3>Privacy Policy</h3><p style="word-break:break-all">${esc(PRIVACY_URL)}</p></div></a></div>`;
-      $('b-land').onclick = () => toggleRecords('landlord_submissions', 'b-land-out', r =>
-        `<div class="rec"><b>${esc(r.property_title || 'Untitled property')}</b><br>${esc(r.address || '')} ${esc(r.city || '')} ${esc(r.state || '')}<br>
-          ${r.monthly_rent != null ? money(r.monthly_rent) + '/mo • ' : ''}${esc(r.bedrooms ?? '-')} bd • ${esc(r.bathrooms ?? '-')} ba<br>
-          ${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}
-          ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}<div class="meta">${new Date(r.created_at).toLocaleString()}</div></div>`);
-      $('b-rent').onclick = () => toggleRecords('renter_requests', 'b-rent-out', r =>
-        `<div class="rec"><b>${esc(r.first_name)} ${esc(r.last_name)}</b><br>${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
-          Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
-          <div class="meta">${new Date(r.created_at).toLocaleString()}</div></div>`);
-    }
-    async function toggleRecords(table, outId, fmt) {
-      const out = $(outId);
-      if (out.innerHTML) { out.innerHTML = ''; return; }
-      out.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>';
-      const { data, error } = await sb.from(table).select('*').order('created_at', { ascending: false });
-      if (error) { out.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}</div></div>`; return; }
-      out.innerHTML = `<div class="panel">${data.length ? data.map(fmt).join('') : '<div class="rec">Nothing here yet.</div>'}</div>`;
-    }
-
-    // ================= Init =================
     (async function init() {
       const { data } = await sb.auth.getSession();
       session = data.session;
-      if (location.search.includes('code=')) history.replaceState({}, '', location.pathname + (location.hash || ''));
-      await checkAdmin();
       loadListings();
       route();
     })();
