@@ -46,7 +46,7 @@
     
     /* Header Small Logo */
     .hlogo { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
-      background: url('A New Design_179198542.png') center/cover no-repeat, linear-gradient(135deg, #2b3a55, #4fb4de); }
+      background: url('locally-logo.png') center/cover no-repeat, linear-gradient(135deg, #2b3a55, #4fb4de); }
     .hicons { display: flex; gap: 16px; }
     .hicons button { color: #fff; padding: 4px; }
 
@@ -57,9 +57,9 @@
     
     .intro { display: flex; gap: 14px; padding: 0 16px; margin-top: -42px; position: relative; z-index: 2; align-items: flex-start; }
     
-    /* Main App Logo Badge (Highlighted Area) */
+    /* Main App Logo Badge */
     .biglogo { width: 80px; height: 80px; border: 2px solid var(--line); border-radius: 20px; flex-shrink: 0; overflow: hidden;
-      background: url('A New Design_179198542.png') center/cover no-repeat, linear-gradient(135deg, #4a4f7a, #9a90bf); }
+      background: url('locally-logo.png') center/cover no-repeat, linear-gradient(135deg, #4a4f7a, #9a90bf); }
     
     .intro h1 { font-size: 28px; font-weight: 700; line-height: 1.1; margin-top: 6px; }
     .intro p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: #aab5c0; }
@@ -152,205 +152,4 @@
     <a class="hbrand" href="#/home"><span class="hlogo"></span><span>Locally</span></a>
     <div class="hicons">
       <button id="h-search" aria-label="Search"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
-      <button id="h-menu" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    </div>
-  </header>
-
-  <!-- HOME VIEW -->
-  <section class="view" id="view-home">
-    <!-- Top Hero Banner -->
-    <div class="hero"></div>
-    <div class="intro">
-      <!-- Main Logo Badge -->
-      <div class="biglogo"></div>
-      <div>
-        <h1>Locally</h1>
-        <p>A community platform connecting tenants and landlords directly.</p>
-      </div>
-    </div>
-    <p class="sub">Explore local rentals, list your property, or request direct broker support.</p>
-
-    <div class="navcards">
-      <button class="navcard" id="nc-browse">
-        <div class="tile browse"></div>
-        <div class="t"><h3>Browse Properties</h3><p>See current available listings.</p></div>
-        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
-      </button>
-      <a class="navcard" href="#/list">
-        <div class="tile list"></div>
-        <div class="t"><h3>List Your Property</h3><p>Share vacancies and attract leads.</p></div>
-        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-
-    <h2 class="section" id="rentals">Available rentals</h2>
-    <div class="searchbar">
-      <label class="search">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="q" type="search" placeholder="Search area or title" />
-      </label>
-      <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg></button>
-    </div>
-    <div class="filter-panel hidden" id="filter-panel">
-      <label>Max price per month</label>
-      <div class="row"><span>$0</span><span id="price-label">$5,000</span></div>
-      <input type="range" id="price" min="300" max="5000" step="50" value="5000" />
-    </div>
-    <div class="items" id="list"></div>
-  </section>
-
-  <!-- LIST YOUR PROPERTY VIEW -->
-  <section class="view page hidden" id="view-list">
-    <h1 class="page-title">List Your Property</h1>
-    <form class="formcard" id="form-list">
-      <div class="fgroup"><label class="lbl">Full name</label>
-        <div class="frow"><div><input type="text" name="first_name" placeholder="First" required /></div><div><input type="text" name="last_name" placeholder="Last" required /></div></div></div>
-      <div class="fgroup"><label class="lbl">Email address</label><input type="email" name="email" required /></div>
-      <div class="fgroup"><label class="lbl">Property title</label><input type="text" name="property_title" placeholder="e.g. Modern Studio" /></div>
-      <div class="fgroup"><label class="lbl">Monthly rent (USD)</label><input type="number" name="monthly_rent" placeholder="1200" /></div>
-      <button class="submit" type="submit">Submit Listing</button>
-    </form>
-  </section>
-
-  <!-- FIND A RENTAL VIEW -->
-  <section class="view page hidden" id="view-find">
-    <h1 class="page-title">Find a Rental</h1>
-    <form class="formcard" id="form-find">
-      <div class="fgroup"><label class="lbl">Full Name</label>
-        <div class="frow"><div><input type="text" name="first_name" placeholder="First" required /></div><div><input type="text" name="last_name" placeholder="Last" required /></div></div></div>
-      <div class="fgroup"><label class="lbl">Email Address</label><input type="email" name="email" required /></div>
-      <div class="fgroup"><label class="lbl">Monthly Budget (USD)</label><input type="number" name="budget" placeholder="1500" /></div>
-      <button class="submit" type="submit">Submit Request</button>
-    </form>
-  </section>
-
-  <!-- LOGIN VIEW -->
-  <section class="view hidden" id="view-login">
-    <div class="l-top"><button id="l-back">‹</button><span>Sign in</span></div>
-    <div class="login">
-      <h1>Log in to continue</h1>
-      <button class="submit" id="btn-google">Continue with Google</button>
-    </div>
-  </section>
-
-  <!-- DETAIL SHEET VIEW -->
-  <section class="view hidden" id="view-detail"></section>
-
-  <!-- MENU SLIDE-OUT -->
-  <div id="menu" class="hidden">
-    <div class="m-top">
-      <div class="hbrand"><span class="hlogo"></span><span>Locally</span></div>
-      <button class="m-x" id="m-close">✕</button>
-    </div>
-    <div class="m-list" id="m-list"></div>
-  </div>
-
-  <!-- TAB BAR -->
-  <nav id="tabbar">
-    <a href="#/home" data-t="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>Home</a>
-    <a href="#/list" data-t="list"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="15" cy="9" r="5"/><path d="M11.5 12.5L4 20v-3l2-.5V15l2-.5.5-1.5"/></svg>List Property</a>
-    <a href="#/find" data-t="find"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find Rental</a>
-  </nav>
-
-  <script>
-    const SUPABASE_URL = 'https://mzgpapxnusushsqezasr.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Z3BhcHhudXN1c2hzcWV6YXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxMTAwMDB9';
-    const REDIRECT_TO = 'https://mrmikesho.github.io/locally-app';
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const $ = (id) => document.getElementById(id);
-    const money = (n) => '$' + Number(n || 0).toLocaleString();
-
-    let session = null;
-    
-    const SAMPLE = [
-      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, image_url: 'IMG_1148.jpeg', description: 'Bright loft with big windows and a quiet reading corner.' },
-      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, image_url: 'IMG_1149.webp', description: 'Spacious flat with a modern kitchen and plenty of light.' },
-      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, image_url: 'IMG_1151.jpeg', description: 'Efficient studio with wood floors and a full kitchenette.' }
-    ];
-    let listings = SAMPLE.slice();
-
-    async function loadListings() {
-      try {
-        const { data, error } = await sb.from('listings').select('*').order('id');
-        if (!error && data && data.length) {
-          listings = data.map((item, idx) => ({
-            ...item,
-            image_url: item.image_url || SAMPLE[idx % SAMPLE.length].image_url
-          }));
-        }
-      } catch (e) {}
-      renderList();
-    }
-
-    function thumbStyle(l) {
-      return l.image_url ? `background-image:url('${l.image_url}')` : 'background:linear-gradient(135deg,#2b3a55,#0e1522)';
-    }
-
-    function renderList() {
-      const q = $('q').value.trim().toLowerCase();
-      const max = Number($('price').value);$('price-label').textContent = money(max);
-      const rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max);
-      $('list').innerHTML = rows.length ? rows.map(l => `
-        <div class="item" data-id="${l.id}">
-          <div class="thumb" style="${thumbStyle(l)}"></div>
-          <div class="info">
-            <h3>${l.title}</h3>
-            <p>${l.area} • ${money(l.price)}/mo</p>
-          </div>
-          <div class="chev">›</div>
-        </div>`).join('') : '<div class="empty">No places match your search.</div>';
-      
-      $('list').querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
-    }
-
-    function renderDetail(id) {
-      const l = listings.find(x => String(x.id) === String(id));
-      if (!l) { location.hash = '#/home'; return; }
-      $('view-detail').innerHTML = `
-        <div class="d-hero" style="${thumbStyle(l)}"><button class="d-back" id="d-back">‹</button></div>
-        <div class="d-body">
-          <h2>${l.title}</h2>
-          <div class="st">${l.area}</div>
-          <div class="price">${money(l.price)}/mo</div>
-          <p>${l.description || ''}</p>
-          <a href="#/find" class="submit" style="display:block;text-align:center;line-height:50px;margin-top:24px">Request viewing</a>
-        </div>`;
-      $('d-back').onclick = () => history.back();
-    }
-
-    const VIEWS = ['home', 'list', 'find', 'login', 'detail'];
-    function route() {
-      const raw = (location.hash || '#/home').replace(/^#\/?/, '');
-      const [name, arg] = raw.split('/');
-      let v = VIEWS.includes(name) ? name : 'home';
-
-      VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));$('menu').classList.add('hidden');
-
-      if (v === 'detail') renderDetail(arg);
-    }
-
-    window.addEventListener('hashchange', route);
-
-    $('btn-google').onclick = async () => {
-      await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: REDIRECT_TO } });
-    };
-
-    $('h-menu').onclick = () => $('menu').classList.remove('hidden');$('m-close').onclick = () => $('menu').classList.add('hidden');$('nc-browse').onclick = () => {
-      location.hash = '#/home';
-      document.getElementById('rentals').scrollIntoView({ behavior: 'smooth' });
-    };
-    $('filter-toggle').onclick = () =>$('filter-panel').classList.toggle('hidden');
-    $('q').addEventListener('input', renderList);$('price').addEventListener('input', renderList);
-
-    sb.auth.onAuthStateChange((_evt, s) => { session = s; });
-
-    (async function init() {
-      const { data } = await sb.auth.getSession();
-      session = data.session;
-      loadListings();
-      route();
-    })();
-  </script>
-</body>
-</html>
+      <button id="h-menu" aria-label="Menu"><svg width="24" height
