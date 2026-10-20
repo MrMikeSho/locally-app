@@ -71,7 +71,7 @@
     /* Card Thumbnail Icon Tiles */
     .tile { width: 50px; height: 50px; border-radius: 14px; background: var(--tile); display: grid; place-items: center; flex-shrink: 0; overflow: hidden;
       background-size: cover; background-position: center; }
-    .tile.browse { background-image: url('browse.jpg'); }
+    .tile.browse { background-image: url('IMG_1146.jpeg'); }
     .tile.list { background-image: url('IMG_1147.webp'); }
 
     .navcard .t { flex: 1; min-width: 0; }
@@ -172,7 +172,6 @@
 
     <div class="navcards">
       <button class="navcard" id="nc-browse">
-        <!-- Browse Card Thumbnail Tile -->
         <div class="tile browse"></div>
         <div class="t"><h3>Browse Properties</h3><p>See current available listings.</p></div>
         <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
@@ -263,17 +262,25 @@
     const money = (n) => '$' + Number(n || 0).toLocaleString();
 
     let session = null;
+    
+    // Default rentals mapped directly to your 3 uploaded files
     const SAMPLE = [
-      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, description: 'Bright loft with big windows and a quiet reading corner.' },
-      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, description: 'Spacious flat with a modern kitchen and plenty of light.' },
-      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, description: 'Efficient studio with wood floors and a full kitchenette.' }
+      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, image_url: 'IMG_1148.jpeg', description: 'Bright loft with big windows and a quiet reading corner.' },
+      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, image_url: 'IMG_1149.webp', description: 'Spacious flat with a modern kitchen and plenty of light.' },
+      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, image_url: 'IMG_1151.jpeg', description: 'Efficient studio with wood floors and a full kitchenette.' }
     ];
     let listings = SAMPLE.slice();
 
     async function loadListings() {
       try {
         const { data, error } = await sb.from('listings').select('*').order('id');
-        if (!error && data && data.length) listings = data;
+        if (!error && data && data.length) {
+          // Fallback to sample images if database items lack an image_url
+          listings = data.map((item, idx) => ({
+            ...item,
+            image_url: item.image_url || SAMPLE[idx % SAMPLE.length].image_url
+          }));
+        }
       } catch (e) {}
       renderList();
     }
