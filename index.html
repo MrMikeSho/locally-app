@@ -98,6 +98,12 @@
     .item h3 { font-size: 16px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
     .item p { font-size: 14px; color: #c9d2db; margin-bottom: 8px; }
     .item .st { font-size: 12px; color: var(--muted); }
+    /* status badges */
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1.5; text-transform: capitalize; vertical-align: middle; }
+    .badge.ok { background: rgba(34,197,94,.16); color: #4ade80; }
+    .badge.warn { background: rgba(234,179,8,.16); color: #facc15; }
+    .badge.bad { background: rgba(239,68,68,.16); color: #f87171; }
+    .badge.neutral { background: rgba(148,163,184,.16); color: #cbd5e1; }
     .item .chev { color: var(--accent); }
     .empty { text-align: center; color: var(--muted); padding: 40px 0; }
 
@@ -397,11 +403,20 @@
     let listings = SAMPLE.slice();
     let statusFilter = 'All';
 
+    // ---- Status badge: empty/blank status falls back to "Available" ----
+    const STATUS_CLASS = { available: 'ok', pending: 'warn', rented: 'bad', taken: 'bad', sold: 'bad' };
+    function normStatus(s) { const t = String(s == null ? '' : s).trim(); return t ? t.charAt(0).toUpperCase() + t.slice(1).toLowerCase() : 'Available'; }
+    function statusBadge(s) {
+      const t = normStatus(s);
+      return `<span class="badge ${STATUS_CLASS[t.toLowerCase()] || 'neutral'}">${esc(t)}</span>`;
+    }
+
     async function loadListings() {
       try {
         const { data, error } = await sb.from('listings').select('*').order('id');
         if (!error && data && data.length) listings = data.map(l => (!l.image_url || /^images\//.test(l.image_url)) ? { ...l, image_url: LOCAL_IMG[l.title] || '' } : l);
       } catch (e) {}
+      listings = listings.map(l => ({ ...l, status: normStatus(l.status) }));
       buildChips(); renderList();
     }
     const thumbBg = (l) => `background-image:${l.image_url ? `url('${esc(l.image_url)}'),` : ''}linear-gradient(135deg,#243247,#0b1522)`;
@@ -414,7 +429,7 @@
 
     function rowHtml(l) {
       return `<div class="item" data-id="${esc(l.id)}"><div class="thumb" style="${thumbBg(l)}"></div>
-        <div class="info"><h3>${esc(l.title)}</h3><p>${esc(l.area)} • ${money(l.price)}/mo</p><div class="st">Status: ${esc(l.status || '')}</div></div>
+        <div class="info"><h3>${esc(l.title)}</h3><p>${esc(l.area)} • ${money(l.price)}/mo</p><div class="st">Status: ${statusBadge(l.status)}</div></div>
         <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M9 5l7 7-7 7"/></svg></div>`;
     }
 
@@ -432,7 +447,7 @@
       const l = listings.find(x => String(x.id) === String(id));
       if (!l) { location.hash = '#/home'; return; }
       $('view-detail').innerHTML = `<div class="d-hero" style="${thumbBg(l)}"><button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
-        <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)}${l.status ? ' • ' + esc(l.status) : ''}</div>
+        <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}</div>
         <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
         <a href="#/find" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
