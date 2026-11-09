@@ -110,6 +110,15 @@
     /* ---------- Forms ---------- */
     .page { padding-top: calc(env(safe-area-inset-top) + 70px); }
     .page-title { padding: 6px 18px 14px; font-size: 23px; font-weight: 700; }
+    .seg { display: flex; gap: 6px; margin: 14px 14px 12px; padding: 4px; border: 1.5px solid var(--line); border-radius: 16px; background: #02060a; }
+    .seg button { flex: 1; padding: 11px 6px; border: 0; border-radius: 12px; background: transparent; color: var(--muted); font: 600 13.5px/1.25 inherit; font-family: inherit; cursor: pointer; }
+    .seg button.on { background: #0d1a22; color: var(--accent); }
+    .picked { margin: 18px 0 4px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 14px; font-size: 14px; color: #aab5c0; }
+    .rec .vbtns { display: flex; gap: 8px; margin-top: 10px; }
+    .rec .vbtns button { flex: 1; padding: 8px 0; border-radius: 12px; border: 1.5px solid var(--line); background: #0d1a22; color: #fff; font: 600 13px inherit; font-family: inherit; cursor: pointer; }
+    .rec .vbtns button.go { color: var(--accent); }
+    .picked b { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; }
+    select { width: 100%; height: 38px; padding: 0 12px; border-radius: 13px; border: 1.5px solid var(--line); background: #02060a; color: #fff; font: inherit; font-size: 15px; }
     .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
     .fgroup { margin-top: 38px; }
     .fgroup > label.lbl { display: block; font-size: 15px; font-weight: 500; margin-bottom: 10px; }
@@ -123,6 +132,8 @@
     .fgroup textarea { height: 38px; min-height: 38px; padding-top: 8px; resize: vertical; }
     .fgroup input:focus, .fgroup textarea:focus { border-color: var(--accent); }
     .fgroup input::placeholder { color: #66727e; }
+    .chk { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: #aab5c0; cursor: pointer; }
+    .chk input { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 1px; accent-color: var(--accent); }
     .sublbl { display: block; margin-top: 6px; font-size: 12px; color: #75818d; }
     .calbtn { width: 38px; height: 38px; border-radius: 9px; background: #0d1a22; display: grid; place-items: center; color: #4fb4de; flex: 0 0 38px; }
     .upload { display: block; text-align: center; border: 1.5px dashed #3a4654; border-radius: 22px; padding: 38px 10px; cursor: pointer; }
@@ -288,6 +299,7 @@
         <label class="upload"><input type="file" name="image" accept="image/*" id="img-file" />
           <svg width="64" height="64" viewBox="0 0 24 24" style="margin:0 auto" fill="none"><path d="M7 18a4 4 0 01-.5-7.97A5.5 5.5 0 0117 8.5 4.5 4.5 0 0117.5 18z" fill="#4a9bb8"/><path d="M12 15V9m0 0l-3 3m3-3l3 3" stroke="#0b1a24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <div class="big">Browse Files</div><div class="small" id="img-name">Choose a file</div></label></div>
+      <div class="fgroup"><label class="chk"><input type="checkbox" name="agree" required /><span>By submitting this property to Locally, I agree to pay a standard broker commission upon successful tenant placement introduced via the platform.</span></label></div>
       <button class="submit" type="submit">Submit</button>
     </form>
     <div class="notice" id="n-list"></div>
@@ -296,7 +308,28 @@
   <!-- ===== FIND A RENTAL ===== -->
   <section class="view page hidden" id="view-find">
     <h1 class="page-title">Find a Rental</h1>
+    <div class="seg" id="find-seg">
+      <button type="button" data-m="view">🏷️ Request a Viewing<br>of a Listing</button>
+      <button type="button" data-m="search">🔍 General Rental<br>Search</button>
+    </div>
+    <form class="formcard" id="form-view" autocomplete="on">
+      <div class="fgroup" style="margin-top:20px"><label class="lbl">Listing</label><select name="listing_id" id="v-listing" required></select></div>
+      <div class="picked" id="v-picked"></div>
+      <div class="fgroup"><label class="lbl">Full Name</label>
+        <div class="frow"><div><input type="text" name="first_name" required /><span class="sublbl">First Name</span></div><div><input type="text" name="last_name" required /><span class="sublbl">Last Name</span></div></div></div>
+      <div class="fgroup"><label class="lbl">Email Address</label><input type="email" name="email" placeholder="name@example.com" required /></div>
+      <div class="fgroup"><label class="lbl">Phone Number</label>
+        <div class="frow pc"><div><input type="tel" name="area_code" /><span class="sublbl">Area Code</span></div><div><input type="tel" name="phone" required /><span class="sublbl">Phone Number</span></div></div></div>
+      <div class="fgroup"><label class="lbl">Preferred Viewing Date</label><input type="date" name="preferred_date" required /></div>
+      <div class="fgroup"><label class="lbl">Preferred Time</label>
+        <select name="preferred_time"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+      <div class="fgroup"><label class="lbl">Notes</label><textarea name="notes"></textarea></div>
+      <div class="fgroup"><label class="chk"><input type="checkbox" name="agree" required /><span>I understand that Locally acts as the exclusive broker for this listing, and viewing arrangements must be coordinated through the platform.</span></label></div>
+      <button class="submit" type="submit">Request Viewing</button>
+    </form>
+    <div class="notice" id="n-view"></div>
     <form class="formcard" id="form-find" autocomplete="on">
+      <div class="picked" style="margin-top:18px"><b>Can't find what you're looking for?</b>Tell the broker your budget and location, and we'll find a match for you.</div>
       <div class="fgroup" style="margin-top:20px"><label class="lbl">Full Name</label>
         <div class="frow"><div><input type="text" name="first_name" required /><span class="sublbl">First Name</span></div><div><input type="text" name="last_name" required /><span class="sublbl">Last Name</span></div></div></div>
       <div class="fgroup"><label class="lbl">Email Address</label><input type="email" name="email" placeholder="name@example.com" required /></div>
@@ -307,6 +340,7 @@
       <div class="fgroup"><label class="lbl">Bedrooms Needed</label><input type="number" inputmode="numeric" name="bedrooms" placeholder="e.g., 23" /></div>
       <div class="fgroup"><label class="lbl">Move-in Timeline</label><input type="text" name="timeline" /></div>
       <div class="fgroup"><label class="lbl">Notes</label><textarea name="notes"></textarea></div>
+      <div class="fgroup"><label class="chk"><input type="checkbox" name="agree" required /><span>I understand that Locally acts as the exclusive broker for this listing, and viewing arrangements must be coordinated through the platform.</span></label></div>
       <button class="submit" type="submit">Submit</button>
     </form>
     <div class="notice" id="n-find"></div>
@@ -404,7 +438,7 @@
     let statusFilter = 'All';
 
     // ---- Status badge: empty/blank status falls back to "Available" ----
-    const STATUS_CLASS = { available: 'ok', pending: 'warn', rented: 'bad', taken: 'bad', sold: 'bad' };
+    const STATUS_CLASS = { available: 'ok', approved: 'ok', declined: 'bad', pending: 'warn', rented: 'bad', taken: 'bad', sold: 'bad' };
     function normStatus(s) { const t = String(s == null ? '' : s).trim(); return t ? t.charAt(0).toUpperCase() + t.slice(1).toLowerCase() : 'Available'; }
     function statusBadge(s) {
       const t = normStatus(s);
@@ -449,7 +483,7 @@
       $('view-detail').innerHTML = `<div class="d-hero" style="${thumbBg(l)}"><button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
         <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}</div>
         <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
-        <a href="#/find" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
+        <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
     }
 
@@ -463,7 +497,7 @@
       let v = VIEWS.includes(name) ? name : 'home';
 
       if ((v === 'list' || v === 'find' || v === 'broker') && !session) {
-        localStorage.setItem('locally_after', '#/' + v);
+        localStorage.setItem('locally_after', '#/' + v + (arg ? '/' + arg : ''));
         location.replace('#/login'); return;
       }
       VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));
@@ -486,6 +520,7 @@
       if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
       if (v === 'broker') renderBroker();
+      if (v === 'find') setFindMode(arg ? 'view' : (findMode || 'search'), arg);
       if (v === 'login') setLoginMode('login');
     }
 
@@ -623,6 +658,7 @@
     $('form-list').onsubmit = async (e) => {
       e.preventDefault();
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
+      if (!f.agree) { setNotice('n-list', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-list', '');
       try {
         let image_url = null;
@@ -638,7 +674,8 @@
         const { error } = await sb.from('landlord_submissions').insert({
           user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
           property_title: f.property_title, neighborhood: f.neighborhood, address: f.address, address2: f.address2, city: f.city, state: f.state, postal: f.postal,
-          monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url
+          monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url,
+          agreed_terms: true, agreed_at: new Date().toISOString()
         });
         if (error) throw error;
         form.reset(); $('img-name').textContent = 'Choose a file';
@@ -648,14 +685,64 @@
       btn.disabled = false;
     };
 
+    // ---- Find a Rental: two modes ----
+    let findMode = null;
+    function fillListingSelect(id) {
+      const sel = $('v-listing');
+      sel.innerHTML = '<option value="">Choose a listing…</option>' + listings.map(l =>
+        `<option value="${esc(l.id)}">${esc(l.title)} – ${esc(l.area || '')}</option>`).join('');
+      if (id != null && listings.some(l => String(l.id) === String(id))) sel.value = String(id);
+      showPicked();
+    }
+    function showPicked() {
+      const l = listings.find(x => String(x.id) === $('v-listing').value);
+      $('v-picked').style.display = l ? '' : 'none';
+      if (l) $('v-picked').innerHTML = `<b>${esc(l.title)}</b>${esc(l.area || '')} • ${money(l.price)}/mo`;
+    }
+    function setFindMode(m, id) {
+      findMode = m;
+      document.querySelectorAll('#find-seg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+      $('form-view').classList.toggle('hidden', m !== 'view');
+      $('n-view').classList.toggle('hidden', m !== 'view');
+      $('form-find').classList.toggle('hidden', m !== 'search');
+      $('n-find').classList.toggle('hidden', m !== 'search');
+      if (m === 'view') fillListingSelect(id);
+    }
+    document.querySelectorAll('#find-seg button').forEach(b => b.onclick = () => setFindMode(b.dataset.m, $('v-listing').value));
+    $('v-listing').onchange = showPicked;
+
+    $('form-view').onsubmit = async (e) => {
+      e.preventDefault();
+      const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
+      if (!f.listing_id) { setNotice('n-view', 'Please choose a listing.', false); return; }
+      if (!f.agree) { setNotice('n-view', 'Please accept the broker agreement to continue.', false); return; }
+      const l = listings.find(x => String(x.id) === String(f.listing_id));
+      btn.disabled = true; setNotice('n-view', '');
+      try {
+        const { error } = await sb.from('viewing_requests').insert({
+          user_id: session.user.id, listing_id: num(f.listing_id), listing_title: l ? l.title : null,
+          first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
+          preferred_date: f.preferred_date || null, preferred_time: f.preferred_time, notes: f.notes,
+          agreed_terms: true, agreed_at: new Date().toISOString()
+        });
+        if (error) throw error;
+        form.reset(); fillListingSelect(null);
+        setNotice('n-view', 'Thank you! Your viewing request has been received. A broker will confirm the time and share the location with you.', true);
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      } catch (err) { setNotice('n-view', 'Could not submit: ' + (err.message || err), false); }
+      btn.disabled = false;
+    };
+
     $('form-find').onsubmit = async (e) => {
       e.preventDefault();
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
+      if (!f.agree) { setNotice('n-find', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-find', '');
       try {
         const { error } = await sb.from('renter_requests').insert({
           user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
-          neighborhood: f.neighborhood, budget: num(f.budget), bedrooms: num(f.bedrooms), timeline: f.timeline, notes: f.notes
+          neighborhood: f.neighborhood, budget: num(f.budget), bedrooms: num(f.bedrooms), timeline: f.timeline, notes: f.notes,
+          agreed_terms: true, agreed_at: new Date().toISOString()
         });
         if (error) throw error;
         form.reset();
@@ -673,6 +760,8 @@
       body.innerHTML = `<div class="navcards" style="padding-top:0">
         <button class="navcard simple" id="b-land"><div class="tile">${gridIcon}</div><div class="t"><h3>Landlord Submissions</h3></div></button>
         <div id="b-land-out"></div>
+        <button class="navcard simple" id="b-view"><div class="tile">${gridIcon}</div><div class="t"><h3>Viewing Requests</h3></div></button>
+        <div id="b-view-out"></div>
         <button class="navcard simple" id="b-rent"><div class="tile">${gridIcon}</div><div class="t"><h3>Renter Requests</h3></div></button>
         <div id="b-rent-out"></div>
         <a class="navcard" href="${PRIVACY_URL}" target="_blank" rel="noopener"><div class="tile"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8" stroke-linecap="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.700l1-1"/></svg></div><div class="t"><h3>Privacy Policy</h3><p style="word-break:break-all">${esc(PRIVACY_URL)}</p></div></a></div>`;
@@ -680,11 +769,23 @@
         `<div class="rec"><b>${esc(r.property_title || 'Untitled property')}</b><br>${esc(r.address || '')} ${esc(r.city || '')} ${esc(r.state || '')}<br>
           ${r.monthly_rent != null ? money(r.monthly_rent) + '/mo • ' : ''}${esc(r.bedrooms ?? '-')} bd • ${esc(r.bathrooms ?? '-')} ba<br>
           ${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}
-          ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}<div class="meta">${new Date(r.created_at).toLocaleString()}</div></div>`);
+          ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}<div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
+      $('b-view').onclick = () => toggleRecords('viewing_requests', 'b-view-out', r =>
+        `<div class="rec"><b>${esc(r.listing_title || 'Listing #' + r.listing_id)}</b><br>${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
+          Wants to view: ${esc(r.preferred_date || '-')} (${esc(r.preferred_time || '-')})<br>${esc(r.notes || '')}<br>Status: ${statusBadge(r.status || 'Pending')}
+          <div class="vbtns"><button class="go" data-id="${esc(r.id)}" data-s="Approved">Approve</button><button data-id="${esc(r.id)}" data-s="Declined">Decline</button><button data-id="${esc(r.id)}" data-s="Pending">Reset</button></div>
+          <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
+      $('b-view-out').onclick = async (e) => {
+        const b = e.target.closest('button[data-id]'); if (!b) return;
+        b.disabled = true;
+        const { error } = await sb.from('viewing_requests').update({ status: b.dataset.s }).eq('id', b.dataset.id);
+        if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
+        $('b-view-out').innerHTML = ''; $('b-view').click();
+      };
       $('b-rent').onclick = () => toggleRecords('renter_requests', 'b-rent-out', r =>
         `<div class="rec"><b>${esc(r.first_name)} ${esc(r.last_name)}</b><br>${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
           Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
-          <div class="meta">${new Date(r.created_at).toLocaleString()}</div></div>`);
+          <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
     }
     async function toggleRecords(table, outId, fmt) {
       const out = $(outId);
