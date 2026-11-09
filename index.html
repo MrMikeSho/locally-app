@@ -45,8 +45,9 @@
     #hdr.solid .hbrand { opacity: 1; }
     .hlogo { width: 66px; height: 36px; border-radius: 4px; flex-shrink: 0;
       background: url('locally-logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
-    .hicons { display: flex; gap: 22px; }
-    .htitle { display: none; font-size: 22px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; padding-right: 10px; }
+    .hicons { display: flex; gap: 12px; }
+    .hicons svg { width: 26px; height: 26px; }
+    .htitle { display: none; font-size: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; padding-right: 10px; }
     #hdr.titled .htitle { display: block; }
     #hdr.titled .hbrand { display: none; }
     .page .page-title { display: none; }
@@ -105,24 +106,24 @@
     .page-title { padding: 6px 18px 14px; font-size: 23px; font-weight: 700; }
     .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
     .fgroup { margin-top: 38px; }
-    .fgroup > label.lbl { display: block; font-size: 17px; font-weight: 500; margin-bottom: 14px; }
+    .fgroup > label.lbl { display: block; font-size: 15px; font-weight: 500; margin-bottom: 10px; }
     .fgroup > label.lbl .req { color: #e53935; margin-left: 4px; }
     .frow { display: flex; gap: 10px; }
     .frow > div { flex: 1; min-width: 0; }
     .frow.pc > div:first-child { flex: .6; }
     .frow.date > div { flex: 1; }
     .fgroup input[type=text], .fgroup input[type=email], .fgroup input[type=tel], .fgroup input[type=number], .fgroup textarea {
-      width: 100%; height: 58px; padding: 0 20px; background: var(--bg); border: 1.5px solid var(--field); border-radius: 18px; outline: none; font-size: 16px; }
-    .fgroup textarea { height: 120px; padding-top: 16px; resize: vertical; }
+      width: 100%; height: 38px; padding: 0 14px; background: var(--bg); border: 1px solid var(--field); border-radius: 13px; outline: none; font-size: 16px; }
+    .fgroup textarea { height: 38px; min-height: 38px; padding-top: 8px; resize: vertical; }
     .fgroup input:focus, .fgroup textarea:focus { border-color: var(--accent); }
     .fgroup input::placeholder { color: #66727e; }
-    .sublbl { display: block; margin-top: 10px; font-size: 12px; color: #75818d; }
-    .calbtn { width: 58px; height: 58px; border-radius: 12px; background: #0d1a22; display: grid; place-items: center; color: #4fb4de; flex: 0 0 58px; }
+    .sublbl { display: block; margin-top: 6px; font-size: 12px; color: #75818d; }
+    .calbtn { width: 38px; height: 38px; border-radius: 9px; background: #0d1a22; display: grid; place-items: center; color: #4fb4de; flex: 0 0 38px; }
     .upload { display: block; text-align: center; border: 1.5px dashed #3a4654; border-radius: 22px; padding: 38px 10px; cursor: pointer; }
     .upload .big { font-size: 20px; font-weight: 700; margin-top: 8px; }
     .upload .small { font-size: 14px; margin-top: 8px; }
     .upload input { display: none; }
-    .submit { width: 100%; height: 68px; margin-top: 52px; border-radius: 34px; background: var(--btn); color: #fff; font-size: 19px; font-weight: 600; }
+    .submit { width: 100%; height: 46px; margin-top: 36px; border-radius: 23px; background: var(--btn); color: #fff; font-size: 16px; font-weight: 600; }
     .submit:disabled { opacity: .6; }
     .notice { margin: 14px 18px 0; padding: 14px 16px; border-radius: 14px; font-size: 12px; display: none; }
     .notice.ok { display: block; background: #0f2a22; color: #7be0a8; border: 1px solid #1b4a39; }
@@ -143,19 +144,20 @@
     .l-top button { position: absolute; left: 18px; color: #fff; }
     .l-top span { font-size: 17px; font-weight: 500; }
     .login { padding: 70px 36px 0; }
-    .login h1 { text-align: center; font-size: 31px; font-weight: 700; margin-bottom: 42px; }
-    .socials { display: flex; justify-content: center; gap: 14px; }
-    .soc { text-align: center; font-size: 13px; color: #9aa6b2; }
-    .soc div { width: 86px; height: 86px; border: 1.5px solid var(--line); border-radius: 18px; display: grid; place-items: center; margin-bottom: 8px; }
-    .or { display: flex; align-items: center; gap: 22px; margin: 36px 0 30px; font-size: 23px; }
+    .login h1 { text-align: center; font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+    .socials { display: flex; justify-content: center; gap: 8px; }
+    .soc { text-align: center; font-size: 12px; color: #9aa6b2; }
+    .soc div svg { width: 24px; height: 24px; }
+    .soc div { width: 56px; height: 56px; border: 1px solid var(--line); border-radius: 14px; display: grid; place-items: center; margin-bottom: 8px; }
+    .or { display: flex; align-items: center; gap: 16px; margin: 24px 0 20px; font-size: 16px; }
     .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-    .login label { display: block; font-size: 19px; font-weight: 500; margin-bottom: 12px; }
-    .login input { width: 100%; height: 62px; padding: 0 20px; background: #02060a; border: 1.5px solid var(--field); border-radius: 22px; outline: none; font-size: 16px; margin-bottom: 26px; }
+    .login label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+    .login input { width: 100%; height: 38px; padding: 0 14px; background: #02060a; border: 1px solid var(--field); border-radius: 13px; outline: none; font-size: 16px; margin-bottom: 18px; }
     .login input:focus { border-color: var(--accent); }
-    .forgot { display: block; margin: -12px 0 0 auto; font-size: 16px; }
-    .login .submit { margin-top: 36px; height: 70px; }
-    .switch { text-align: center; margin-top: 36px; font-size: 16px; }
-    .switch button { color: var(--accent); font-weight: 600; margin-left: 6px; font-size: 16px; }
+    .forgot { display: block; margin: -8px 0 0 auto; font-size: 14px; }
+    .login .submit { margin-top: 24px; height: 46px; }
+    .switch { text-align: center; margin-top: 24px; font-size: 15px; }
+    .switch button { color: var(--accent); font-weight: 600; margin-left: 6px; font-size: 15px; }
 
     /* ---------- Menu ---------- */
     #menu { position: fixed; inset: 0; z-index: 90; background: var(--bg); overflow-y: auto; }
@@ -274,7 +276,7 @@
       <div class="fgroup"><label class="lbl">Bathrooms</label><input type="number" inputmode="decimal" step="0.5" name="bathrooms" placeholder="e.g., 23" /></div>
       <div class="fgroup"><label class="lbl">Availability date</label>
         <div class="frow date"><div><input type="number" inputmode="numeric" id="d-m" /><span class="sublbl">Month</span></div><div><input type="number" inputmode="numeric" id="d-d" /><span class="sublbl">Day</span></div><div><input type="number" inputmode="numeric" id="d-y" /><span class="sublbl">Year</span></div>
-          <div style="flex:0 0 58px"><button type="button" class="calbtn" id="cal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 16l2 2 4-4"/></svg></button><input type="date" id="d-pick" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px" /></div></div></div>
+          <div style="flex:0 0 38px"><button type="button" class="calbtn" id="cal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 16l2 2 4-4"/></svg></button><input type="date" id="d-pick" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px" /></div></div></div>
       <div class="fgroup"><label class="lbl">Property description</label><textarea name="description"></textarea></div>
       <div class="fgroup"><label class="lbl">Property image</label>
         <label class="upload"><input type="file" name="image" accept="image/*" id="img-file" />
