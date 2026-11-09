@@ -46,6 +46,10 @@
     .hlogo { width: 66px; height: 36px; border-radius: 4px; flex-shrink: 0;
       background: url('locally-logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
     .hicons { display: flex; gap: 22px; }
+    .htitle { display: none; font-size: 22px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; padding-right: 10px; }
+    #hdr.titled .htitle { display: block; }
+    #hdr.titled .hbrand { display: none; }
+    .page .page-title { display: none; }
     .hicons button { color: #fff; padding: 4px; }
 
     /* ---------- Home hero ---------- */
@@ -97,7 +101,7 @@
     .empty { text-align: center; color: var(--muted); padding: 40px 0; }
 
     /* ---------- Forms ---------- */
-    .page { padding-top: calc(env(safe-area-inset-top) + 76px); }
+    .page { padding-top: calc(env(safe-area-inset-top) + 70px); }
     .page-title { padding: 6px 18px 14px; font-size: 23px; font-weight: 700; }
     .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
     .fgroup { margin-top: 38px; }
@@ -113,7 +117,7 @@
     .fgroup input:focus, .fgroup textarea:focus { border-color: var(--accent); }
     .fgroup input::placeholder { color: #66727e; }
     .sublbl { display: block; margin-top: 10px; font-size: 12px; color: #75818d; }
-    .calbtn { width: 58px; height: 58px; border-radius: 12px; background: #f1f3f5; display: grid; place-items: center; color: #3a4654; flex: 0 0 58px; }
+    .calbtn { width: 58px; height: 58px; border-radius: 12px; background: #0d1a22; display: grid; place-items: center; color: #4fb4de; flex: 0 0 58px; }
     .upload { display: block; text-align: center; border: 1.5px dashed #3a4654; border-radius: 22px; padding: 38px 10px; cursor: pointer; }
     .upload .big { font-size: 20px; font-weight: 700; margin-top: 8px; }
     .upload .small { font-size: 14px; margin-top: 8px; }
@@ -181,7 +185,7 @@
 
     /* ---------- Tab bar ---------- */
     #tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: flex; background: var(--card); border-top: 1.5px solid #0f1923; padding-bottom: env(safe-area-inset-bottom); }
-    #tabbar a { flex: 1; text-align: center; padding: 14px 4px 12px; font-size: 13px; color: #6f7c88; position: relative; }
+    #tabbar a { flex: 1; text-align: center; padding: 12px 4px 10px; font-size: 14px; color: #6f7c88; position: relative; }
     #tabbar a svg { margin: 0 auto 6px; }
     #tabbar a.on { color: var(--accent); font-weight: 600; }
     #tabbar a.on::before { content: ""; position: absolute; top: -1.5px; left: 50%; transform: translateX(-50%); width: 64px; height: 4px; border-radius: 0 0 4px 4px; background: var(--accent); }
@@ -193,9 +197,11 @@
 
   <!-- ===== Header ===== -->
   <header id="hdr">
+    <span class="htitle" id="hdr-title"></span>
     <a class="hbrand" href="#/home"><span class="hlogo"></span><span>Locally</span></a>
     <div class="hicons">
       <button id="h-search" aria-label="Search"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <button id="h-bell" aria-label="Notifications"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.500 2.500 0 002.400-1.800h-4.800A2.500 2.500 0 0012 22zm7-5.500V11a7 7 0 10-14 0v5.500L3 18.500V20h18v-1.500z"/></svg></button>
       <button id="h-menu" aria-label="Menu"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
@@ -352,7 +358,6 @@
 
   <!-- ===== Tab bar ===== -->
   <nav id="tabbar">
-    <a href="#/home" data-t="home"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>Home</a>
     <a href="#/list" data-t="list"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a>
     <a href="#/find" data-t="find"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find a Rental</a>
   </nav>
@@ -449,6 +454,8 @@
 
       const showHdr = ['home', 'list', 'find', 'broker'].includes(v);
       $('hdr').classList.toggle('hidden', !showHdr);
+      $('hdr').classList.toggle('titled', ['list', 'find', 'broker'].includes(v));
+      $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: 'Broker Panel' })[v] || '';
       $('tabbar').classList.toggle('hidden', ['search', 'detail'].includes(v));
       document.body.style.paddingBottom = ['search', 'detail'].includes(v) ? '0' : '';
 
@@ -484,6 +491,7 @@
     }
     function closeMenu() { $('menu').classList.add('hidden'); }
     $('h-menu').onclick = openMenu;
+    $('h-bell').onclick = () => toast('No new notifications');
     $('m-close').onclick = closeMenu;
     $('m-list').addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
     $('h-search').onclick = () => { location.hash = '#/search'; };
