@@ -360,10 +360,14 @@
   <script>
     // ================= Supabase =================
     const SUPABASE_URL = 'https://mzgpapxnusushsqezasr.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Z3BhcHhudXN1c2hzcWV6YXNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkxMTAwMDB9';
+    const SUPABASE_ANON_KEY = 'sb_publishable_lwDj3dfWsM9EUsVF7ssFrg_UEQ4MQTH';
     const REDIRECT_TO = 'https://mrmikesho.github.io/locally-app';
     const PRIVACY_URL = 'https://telegra.ph/Privacy-Policy-For-Locally-09-21-2';
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { flowType: 'pkce' } });
+    // A real Supabase key is either 'sb_publishable_...' or a 3-part token (header.payload.signature)
+    const KEY_OK = /^sb_publishable_/.test(SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY.split('.').length === 3;
+    const KEY_MSG = 'The Supabase key in index.html is incomplete. In Supabase open Project Settings > API Keys, copy the anon / publishable key and paste it into SUPABASE_ANON_KEY.';
+    if (!KEY_OK) console.warn(KEY_MSG);
 
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -532,7 +536,7 @@
       const opts = { redirectTo: REDIRECT_TO };
       if (b.dataset.p === 'azure') opts.scopes = 'email';
       const { error } = await sb.auth.signInWithOAuth({ provider: b.dataset.p, options: opts });
-      if (error) setNotice('n-login', error.message, false);
+      if (error) setNotice('n-login', KEY_OK ? error.message : KEY_MSG, false);
     });
 
     $('form-login').onsubmit = async (e) => {
@@ -548,7 +552,7 @@
           if (error) throw error;
           if (!data.session) setNotice('n-login', 'Account created. Check your email to confirm, then log in.', true);
         }
-      } catch (err) { setNotice('n-login', err.message, false); }
+      } catch (err) { setNotice('n-login', KEY_OK ? err.message : KEY_MSG, false); }
       $('l-submit').disabled = false;
     };
 
