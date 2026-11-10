@@ -47,8 +47,8 @@
     #hdr.solid { background: rgba(2,7,12,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .hbrand { display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 700; opacity: 0; transition: opacity .25s; }
     #hdr.solid .hbrand { opacity: 1; }
-    .hlogo { width: 66px; height: 36px; border-radius: 4px; flex-shrink: 0;
-      background: url('locally-logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
+    .hlogo { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      background: url('icon-192.png?v=3') center/cover, #08162b; }
     .hicons { display: flex; gap: 12px; }
     .hicons svg { width: 26px; height: 26px; }
     .htitle { display: none; font-size: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; padding-right: 10px; }
@@ -61,11 +61,11 @@
     .hero { height: 300px; position: relative;
       background: url('IMG_1147.webp') center/cover, linear-gradient(160deg, #3a5070, #0b1522); }
     .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(2,7,12,.45), rgba(2,7,12,.1) 40%, rgba(2,7,12,.0) 70%, var(--bg)); }
-    .intro { display: flex; gap: 22px; padding: 0 18px; margin-top: -50px; position: relative; z-index: 2; }
-    .biglogo { width: 112px; height: 112px; border: 2px solid #123a45; border-radius: 20px; flex-shrink: 0; overflow: hidden; background: var(--bg); }
-    .biglogo div { height: 62px; margin-top: 4px; background: url('locally-logo.png') center/cover, linear-gradient(135deg, #4a4f7a, #9a90bf); }
-    .intro h1 { font-size: 34px; font-weight: 700; line-height: 1.05; margin-top: 8px; }
-    .intro p { margin-top: 6px; font-size: 14px; line-height: 1.75; color: #dfe6ec; }
+    .intro { display: flex; flex-direction: column; align-items: flex-start; gap: 0; padding: 0 18px; margin-top: -54px; position: relative; z-index: 2; }
+    .biglogo { width: 100px; height: 100px; border: 3px solid #123a45; border-radius: 50%; flex-shrink: 0; overflow: hidden; background: #08162b; box-shadow: 0 6px 18px rgba(0,0,0,.5); }
+    .biglogo div { height: 100%; background: url('icon-512.png?v=3') center/cover, #08162b; }
+    .intro h1 { font-size: 32px; font-weight: 700; line-height: 1.1; margin-top: 14px; }
+    .intro p { margin-top: 8px; max-width: 520px; font-size: 14px; line-height: 1.75; color: #dfe6ec; }
     .sub { padding: 34px 18px 0; font-size: 14px; line-height: 1.6; color: #9aa6b2; }
 
     .navcards { padding: 22px 18px 0; display: flex; flex-direction: column; gap: 16px; }
