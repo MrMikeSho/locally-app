@@ -1,7 +1,7 @@
 // Locally service worker: lets the app open and browse saved listings without internet.
-const CACHE = 'locally-v2';
+const CACHE = 'locally-v3';
 const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-const SHELL = ['./', 'index.html', 'locally-logo.png', 'manifest.json', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'IMG_1146.jpeg', 'IMG_1147.webp', 'IMG_1148.jpeg', 'IMG_1149.webp', 'IMG_1151.jpeg'];
+const SHELL = ['./', 'index.html', 'locally-logo.png', 'manifest.json', 'icon-192.png?v=3', 'icon-512.png?v=3', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'IMG_1146.jpeg', 'IMG_1147.webp', 'IMG_1148.jpeg', 'IMG_1149.webp', 'IMG_1151.jpeg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => Promise.all([
