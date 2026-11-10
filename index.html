@@ -448,15 +448,15 @@
 
     // ================= Listings =================
     const LOCAL_IMG = {
-      'Sunny Loft in Riverside': 'IMG_1148.jpeg',
-      'Family Flat in Old Town': 'IMG_1149.webp',
-      'Compact Studio in Central Square': 'IMG_1151.jpeg'
+      'Sunny Loft in Morningside': 'IMG_1148.jpeg', 'Sunny Loft in Riverside': 'IMG_1148.jpeg',
+      'Family House In Murambi East': 'IMG_1149.webp', 'Family Flat in Old Town': 'IMG_1149.webp',
+      'Compact Studio in Upper 3rd': 'IMG_1151.jpeg', 'Compact Studio in Central Square': 'IMG_1151.jpeg'
     };
     const SAMPLE = [
-      { id: 1, title: 'Sunny Loft in Riverside', area: 'Riverside', price: 1850, status: '', image_url: 'IMG_1148.jpeg', description: 'Bright loft with big windows and a quiet reading corner.' },
-      { id: 2, title: 'Family Flat in Old Town', area: 'Old Town', price: 2400, status: '', image_url: 'IMG_1149.webp', description: 'Spacious flat with a modern kitchen and plenty of light.' },
-      { id: 3, title: 'Compact Studio in Central Square', area: 'Central Square', price: 1250, status: '', image_url: 'IMG_1151.jpeg', description: 'Efficient studio with wood floors and a full kitchenette.' },
-      { id: 4, title: 'Garden Duplex in West End', area: 'West End', price: 2950, status: '', image_url: '', description: 'Two-level duplex with a private garden and sunny patio.' }
+      { id: 1, title: 'Sunny Loft in Morningside', area: 'Mutare', price: 450, status: '', image_url: 'IMG_1148.jpeg', description: 'Bright loft with big windows and a quiet reading corner.' },
+      { id: 2, title: 'Family House In Murambi East', area: 'Mutare', price: 650, status: '', image_url: 'IMG_1149.webp', description: 'Spacious flat with a modern kitchen and plenty of light.' },
+      { id: 3, title: 'Compact Studio in Upper 3rd', area: 'Uptown', price: 350, status: '', image_url: 'IMG_1151.jpeg', description: 'Efficient studio with wood floors and a full kitchenette.' },
+      { id: 4, title: 'Garden Duplex in Fairbridge Park', area: 'Mutare', price: 600, status: '', image_url: '', description: 'Two-level duplex with a private garden and sunny patio.' }
     ];
     let listings = SAMPLE.slice();
     let statusFilter = 'All';
@@ -469,6 +469,19 @@
       return `<span class="badge ${STATUS_CLASS[t.toLowerCase()] || 'neutral'}">${esc(t)}</span>`;
     }
 
+    // ---- Approximate neighbourhood points (area centres, NOT street addresses) ----
+    // Add more areas here any time. Check each point once in Google Maps before relying on it.
+    const AREA_COORDS = [
+      ['dangamvura', -19.0185, 32.6288], ['chikanga', -18.9610, 32.6350], ['murambi', -18.9530, 32.6720],
+      ['palmerstone', -18.9800, 32.6780], ["tiger's kloof", -18.9550, 32.6620], ['tigers kloof', -18.9550, 32.6620], ['greendale', -18.9550, 32.6620],
+      ['greenside', -18.9650, 32.6800], ['fernhill', -19.0020, 32.6450], ['mutare cbd', -18.9728, 32.6694],
+      ['mutare', -18.9728, 32.6694]   // town-level fallback, keep last
+    ];
+    function coordsFor() {
+      const text = Array.prototype.slice.call(arguments).join(' ').toLowerCase();
+      const hit = AREA_COORDS.find(a => text.includes(a[0]));
+      return hit ? { lat: hit[1], lng: hit[2] } : null;   // unknown place -> no point (never guess)
+    }
     const CACHE_KEY = 'locally_listings_v1';
     let fromCache = false, savedAt = null;
     async function loadListings() {
@@ -482,6 +495,7 @@
           try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data: listings })); } catch (e) {}
         }
       } catch (e) { failed = true; }
+      listings = listings.map(l => { if (l.latitude != null && l.longitude != null && l.latitude !== '') return l; const c = coordsFor(l.area, l.title); return c ? { ...l, latitude: c.lat, longitude: c.lng } : l; });
       fromCache = false;
       if (failed) {
         try {
@@ -489,7 +503,7 @@
           if (c && Array.isArray(c.data) && c.data.length) { listings = c.data; savedAt = c.t; fromCache = true; }
         } catch (e) {}
       }
-      listings = listings.map(l => ({ ...l, status: normStatus(l.status) }));
+      listings = listings.map(l => { const n = { ...l, status: normStatus(l.status) }; if (n.latitude == null || n.latitude === '') { const c = coordsFor(n.area, n.title); if (c) { n.latitude = c.lat; n.longitude = c.lng; } } return n; });
       updateNet(); buildChips(); renderList();
     }
     function updateNet() {
@@ -759,10 +773,12 @@
         }
         const m = $('d-m').value, d = $('d-d').value, y = $('d-y').value;
         const available_date = (m && d && y) ? `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` : null;
+        const pt = coordsFor(f.neighborhood, f.city, f.address2);
         const { error } = await sb.from('landlord_submissions').insert({
           user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
           property_title: f.property_title, neighborhood: f.neighborhood, address: f.address, address2: f.address2, city: f.city, state: f.state, postal: f.postal,
           monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url,
+          latitude: pt ? pt.lat : null, longitude: pt ? pt.lng : null,
           agreed_terms: true, agreed_at: new Date().toISOString()
         });
         if (error) throw error;
@@ -858,7 +874,8 @@
       $('b-land').onclick = () => toggleRecords('landlord_submissions', 'b-land-out', r =>
         `<div class="rec"><b>${esc(r.property_title || 'Untitled property')}</b><br>${esc(r.address || '')} ${esc(r.city || '')} ${esc(r.state || '')}<br>
           ${r.monthly_rent != null ? money(r.monthly_rent) + '/mo • ' : ''}${esc(r.bedrooms ?? '-')} bd • ${esc(r.bathrooms ?? '-')} ba<br>
-          ${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}
+          ${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
+          Map point: ${r.latitude != null ? esc(Number(r.latitude).toFixed(4) + ', ' + Number(r.longitude).toFixed(4)) + ' (auto)' : 'not found for this area, set it by hand'}
           ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}<div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
       $('b-view').onclick = () => toggleRecords('viewing_requests', 'b-view-out', r =>
         `<div class="rec"><b>${esc(r.listing_title || 'Listing #' + r.listing_id)}</b><br>${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
