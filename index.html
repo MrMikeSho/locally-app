@@ -117,6 +117,9 @@
     .rec .vbtns { display: flex; gap: 8px; margin-top: 10px; }
     .rec .vbtns button { flex: 1; padding: 8px 0; border-radius: 12px; border: 1.5px solid var(--line); background: #0d1a22; color: #fff; font: 600 13px inherit; font-family: inherit; cursor: pointer; }
     .rec .vbtns button.go { color: var(--accent); }
+    .hint { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+    .linkbtn { float: right; background: none; border: 0; color: var(--accent); font: 600 14px inherit; font-family: inherit; cursor: pointer; }
+    .offline { position: fixed; left: 0; right: 0; bottom: 84px; margin: 0 14px; padding: 10px 14px; border-radius: 14px; background: #2a1d05; border: 1.5px solid #6b4a0a; color: #ffd58a; font-size: 13px; text-align: center; z-index: 60; }
     .picked b { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; }
     select { width: 100%; height: 38px; padding: 0 12px; border-radius: 13px; border: 1.5px solid var(--line); background: #02060a; color: #fff; font: inherit; font-size: 15px; }
     .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
@@ -255,6 +258,7 @@
       </a>
     </div>
 
+    <div id="recent"></div>
     <h2 class="section" id="rentals">Available rentals</h2>
     <div class="searchbar">
       <label class="search">
@@ -269,6 +273,13 @@
       <input type="range" id="price" min="300" max="5000" step="50" value="5000" />
       <label style="margin-top:16px">Status</label>
       <div class="chips" id="status-chips"></div>
+      <label style="margin-top:16px">Distance</label>
+      <div class="chips"><button type="button" class="chip" id="loc-btn">📍 Use my location</button></div>
+      <div class="hint" id="loc-note"></div>
+      <div id="radius-wrap" class="hidden">
+        <div class="row" style="margin-top:10px"><span>Within</span><span id="radius-label">Any distance</span></div>
+        <input type="range" id="radius" min="1" max="51" step="1" value="51" />
+      </div>
     </div>
     <div class="items" id="list"></div>
   </section>
@@ -398,6 +409,8 @@
     <div class="m-list" id="m-list"></div>
   </div>
 
+  <div class="offline hidden" id="offline-bar" role="status"></div>
+
   <!-- ===== Tab bar ===== -->
   <nav id="tabbar">
     <a href="#/list" data-t="list"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a>
@@ -410,7 +423,17 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_lwDj3dfWsM9EUsVF7ssFrg_UEQ4MQTH';
     const REDIRECT_TO = 'https://mrmikesho.github.io/locally-app';
     const PRIVACY_URL = 'https://telegra.ph/Privacy-Policy-For-Locally-09-21-2';
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { flowType: 'pkce' } });
+    // If the Supabase script could not load (offline), use a stand-in so saved listings still show.
+    const OFFLINE_ERR = { message: "You're offline. Please reconnect and try again." };
+    const offlineClient = {
+      auth: { getSession: async () => ({ data: { session: null } }), onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+        signOut: async () => ({ error: null }), signInWithPassword: async () => ({ error: OFFLINE_ERR }), signUp: async () => ({ error: OFFLINE_ERR }),
+        signInWithOAuth: async () => ({ error: OFFLINE_ERR }), resetPasswordForEmail: async () => ({ error: OFFLINE_ERR }) },
+      from: () => { const q = { select: () => q, order: async () => ({ data: null, error: OFFLINE_ERR }), limit: async () => ({ data: null, error: OFFLINE_ERR }),
+        insert: async () => ({ error: OFFLINE_ERR }), update: () => ({ eq: async () => ({ error: OFFLINE_ERR }) }), eq: () => q }; return q; },
+      storage: { from: () => ({ upload: async () => ({ error: OFFLINE_ERR }), getPublicUrl: () => ({ data: { publicUrl: '' } }) }) }
+    };
+    const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { flowType: 'pkce' } }) : offlineClient;
     // A real Supabase key is either 'sb_publishable_...' or a 3-part token (header.payload.signature)
     const KEY_OK = /^sb_publishable_/.test(SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY.split('.').length === 3;
     const KEY_MSG = 'The Supabase key in index.html is incomplete. In Supabase open Project Settings > API Keys, copy the anon / publishable key and paste it into SUPABASE_ANON_KEY.';
@@ -445,14 +468,70 @@
       return `<span class="badge ${STATUS_CLASS[t.toLowerCase()] || 'neutral'}">${esc(t)}</span>`;
     }
 
+    const CACHE_KEY = 'locally_listings_v1';
+    let fromCache = false, savedAt = null;
     async function loadListings() {
+      let failed = false;
       try {
         const { data, error } = await sb.from('listings').select('*').order('id');
-        if (!error && data && data.length) listings = data.map(l => (!l.image_url || /^images\//.test(l.image_url)) ? { ...l, image_url: LOCAL_IMG[l.title] || '' } : l);
-      } catch (e) {}
+        if (error) failed = true;
+        else if (data && data.length) {
+          listings = data.map(l => (!l.image_url || /^images\//.test(l.image_url)) ? { ...l, image_url: LOCAL_IMG[l.title] || '' } : l);
+          listings = listings.map(l => ({ ...l, status: normStatus(l.status) }));
+          try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data: listings })); } catch (e) {}
+        }
+      } catch (e) { failed = true; }
+      fromCache = false;
+      if (failed) {
+        try {
+          const c = JSON.parse(localStorage.getItem(CACHE_KEY));
+          if (c && Array.isArray(c.data) && c.data.length) { listings = c.data; savedAt = c.t; fromCache = true; }
+        } catch (e) {}
+      }
       listings = listings.map(l => ({ ...l, status: normStatus(l.status) }));
-      buildChips(); renderList();
+      updateNet(); buildChips(); renderList();
     }
+    function updateNet() {
+      const bar = $('offline-bar');
+      if (!navigator.onLine || fromCache) {
+        bar.textContent = fromCache && savedAt ? `You're offline. Showing listings saved ${new Date(savedAt).toLocaleDateString()}.` : "You're offline. Showing what's saved on this device.";
+        bar.classList.remove('hidden');
+      } else bar.classList.add('hidden');
+    }
+    window.addEventListener('offline', updateNet);
+    window.addEventListener('online', () => { loadListings(); });
+
+    // ---- Recently viewed (stored on this device only) ----
+    const HIST_KEY = 'locally_history';
+    function getHist() { try { return JSON.parse(localStorage.getItem(HIST_KEY)) || []; } catch (e) { return []; } }
+    function pushHist(id) { try { const h = getHist().filter(x => String(x) !== String(id)); h.unshift(id); localStorage.setItem(HIST_KEY, JSON.stringify(h.slice(0, 10))); } catch (e) {} }
+    function renderRecent() {
+      const rows = getHist().map(id => listings.find(l => String(l.id) === String(id))).filter(Boolean).slice(0, 5);
+      $('recent').innerHTML = rows.length ? `<h2 class="section">Recently viewed <button class="linkbtn" id="recent-clear">Clear</button></h2><div class="items">${rows.map(rowHtml).join('')}</div>` : '';
+      if (rows.length) { bindRows($('recent')); $('recent-clear').onclick = () => { try { localStorage.removeItem(HIST_KEY); } catch (e) {} renderRecent(); }; }
+    }
+
+    // ---- Distance (your location is used only in this tab and is never saved or sent) ----
+    let userLoc = null, radiusKm = Infinity;
+    function hav(a, b, c, d) { const r = x => x * Math.PI / 180, dLa = r(c - a), dLo = r(d - b); const h = Math.sin(dLa / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); }
+    function distKm(l) { return userLoc && l.latitude != null && l.longitude != null && l.latitude !== '' ? hav(userLoc.lat, userLoc.lng, Number(l.latitude), Number(l.longitude)) : null; }
+    const fmtKm = (k) => k < 1 ? Math.round(k * 1000) + ' m' : k.toFixed(1) + ' km';
+    const locNote = (t) => { $('loc-note').textContent = t || ''; };
+    $('loc-btn').onclick = () => {
+      if (userLoc) { userLoc = null; radiusKm = Infinity; $('radius').value = 51; $('radius-label').textContent = 'Any distance'; $('radius-wrap').classList.add('hidden'); $('loc-btn').classList.remove('on'); $('loc-btn').textContent = '📍 Use my location'; locNote(''); renderList(); return; }
+      if (!navigator.geolocation) { locNote('Your browser does not support location.'); return; }
+      locNote('Finding your location…');
+      navigator.geolocation.getCurrentPosition(p => {
+        userLoc = { lat: p.coords.latitude, lng: p.coords.longitude };
+        $('loc-btn').classList.add('on'); $('loc-btn').textContent = '📍 Location on';
+        $('radius-wrap').classList.remove('hidden');
+        const n = listings.filter(l => l.latitude != null && l.longitude != null && l.latitude !== '').length;
+        locNote(n ? `Nearest first. Distances are shown for ${n} of ${listings.length} places.` : 'No places have a map location yet, so distances cannot be shown.');
+        renderList();
+      }, err => locNote(err && err.code === 1 ? 'Location permission was denied. Allow it in your browser settings to use distance.' : 'Could not get your location. Try again.'),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+    };
+    $('radius').oninput = () => { const v = Number($('radius').value); radiusKm = v > 50 ? Infinity : v; $('radius-label').textContent = v > 50 ? 'Any distance' : v + ' km'; renderList(); };
     const thumbBg = (l) => `background-image:${l.image_url ? `url('${esc(l.image_url)}'),` : ''}linear-gradient(135deg,#243247,#0b1522)`;
 
     function buildChips() {
@@ -463,7 +542,7 @@
 
     function rowHtml(l) {
       return `<div class="item" data-id="${esc(l.id)}"><div class="thumb" style="${thumbBg(l)}"></div>
-        <div class="info"><h3>${esc(l.title)}</h3><p>${esc(l.area)} • ${money(l.price)}/mo</p><div class="st">Status: ${statusBadge(l.status)}</div></div>
+        <div class="info"><h3>${esc(l.title)}</h3><p>${esc(l.area)} • ${money(l.price)}/mo${distKm(l) != null ? ' • ' + fmtKm(distKm(l)) + ' away' : ''}</p><div class="st">Status: ${statusBadge(l.status)}</div></div>
         <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M9 5l7 7-7 7"/></svg></div>`;
     }
 
@@ -471,17 +550,23 @@
       const q = $('q').value.trim().toLowerCase();
       const max = Number($('price').value);
       $('price-label').textContent = money(max);
-      const rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter));
+      let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter));
+      if (userLoc) {
+        if (radiusKm !== Infinity) rows = rows.filter(l => { const d = distKm(l); return d != null && d <= radiusKm; });
+        rows = rows.map(l => ({ l, d: distKm(l) })).sort((a, b) => (a.d == null) - (b.d == null) || a.d - b.d).map(x => x.l);
+      }
       $('list').innerHTML = rows.length ? rows.map(rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
+      renderRecent();
     }
     function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
     function renderDetail(id) {
       const l = listings.find(x => String(x.id) === String(id));
       if (!l) { location.hash = '#/home'; return; }
+      pushHist(l.id);
       $('view-detail').innerHTML = `<div class="d-hero" style="${thumbBg(l)}"><button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
-        <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}</div>
+        <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}${distKm(l) != null ? ` • ${fmtKm(distKm(l))} away` : ''}</div>
         <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
         <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
@@ -520,6 +605,7 @@
       if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
       if (v === 'broker') renderBroker();
+      if (v === 'home') renderRecent();
       if (v === 'find') setFindMode(arg ? 'view' : (findMode || 'search'), arg);
       if (v === 'login') setLoginMode('login');
     }
@@ -658,6 +744,7 @@
     $('form-list').onsubmit = async (e) => {
       e.preventDefault();
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
+      if (!navigator.onLine) { setNotice('n-list', "You're offline. Please reconnect to submit.", false); return; }
       if (!f.agree) { setNotice('n-list', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-list', '');
       try {
@@ -715,6 +802,7 @@
       e.preventDefault();
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
       if (!f.listing_id) { setNotice('n-view', 'Please choose a listing.', false); return; }
+      if (!navigator.onLine) { setNotice('n-view', "You're offline. Please reconnect to submit.", false); return; }
       if (!f.agree) { setNotice('n-view', 'Please accept the broker agreement to continue.', false); return; }
       const l = listings.find(x => String(x.id) === String(f.listing_id));
       btn.disabled = true; setNotice('n-view', '');
@@ -736,6 +824,7 @@
     $('form-find').onsubmit = async (e) => {
       e.preventDefault();
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
+      if (!navigator.onLine) { setNotice('n-find', "You're offline. Please reconnect to submit.", false); return; }
       if (!f.agree) { setNotice('n-find', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-find', '');
       try {
@@ -804,13 +893,13 @@
 
     // ================= Init =================
     (async function init() {
-      const { data } = await sb.auth.getSession();
-      session = data.session;
+      try { const { data } = await sb.auth.getSession(); session = data.session; } catch (e) { session = null; }
       if (location.search.includes('code=')) history.replaceState({}, '', location.pathname + (location.hash || ''));
       await checkAdmin();
       useImage('tile-browse', 'IMG_1146.jpeg');
       loadListings();
       route();
+      if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
     })();
   </script>
 </body>
