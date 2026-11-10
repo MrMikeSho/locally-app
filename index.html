@@ -30,7 +30,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      min-height: 100vh; padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+      min-height: 100vh; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
     button, input, textarea { font: inherit; color: inherit; }
     button { background: none; border: none; cursor: pointer; }
     a { color: inherit; text-decoration: none; }
@@ -119,7 +119,7 @@
     .rec .vbtns button.go { color: var(--accent); }
     .hint { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
     .linkbtn { float: right; background: none; border: 0; color: var(--accent); font: 600 14px inherit; font-family: inherit; cursor: pointer; }
-    .offline { position: fixed; left: 0; right: 0; bottom: 84px; margin: 0 14px; padding: 10px 14px; border-radius: 14px; background: #2a1d05; border: 1.5px solid #6b4a0a; color: #ffd58a; font-size: 13px; text-align: center; z-index: 60; }
+    .offline { position: fixed; left: 0; right: 0; bottom: calc(86px + env(safe-area-inset-bottom)); margin: 0 18px; padding: 10px 14px; border-radius: 14px; background: #2a1d05; border: 1.5px solid #6b4a0a; color: #ffd58a; font-size: 13px; text-align: center; z-index: 60; }
     .picked b { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; }
     select { width: 100%; height: 38px; padding: 0 12px; border-radius: 13px; border: 1.5px solid var(--line); background: #02060a; color: #fff; font: inherit; font-size: 15px; }
     .formcard { margin: 0 14px; padding: 14px 18px 26px; border: 1.5px solid #0c141c; border-radius: 28px; background: #02060a; }
@@ -206,11 +206,12 @@
     .d-body p { color: #aab5c0; line-height: 1.6; font-size: 13px; }
 
     /* ---------- Tab bar ---------- */
-    #tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; display: flex; background: var(--card); border-top: 1.5px solid #0f1923; padding-bottom: env(safe-area-inset-bottom); }
-    #tabbar a { flex: 1; text-align: center; padding: 12px 4px 10px; font-size: 14px; color: #6f7c88; position: relative; }
-    #tabbar a svg { margin: 0 auto 6px; }
-    #tabbar a.on { color: var(--accent); font-weight: 600; }
-    #tabbar a.on::before { content: ""; position: absolute; top: -1.5px; left: 50%; transform: translateX(-50%); width: 64px; height: 4px; border-radius: 0 0 4px 4px; background: var(--accent); }
+    /* Floating, rounded pill navigation */
+    #tabbar { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; display: flex; gap: 6px; padding: 6px; background: rgba(36,37,38,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid #3a3b3c; border-radius: 999px; box-shadow: 0 8px 26px rgba(0,0,0,.55); }
+    #tabbar a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 6px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #b0b3b8; white-space: nowrap; transition: background .2s, color .2s; }
+    #tabbar a svg { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; }
+    #tabbar a.on { background: #3a3b3c; color: #fff; }
+    #tabbar a.on svg { color: var(--accent); }
 
     .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); z-index: 200; background: #12202c; border: 1px solid var(--line); padding: 14px 22px; border-radius: 16px; max-width: 86%; text-align: center; }
   </style>
@@ -320,8 +321,8 @@
   <section class="view page hidden" id="view-find">
     <h1 class="page-title">Find a Rental</h1>
     <div class="seg" id="find-seg">
-      <button type="button" data-m="view">🏷️ Request a Viewing<br>of a Listing</button>
-      <button type="button" data-m="search">🔍 General Rental<br>Search</button>
+      <button type="button" data-m="view">🏷️ Request<br>a Viewing</button>
+      <button type="button" data-m="search">🔍 General<br>Search</button>
     </div>
     <form class="formcard" id="form-view" autocomplete="on">
       <div class="fgroup" style="margin-top:20px"><label class="lbl">Listing</label><select name="listing_id" id="v-listing" required></select></div>
