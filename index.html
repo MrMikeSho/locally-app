@@ -1040,7 +1040,7 @@
       // ---- Manage Listings: one-tap status (Available / Pending / Rented) ----
       $('b-list').onclick = () => toggleRecords('listings', 'b-list-out', r =>
         `<div class="rec"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)}
-          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div></div>`);
+          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div></div>`, 'title');
       $('b-list-out').onclick = async (e) => {
         const b = e.target.closest('button[data-lid]'); if (!b) return;
         b.disabled = true;
@@ -1086,11 +1086,11 @@
         }
       };
     }
-    async function toggleRecords(table, outId, fmt) {
+    async function toggleRecords(table, outId, fmt, orderCol = 'created_at') {
       const out = $(outId);
       if (out.innerHTML) { out.innerHTML = ''; return; }
       out.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>';
-      const { data, error } = await sb.from(table).select('*').order('created_at', { ascending: false });
+      const { data, error } = await sb.from(table).select('*').order(orderCol, { ascending: orderCol === 'title' });
       if (error) { out.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}</div></div>`; return; }
       out._rows = data;
       out.innerHTML = `<div class="panel">${data.length ? data.map(fmt).join('') : '<div class="rec">Nothing here yet.</div>'}</div>`;
