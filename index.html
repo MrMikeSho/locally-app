@@ -992,6 +992,10 @@
         <div id="b-view-out"></div>
         <button class="navcard simple" id="b-rent"><div class="tile">${gridIcon}</div><div class="t"><h3>Renter Requests</h3></div></button>
         <div id="b-rent-out"></div>
+        <button class="navcard simple" id="b-list"><div class="tile">${gridIcon}</div><div class="t"><h3>Manage Listings</h3></div></button>
+        <div id="b-list-out"></div>
+        <button class="navcard simple" id="b-cash"><div class="tile">${gridIcon}</div><div class="t"><h3>Cash Flow</h3></div></button>
+        <div id="b-cash-out"></div>
         <a class="navcard" href="${PRIVACY_URL}" target="_blank" rel="noopener"><div class="tile"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8" stroke-linecap="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.700l1-1"/></svg></div><div class="t"><h3>Privacy Policy</h3><p style="word-break:break-all">${esc(PRIVACY_URL)}</p></div></a></div>`;
       $('b-land').onclick = () => toggleRecords('landlord_submissions', 'b-land-out', r =>
         `<div class="rec"><b>${esc(r.property_title || 'Untitled property')}</b><br>${esc(r.address || '')} ${esc(r.city || '')} ${esc(r.state || '')}<br>
@@ -1032,6 +1036,55 @@
         `<div class="rec"><b>${esc(r.first_name)} ${esc(r.last_name)}</b><br>${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
           Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
           <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
+
+      // ---- Manage Listings: one-tap status (Available / Pending / Rented) ----
+      $('b-list').onclick = () => toggleRecords('listings', 'b-list-out', r =>
+        `<div class="rec"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)}
+          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div></div>`);
+      $('b-list-out').onclick = async (e) => {
+        const b = e.target.closest('button[data-lid]'); if (!b) return;
+        b.disabled = true;
+        const { error } = await sb.from('listings').update({ status: b.dataset.s }).eq('id', b.dataset.lid);
+        if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
+        toast('Status changed to ' + b.dataset.s);
+        $('b-list-out').innerHTML = ''; $('b-list').click(); loadListings();
+      };
+
+      // ---- Cash Flow: admin-only income / expense ledger ----
+      const cash = $('b-cash-out');
+      async function drawCash() {
+        const { data, error } = await sb.from('transactions').select('*').order('created_at', { ascending: false }).limit(200);
+        if (error) { cash.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}<br>Run the latest setup.sql in Supabase first.</div></div>`; return; }
+        let inc = 0, exp = 0;
+        data.forEach(t => { if (t.type === 'income') inc += Number(t.amount); else exp += Number(t.amount); });
+        const f = n => '$' + n.toFixed(2);
+        cash.innerHTML = `<div class="panel">
+          <div class="rec"><b>Income</b> ${f(inc)} &nbsp;•&nbsp; <b>Expenses</b> ${f(exp)} &nbsp;•&nbsp; <b>Net</b> ${f(inc - exp)}</div>
+          <div class="rec"><b>Log a transaction</b><br>
+            <select id="tx-type"><option value="income">Income (+)</option><option value="expense">Expense (-)</option></select>
+            <input id="tx-amount" type="number" step="0.01" min="0" placeholder="Amount (USD)" />
+            <input id="tx-cat" type="text" maxlength="60" placeholder="Category, e.g. Broker fee, Hosting" />
+            <input id="tx-note" type="text" maxlength="200" placeholder="Note (optional)" />
+            <div class="vbtns"><button class="go" id="tx-save">Save</button></div></div>
+          ${data.map(t => `<div class="rec"><b>${t.type === 'income' ? '+' : '-'}${f(Number(t.amount))}</b> • ${esc(t.category)}<br>${esc(t.note || '')}
+            <div class="meta">${new Date(t.created_at).toLocaleString()} <button data-del="${esc(t.id)}" style="margin-left:8px">Delete</button></div></div>`).join('')}</div>`;
+      }
+      $('b-cash').onclick = () => { if (cash.innerHTML) { cash.innerHTML = ''; return; } cash.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>'; drawCash(); };
+      cash.onclick = async (e) => {
+        if (e.target.id === 'tx-save') {
+          const amount = parseFloat($('tx-amount').value), category = $('tx-cat').value.trim();
+          if (!(amount > 0) || !category) { toast('Enter an amount above 0 and a category.'); return; }
+          e.target.disabled = true;
+          const { error } = await sb.from('transactions').insert({ type: $('tx-type').value, amount, category, note: $('tx-note').value.trim() || null });
+          if (error) { toast('Could not save: ' + error.message); e.target.disabled = false; return; }
+          toast('Saved'); drawCash();
+        }
+        const d = e.target.closest('button[data-del]');
+        if (d && confirm('Delete this transaction?')) {
+          const { error } = await sb.from('transactions').delete().eq('id', d.dataset.del);
+          if (error) toast('Could not delete: ' + error.message); else drawCash();
+        }
+      };
     }
     async function toggleRecords(table, outId, fmt) {
       const out = $(outId);
