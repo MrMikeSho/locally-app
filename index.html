@@ -188,10 +188,14 @@
     .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1px solid #0c141c; }
     .m-top .hbrand { opacity: 1; }
     .m-x { width: 58px; height: 58px; border-radius: 50%; background: #0b131b; display: grid; place-items: center; color: #fff; }
-    .m-list { padding: 28px 18px; }
-    .m-list a, .m-list button { display: block; width: 100%; text-align: left; font-size: 22px; font-weight: 500; padding: 22px 0; }
-    .m-list a.on { color: var(--accent); }
-    .m-list .small { font-size: 14px; color: var(--muted); padding-top: 40px; }
+    .m-list { padding: 18px 16px 40px; display: flex; flex-direction: column; gap: 10px; }
+    .m-list a, .m-list button { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; font-size: 15px; font-weight: 600; padding: 12px 14px; background: #0b151d; border: 1px solid var(--line); border-radius: 16px; color: #e6edf3; }
+    .m-list .mi { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px; background: #12212c; color: #fff; display: grid; place-items: center; }
+    .m-list .mi svg { width: 22px; height: 22px; }
+    .m-list a.on { background: #0f2230; }
+    .m-list a.on .mi { color: var(--accent); }
+    .m-list .sep { height: 1px; background: var(--line); margin: 8px 4px; }
+    .m-list .small { font-size: 14px; color: #b8c2cc; padding-top: 12px; }
 
     /* ---------- Broker ---------- */
     .panel { margin: 4px 18px 12px; padding: 4px 16px; border: 1.5px solid var(--line); border-radius: 22px; background: var(--card); }
@@ -202,6 +206,21 @@
     .rec img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-top: 8px; }
 
     /* ---------- Detail ---------- */
+    .gal-wrap { position: relative; height: 280px; }
+    .gal { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .gal::-webkit-scrollbar { display: none; }
+    .slide { flex: 0 0 100%; scroll-snap-align: center; background-size: cover; background-position: center; cursor: zoom-in; }
+    .gal-wrap, #viewer { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    .wm { position: absolute; inset: 0; pointer-events: none; opacity: .22; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='160'><text x='20' y='90' font-family='DM Sans,Arial,sans-serif' font-size='24' font-weight='700' fill='white' transform='rotate(-24 110 80)'>Locally</text></svg>"); }
+    .gal-count { position: absolute; right: 14px; bottom: 14px; padding: 5px 11px; border-radius: 999px; background: rgba(2,7,12,.72); color: #fff; font-size: 12.5px; font-weight: 600; pointer-events: none; }
+    #viewer { position: fixed; inset: 0; z-index: 120; background: #000; }
+    #v-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    #v-track::-webkit-scrollbar { display: none; }
+    .vs { flex: 0 0 100%; height: 100%; scroll-snap-align: center; overflow: hidden; touch-action: pan-x; }
+    .vi { width: 100%; height: 100%; background-size: contain; background-repeat: no-repeat; background-position: center; transition: transform .12s ease-out; will-change: transform; }
+    #v-close { position: absolute; top: calc(env(safe-area-inset-top) + 14px); right: 14px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; background: rgba(40,40,44,.8); color: #fff; display: grid; place-items: center; }
+    #v-count { position: absolute; top: calc(env(safe-area-inset-top) + 24px); left: 18px; z-index: 3; color: #fff; font-size: 14px; font-weight: 600; text-shadow: 0 1px 4px #000; }
+    @media print { body { display: none !important; } }
     .d-hero { height: 280px; background-size: cover; background-position: center; position: relative; }
     .d-back { position: absolute; top: calc(env(safe-area-inset-top) + 14px); left: 14px; width: 44px; height: 44px; border-radius: 50%; background: rgba(2,7,12,.7); display: grid; place-items: center; color: #fff; }
     .d-body { padding: 22px 18px; }
@@ -312,9 +331,9 @@
           <div style="flex:0 0 38px"><button type="button" class="calbtn" id="cal"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 16l2 2 4-4"/></svg></button><input type="date" id="d-pick" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px" /></div></div></div>
       <div class="fgroup"><label class="lbl">Property description</label><textarea name="description"></textarea></div>
       <div class="fgroup"><label class="lbl">Property image</label>
-        <label class="upload"><input type="file" name="image" accept="image/*" id="img-file" />
+        <label class="upload"><input type="file" name="image" accept="image/*" id="img-file" multiple />
           <svg width="64" height="64" viewBox="0 0 24 24" style="margin:0 auto" fill="none"><path d="M7 18a4 4 0 01-.5-7.97A5.5 5.5 0 0117 8.5 4.5 4.5 0 0117.5 18z" fill="#4a9bb8"/><path d="M12 15V9m0 0l-3 3m3-3l3 3" stroke="#0b1a24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="big">Browse Files</div><div class="small" id="img-name">Choose a file</div></label></div>
+          <div class="big">Browse Files</div><div class="small" id="img-name">Choose photos (up to 6)</div></label></div>
       <div class="fgroup"><label class="chk"><input type="checkbox" name="agree" required /><span>By submitting this property to Locally, I agree to pay a standard broker commission upon successful tenant placement introduced via the platform.</span></label></div>
       <button class="submit" type="submit">Submit</button>
     </form>
@@ -412,6 +431,13 @@
       <button class="m-x" id="m-close" aria-label="Close"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="m-list" id="m-list"></div>
+  </div>
+
+  <div id="viewer" class="hidden" aria-label="Photo viewer">
+    <button id="v-close" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div id="v-count"></div>
+    <div id="v-track"></div>
+    <div class="wm"></div>
   </div>
 
   <div class="offline hidden" id="offline-bar" role="status"></div>
@@ -611,15 +637,64 @@
     }
     function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
+    // ---- Photo gallery + zoom viewer ----
+    function galleryOf(l) {
+      const out = []; const add = (u) => { if (u && !/^images\//.test(u) && !out.includes(u)) out.push(u); };
+      add(l.image_url); (Array.isArray(l.images) ? l.images : []).forEach(add);
+      return out;
+    }
+    const dist2 = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+    function attachZoom(vs) {
+      const vi = vs.firstChild; let sc = 1, x = 0, y = 0, d0 = 0, s0 = 1, p0 = { x: 0, y: 0 }, lastTap = 0;
+      const clamp = () => { const mx = (vs.clientWidth * sc - vs.clientWidth) / 2, my = (vs.clientHeight * sc - vs.clientHeight) / 2; x = Math.max(-mx, Math.min(mx, x)); y = Math.max(-my, Math.min(my, y)); };
+      const apply = () => { vi.style.transform = `translate(${x}px,${y}px) scale(${sc})`; vs.style.touchAction = sc > 1 ? 'none' : 'pan-x'; };
+      const toggle = () => { sc = sc > 1 ? 1 : 2.5; if (sc === 1) { x = 0; y = 0; } clamp(); apply(); };
+      vs.addEventListener('touchstart', e => {
+        if (e.touches.length === 2) { d0 = dist2(e.touches); s0 = sc; }
+        else if (e.touches.length === 1) { p0 = { x: e.touches[0].clientX - x, y: e.touches[0].clientY - y }; const n = Date.now(); if (n - lastTap < 300) toggle(); lastTap = n; }
+      }, { passive: true });
+      vs.addEventListener('touchmove', e => {
+        if (e.touches.length === 2) { e.preventDefault(); sc = Math.max(1, Math.min(5, s0 * dist2(e.touches) / d0)); clamp(); apply(); }
+        else if (e.touches.length === 1 && sc > 1) { e.preventDefault(); x = e.touches[0].clientX - p0.x; y = e.touches[0].clientY - p0.y; clamp(); apply(); }
+      }, { passive: false });
+      vs.addEventListener('touchend', e => { if (sc < 1.02) { sc = 1; x = 0; y = 0; apply(); } if (e.touches.length === 1) p0 = { x: e.touches[0].clientX - x, y: e.touches[0].clientY - y }; });
+      vs.addEventListener('dblclick', toggle);
+      vs._reset = () => { sc = 1; x = 0; y = 0; apply(); };
+    }
+    let viewerOpen = false;
+    function openViewer(urls, start) {
+      const tr = $('v-track');
+      tr.innerHTML = urls.map(u => `<div class="vs"><div class="vi" style="background-image:url('${esc(u)}')"></div></div>`).join('');
+      tr.querySelectorAll('.vs').forEach(attachZoom);
+      $('viewer').classList.remove('hidden'); document.body.style.overflow = 'hidden'; viewerOpen = true;
+      tr.scrollLeft = tr.clientWidth * start;
+      const upd = () => { const i = Math.round(tr.scrollLeft / tr.clientWidth); $('v-count').textContent = urls.length > 1 ? (i + 1) + ' / ' + urls.length : ''; tr.querySelectorAll('.vs').forEach((v, j) => { if (j !== i && v._reset) v._reset(); }); };
+      tr.onscroll = upd; upd();
+    }
+    function closeViewer() { if (!viewerOpen) return; $('viewer').classList.add('hidden'); document.body.style.overflow = ''; viewerOpen = false; }
+    $('v-close').onclick = closeViewer;
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeViewer(); });
+    window.addEventListener('hashchange', closeViewer);
+    // No right-click menu or drag-saving on photos
+    document.addEventListener('contextmenu', e => { if (e.target.closest('.gal-wrap, #viewer')) e.preventDefault(); });
+    document.addEventListener('dragstart', e => { if (e.target.closest('.gal-wrap, #viewer')) e.preventDefault(); });
+
     function renderDetail(id) {
       const l = listings.find(x => String(x.id) === String(id));
       if (!l) { location.hash = '#/home'; return; }
       pushHist(l.id);
-      $('view-detail').innerHTML = `<div class="d-hero" style="${thumbBg(l)}"><button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
+      const imgs = galleryOf(l);
+      const slides = imgs.length ? imgs.map((u, i) => `<div class="slide" data-i="${i}" style="background-image:url('${esc(u)}')"></div>`).join('') : `<div class="slide" style="${thumbBg(l)};cursor:default"></div>`;
+      $('view-detail').innerHTML = `<div class="gal-wrap"><div class="gal" id="gal">${slides}</div><div class="wm"></div>${imgs.length > 1 ? `<div class="gal-count" id="gal-count">1 / ${imgs.length}</div>` : ''}<button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
         <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}${distKm(l) != null ? ` • ${fmtKm(distKm(l))} away` : ''}</div>
         <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
         <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
+      if (imgs.length) {
+        const g = $('gal');
+        g.querySelectorAll('.slide').forEach(sl => sl.onclick = () => openViewer(imgs, Number(sl.dataset.i)));
+        if (imgs.length > 1) g.onscroll = () => { $('gal-count').textContent = (Math.round(g.scrollLeft / g.clientWidth) + 1) + ' / ' + imgs.length; };
+      }
     }
 
     // ================= Router =================
@@ -670,10 +745,21 @@
     // ================= Menu =================
     function openMenu() {
       const cur = (location.hash || '#/home');
-      const link = (h, t) => `<a href="${h}" class="${cur === h ? 'on' : ''}">${t}</a>`;
-      $('m-list').innerHTML = link('#/home', 'Home') + link('#/list', 'List Your Property') + link('#/find', 'Find a Rental') +
-        (isAdmin ? link('#/broker', 'Broker Panel') : '') +
-        (session ? `<button class="small" id="m-out">Sign out (${esc(session.user.email || '')})</button>` : `<a class="small" href="#/login">Sign in</a>`);
+      const ic = {
+        home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+        key: '<circle cx="15" cy="9" r="5"/><path d="M11.5 12.5L4 20v-3l2-.5V15l2-.5.5-1.5"/>',
+        search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+        shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+        user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+        out: '<path d="M9 4H5v16h4"/><path d="M16 8l4 4-4 4"/><path d="M20 12H9"/>',
+        doc: '<path d="M7 3h8l4 4v14H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>'
+      };
+      const svg = (k) => `<span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ic[k]}</svg></span>`;
+      const link = (h, t, k) => `<a href="${h}" class="${cur === h ? 'on' : ''}">${svg(k)}${t}</a>`;
+      $('m-list').innerHTML = link('#/home', 'Home', 'home') + link('#/list', 'List Your Property', 'key') + link('#/find', 'Find a Rental', 'search') +
+        (isAdmin ? link('#/broker', 'Broker Panel', 'shield') : '') +
+        `<div class="sep"></div><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${svg('doc')}Privacy Policy</a>` +
+        (session ? `<button id="m-out">${svg('out')}Sign out<span style="font-weight:400;color:#8b97a3;font-size:12.5px;margin-left:auto;overflow:hidden;text-overflow:ellipsis;max-width:46%">${esc(session.user.email || '')}</span></button>` : link('#/login', 'Sign in', 'user'));
       if (session) $('m-out').onclick = async () => { await sb.auth.signOut(); session = null; isAdmin = false; location.hash = '#/home'; location.reload(); };
       $('menu').classList.remove('hidden');
     }
@@ -787,7 +873,7 @@
     function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3500); }
     const num = (v) => (v === '' || v == null ? null : Number(v));
 
-    $('img-file').onchange = (e) => { $('img-name').textContent = e.target.files[0] ? e.target.files[0].name : 'Choose a file'; };
+    $('img-file').onchange = (e) => { const n = Math.min(e.target.files.length, 6); $('img-name').textContent = n > 1 ? n + ' photos selected' : (n === 1 ? e.target.files[0].name : 'Choose photos (up to 6)'); };
     $('cal').onclick = () => { const p = $('d-pick'); p.style.pointerEvents = 'auto'; try { p.showPicker(); } catch (e) { p.focus(); p.click(); } };
     $('d-pick').onchange = (e) => { const [y, m, d] = e.target.value.split('-'); if (y) { $('d-y').value = y; $('d-m').value = Number(m); $('d-d').value = Number(d); } };
 
@@ -798,26 +884,27 @@
       if (!f.agree) { setNotice('n-list', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-list', '');
       try {
-        let image_url = null;
-        const file = $('img-file').files[0];
-        if (file) {
-          const path = `${session.user.id}/${Date.now()}-${file.name.replace(/[^a-z0-9._-]/gi, '_')}`;
+        let image_url = null; const images = [];
+        const files = Array.from($('img-file').files).slice(0, 6);
+        for (const file of files) {
+          const path = `${session.user.id}/${Date.now()}-${images.length}-${file.name.replace(/[^a-z0-9._-]/gi, '_')}`;
           const up = await sb.storage.from('property-images').upload(path, file);
           if (up.error) throw up.error;
-          image_url = sb.storage.from('property-images').getPublicUrl(path).data.publicUrl;
+          images.push(sb.storage.from('property-images').getPublicUrl(path).data.publicUrl);
         }
+        image_url = images[0] || null;
         const m = $('d-m').value, d = $('d-d').value, y = $('d-y').value;
         const available_date = (m && d && y) ? `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}` : null;
         const pt = coordsFor(f.neighborhood, f.city, f.address2);
         const { error } = await sb.from('landlord_submissions').insert({
           user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
           property_title: f.property_title, neighborhood: f.neighborhood, address: f.address, address2: f.address2, city: f.city, state: f.state, postal: f.postal,
-          monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url,
+          monthly_rent: num(f.monthly_rent), bedrooms: num(f.bedrooms), bathrooms: num(f.bathrooms), available_date, description: f.description, image_url, images,
           latitude: pt ? pt.lat : null, longitude: pt ? pt.lng : null,
           agreed_terms: true, agreed_at: new Date().toISOString()
         });
         if (error) throw error;
-        form.reset(); $('img-name').textContent = 'Choose a file';
+        form.reset(); $('img-name').textContent = 'Choose photos (up to 6)';
         setNotice('n-list', 'Thank you! Your property has been submitted. A broker will be in touch.', true);
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       } catch (err) { setNotice('n-list', 'Could not submit: ' + (err.message || err), false); }
@@ -911,7 +998,24 @@
           ${r.monthly_rent != null ? money(r.monthly_rent) + '/mo • ' : ''}${esc(r.bedrooms ?? '-')} bd • ${esc(r.bathrooms ?? '-')} ba<br>
           ${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
           Map point: ${r.latitude != null ? esc(Number(r.latitude).toFixed(4) + ', ' + Number(r.longitude).toFixed(4)) + ' (auto)' : 'not found for this area, set it by hand'}
-          ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}<div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
+          ${r.image_url ? `<img src="${esc(r.image_url)}" alt="" />` : ''}${Array.isArray(r.images) && r.images.length > 1 ? `<br>${r.images.length} photos` : ''}
+          <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div>
+          ${r.published_listing_id ? `<div class="vbtns"><span class="badge ok">Published as listing #${esc(r.published_listing_id)}</span></div>` : `<div class="vbtns"><button class="go" data-pub="${esc(r.id)}">Approve &amp; publish</button></div>`}</div>`);
+      $('b-land-out').onclick = async (e) => {
+        const b = e.target.closest('button[data-pub]'); if (!b) return;
+        const r = ($('b-land-out')._rows || []).find(x => String(x.id) === b.dataset.pub); if (!r) return;
+        if (r.monthly_rent == null || !r.property_title) { toast('This submission needs a title and a monthly rent before it can be published.'); return; }
+        const pt = r.latitude != null ? { lat: r.latitude, lng: r.longitude } : coordsFor(r.neighborhood, r.city, r.address2);
+        const row = { title: r.property_title, area: (r.neighborhood || r.city || '').trim(), price: r.monthly_rent, status: 'Available', description: r.description || null,
+          image_url: r.image_url || null, images: (Array.isArray(r.images) && r.images.length) ? r.images : null, latitude: pt ? pt.lat : null, longitude: pt ? pt.lng : null };
+        if (!confirm(`Publish "${row.title}" in ${row.area || '(no area)'} at ${money(row.price)}/mo?\n\nThe street address and phone number stay private.`)) return;
+        b.disabled = true;
+        const ins = await sb.from('listings').insert(row).select('id').single();
+        if (ins.error) { toast('Could not publish: ' + ins.error.message); b.disabled = false; return; }
+        const up = await sb.from('landlord_submissions').update({ published_listing_id: ins.data.id }).eq('id', r.id);
+        if (up.error) toast('Published, but could not mark it done: ' + up.error.message); else toast('Published! It is now live in the app.');
+        $('b-land-out').innerHTML = ''; $('b-land').click(); loadListings();
+      };
       $('b-view').onclick = () => toggleRecords('viewing_requests', 'b-view-out', r =>
         `<div class="rec"><b>${esc(r.listing_title || 'Listing #' + r.listing_id)}</b><br>${esc(r.first_name)} ${esc(r.last_name)} • ${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
           Wants to view: ${esc(r.preferred_date || '-')} (${esc(r.preferred_time || '-')})<br>${esc(r.notes || '')}<br>Status: ${statusBadge(r.status || 'Pending')}
@@ -935,6 +1039,7 @@
       out.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>';
       const { data, error } = await sb.from(table).select('*').order('created_at', { ascending: false });
       if (error) { out.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}</div></div>`; return; }
+      out._rows = data;
       out.innerHTML = `<div class="panel">${data.length ? data.map(fmt).join('') : '<div class="rec">Nothing here yet.</div>'}</div>`;
     }
 
