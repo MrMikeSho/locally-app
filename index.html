@@ -192,6 +192,19 @@
     #app-banner .ab-go { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; background: #1f7f9c; color: #fff; font-weight: 700; font-size: 13px; }
     body.has-app-banner { padding-top: 56px; }
     body.has-app-banner #hdr { top: 56px; }
+    /* signed-in Home: compact top bar + a row of available listings (no profile/description) */
+    #view-home.compact .hero, #view-home.compact .intro, #view-home.compact .sub { display: none; }
+    #view-home.compact { padding-top: calc(env(safe-area-inset-top) + 66px); }
+    #trend { display: none; }
+    #view-home.compact #trend { display: block; }
+    #trend .thead { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 18px 10px; }
+    #trend .thead h2 { margin: 0; font-size: 20px; color: #fff; }
+    #trend .thead a { color: #4fb4de; font-weight: 600; font-size: 14px; }
+    #trend .trow { display: flex; gap: 12px; overflow-x: auto; padding: 0 18px 6px; scroll-snap-type: x proximity; scroll-padding-left: 18px; -webkit-overflow-scrolling: touch; }
+    #trend .tcard { flex: 0 0 62%; max-width: 250px; border-radius: 18px; overflow: hidden; background: #0b151d; border: 1px solid var(--line); scroll-snap-align: start; cursor: pointer; }
+    #trend .tph { height: 132px; background-size: cover; background-position: center; }
+    #trend .tp { padding: 10px 12px 0; font-weight: 700; color: #6fd3e6; font-size: 17px; }
+    #trend .ta { padding: 2px 12px 12px; color: #b0b3b8; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #menu { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.55); }
     .m-sheet { height: 50vh; height: 50dvh; background: var(--bg); overflow-y: auto; border-radius: 0 0 28px 28px; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
     .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1px solid #0c141c; }
@@ -287,6 +300,8 @@
       </div>
     </div>
     <p class="sub">Explore local rentals, submit your property, or start a guided search with broker support throughout the deal.</p>
+
+    <div id="trend"><div class="thead"><h2>Available now</h2><a href="#/home" id="trend-all">View all</a></div><div class="trow" id="trow"></div></div>
 
     <div class="navcards">
       <button class="navcard" id="nc-browse">
@@ -655,8 +670,16 @@
       }
       $('list').innerHTML = rows.length ? rows.map(rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
+      renderTrend();
       renderRecent();
     }
+    function renderTrend() {
+      const t = listings.filter(l => String(l.status || '').toLowerCase() !== 'rented').slice(0, 8);
+      $('trow').innerHTML = t.length ? t.map(l => `<div class="tcard" data-id="${esc(l.id)}"><div class="tph" style="${thumbBg(l)}"></div><div class="tp">${money(l.price)}/mo</div><div class="ta">${esc(l.title)} • ${esc(l.area)}</div></div>`).join('') : '';
+      $('trow').querySelectorAll('.tcard').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
+      $('trend').style.display = t.length ? '' : 'none';
+    }
+    $('trend-all').onclick = (e) => { e.preventDefault(); $('rentals').scrollIntoView({ behavior: 'smooth' }); };
     function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
     // ---- Photo gallery + zoom viewer ----
@@ -732,6 +755,7 @@
         localStorage.setItem('locally_after', '#/' + v + (arg ? '/' + arg : ''));
         location.replace('#/login'); return;
       }
+      $('view-home').classList.toggle('compact', !!session);
       VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));
       closeMenu();
 
@@ -760,7 +784,7 @@
 
     function onScroll() {
       const raw = (location.hash || '#/home').replace(/^#\/?/, '').split('/')[0];
-      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : window.scrollY > 200);
+      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : (session ? true : window.scrollY > 200));
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', route);
@@ -928,6 +952,7 @@
         } catch (e) {}
       }
       $('nc-broker').classList.toggle('hidden', !isAdmin);
+      $('view-home').classList.toggle('compact', !!session); onScroll();
     }
 
     sb.auth.onAuthStateChange((evt, s) => {
