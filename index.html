@@ -123,14 +123,6 @@
     .rec .vbtns button.go { color: var(--accent); }
     .hint { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
     .linkbtn { float: right; background: none; border: 0; color: var(--accent); font: 600 14px inherit; font-family: inherit; cursor: pointer; }
-    .ann { margin: 14px 18px 0; padding: 12px 40px 12px 14px; border-radius: 14px; background: #0d2231; border: 1.5px solid #1f4a66; color: #cfe9f7; font-size: 14px; line-height: 1.45; position: relative; }
-    .ann button { position: absolute; top: 6px; right: 8px; background: none; border: 0; color: #8fb9d1; font-size: 22px; line-height: 1; cursor: pointer; }
-    .rep-link { display: block; margin: 18px auto 0; background: none; border: 0; color: var(--muted); font: 600 14px inherit; font-family: inherit; text-decoration: underline; cursor: pointer; }
-    .rep-box { margin-top: 12px; padding: 14px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--card); }
-    .rep-box select, .rep-box input, .f2 select, .f2 input[type=text], .f2 textarea { width: 100%; box-sizing: border-box; margin-top: 8px; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: #0d1a22; color: #fff; font: 14px inherit; font-family: inherit; }
-    .f2 textarea { min-height: 70px; resize: vertical; }
-    .f2 label.chk, .rec label.chk { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 14px; color: #fff; }
-    .rec label.chk input { width: auto; margin: 0; }
     .offline { position: fixed; left: 0; right: 0; bottom: calc(86px + env(safe-area-inset-bottom)); margin: 0 18px; padding: 10px 14px; border-radius: 14px; background: #2a1d05; border: 1.5px solid #6b4a0a; color: #ffd58a; font-size: 13px; text-align: center; z-index: 60; }
     .picked b { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; }
     select { width: 100%; height: 38px; padding: 0 12px; border-radius: 13px; border: 1.5px solid var(--line); background: #02060a; color: #fff; font: inherit; font-size: 15px; }
@@ -200,19 +192,6 @@
     #app-banner .ab-go { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; background: #1f7f9c; color: #fff; font-weight: 700; font-size: 13px; }
     body.has-app-banner { padding-top: 56px; }
     body.has-app-banner #hdr { top: 56px; }
-    /* signed-in Home: compact top bar + a row of available listings (no profile/description) */
-    #view-home.compact .hero, #view-home.compact .intro, #view-home.compact .sub { display: none; }
-    #view-home.compact { padding-top: calc(env(safe-area-inset-top) + 66px); }
-    #trend { display: none; }
-    #view-home.compact #trend { display: block; }
-    #trend .thead { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 18px 10px; }
-    #trend .thead h2 { margin: 0; font-size: 20px; color: #fff; }
-    #trend .thead a { color: #4fb4de; font-weight: 600; font-size: 14px; }
-    #trend .trow { display: flex; gap: 12px; overflow-x: auto; padding: 0 18px 6px; scroll-snap-type: x proximity; scroll-padding-left: 18px; -webkit-overflow-scrolling: touch; }
-    #trend .tcard { flex: 0 0 62%; max-width: 250px; border-radius: 18px; overflow: hidden; background: #0b151d; border: 1px solid var(--line); scroll-snap-align: start; cursor: pointer; }
-    #trend .tph { height: 132px; background-size: cover; background-position: center; }
-    #trend .tp { padding: 10px 12px 0; font-weight: 700; color: #6fd3e6; font-size: 17px; }
-    #trend .ta { padding: 2px 12px 12px; color: #b0b3b8; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #menu { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.55); }
     .m-sheet { height: 50vh; height: 50dvh; background: var(--bg); overflow-y: auto; border-radius: 0 0 28px 28px; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
     .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1px solid #0c141c; }
@@ -308,9 +287,6 @@
       </div>
     </div>
     <p class="sub">Explore local rentals, submit your property, or start a guided search with broker support throughout the deal.</p>
-
-    <div class="ann hidden" id="ann"></div>
-    <div id="trend"><div class="thead"><h2>Available now</h2><a href="#/home" id="trend-all">View all</a></div><div class="trow" id="trow"></div></div>
 
     <div class="navcards">
       <button class="navcard" id="nc-browse">
@@ -597,7 +573,7 @@
         const { data, error } = await sb.from('listings').select('*').order('id');
         if (error) failed = true;
         else if (data && data.length) {
-          listings = data.filter(l => !l.hidden).map(l => (!l.image_url || /^images\//.test(l.image_url)) ? { ...l, image_url: LOCAL_IMG[l.title] || '' } : l);
+          listings = data.map(l => (!l.image_url || /^images\//.test(l.image_url)) ? { ...l, image_url: LOCAL_IMG[l.title] || '' } : l);
           listings = listings.map(l => ({ ...l, status: normStatus(l.status) }));
           try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data: listings })); } catch (e) {}
         }
@@ -673,23 +649,14 @@
       const max = Number($('price').value);
       $('price-label').textContent = money(max);
       let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter));
-      rows = rows.slice().sort((a, b) => (b.pinned === true) - (a.pinned === true));
       if (userLoc) {
         if (radiusKm !== Infinity) rows = rows.filter(l => { const d = distKm(l); return d != null && d <= radiusKm; });
         rows = rows.map(l => ({ l, d: distKm(l) })).sort((a, b) => (a.d == null) - (b.d == null) || a.d - b.d).map(x => x.l);
       }
       $('list').innerHTML = rows.length ? rows.map(rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
-      renderTrend();
       renderRecent();
     }
-    function renderTrend() {
-      const t = listings.filter(l => String(l.status || '').toLowerCase() !== 'rented').sort((a, b) => (b.pinned === true) - (a.pinned === true)).slice(0, 8);
-      $('trow').innerHTML = t.length ? t.map(l => `<div class="tcard" data-id="${esc(l.id)}"><div class="tph" style="${thumbBg(l)}"></div><div class="tp">${money(l.price)}/mo</div><div class="ta">${esc(l.title)} • ${esc(l.area)}</div></div>`).join('') : '';
-      $('trow').querySelectorAll('.tcard').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
-      $('trend').style.display = t.length ? '' : 'none';
-    }
-    $('trend-all').onclick = (e) => { e.preventDefault(); $('rentals').scrollIntoView({ behavior: 'smooth' }); };
     function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
     // ---- Photo gallery + zoom viewer ----
@@ -743,23 +710,7 @@
       $('view-detail').innerHTML = `<div class="gal-wrap"><div class="gal" id="gal">${slides}</div><div class="wm"></div>${imgs.length > 1 ? `<div class="gal-count" id="gal-count">1 / ${imgs.length}</div>` : ''}<button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
         <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}${distKm(l) != null ? ` • ${fmtKm(distKm(l))} away` : ''}</div>
         <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
-        <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a>
-        <button class="rep-link" id="rep-open">Report this listing</button><div class="rep-box hidden" id="rep-box">
-          <b style="color:#fff">What is wrong with this listing?</b>
-          <select id="rep-reason"><option>Fake listing</option><option>Already rented</option><option>Asking for a viewing fee</option><option>Other</option></select>
-          <input id="rep-note" type="text" maxlength="200" placeholder="Details (optional)" />
-          <button class="submit" id="rep-send" style="margin-top:12px;height:52px;font-size:16px">Send report</button>
-          <div class="hint" id="rep-msg"></div></div></div>`;
-      $('rep-open').onclick = () => $('rep-box').classList.toggle('hidden');
-      $('rep-send').onclick = async () => {
-        if (!session) { localStorage.setItem('locally_after', '#/detail/' + l.id); location.hash = '#/login'; return; }
-        if (!navigator.onLine) { $('rep-msg').textContent = "You're offline. Please reconnect and try again."; return; }
-        const btn = $('rep-send'); btn.disabled = true;
-        const { error } = await sb.from('listing_reports').insert({ listing_id: l.id, listing_title: l.title, reason: $('rep-reason').value, note: $('rep-note').value.trim() || null });
-        btn.disabled = false;
-        if (error) { $('rep-msg').textContent = error.code === '23505' ? 'You have already reported this listing. Thank you.' : 'Could not send: ' + error.message; return; }
-        $('rep-msg').textContent = 'Thank you. A broker will look into this listing.'; btn.classList.add('hidden');
-      };
+        <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
       if (imgs.length) {
         const g = $('gal');
@@ -781,7 +732,6 @@
         localStorage.setItem('locally_after', '#/' + v + (arg ? '/' + arg : ''));
         location.replace('#/login'); return;
       }
-      $('view-home').classList.toggle('compact', !!session);
       VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));
       closeMenu();
 
@@ -800,7 +750,6 @@
       onScroll();
       window.scrollTo(0, 0);
 
-      if (v === 'list' && settings.submissions_paused) setNotice('n-list', 'New property submissions are paused right now. Please check back soon.', false);
       if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
       if (v === 'broker') renderBroker();
@@ -811,7 +760,7 @@
 
     function onScroll() {
       const raw = (location.hash || '#/home').replace(/^#\/?/, '').split('/')[0];
-      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : (session ? true : window.scrollY > 200));
+      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : window.scrollY > 200);
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', route);
@@ -921,19 +870,6 @@
       $('sp-body').querySelectorAll('.sp-chips button').forEach(b => b.onclick = () => { location.hash = CHIPS[b.dataset.i][1]; });
     }
     $('sp-q').addEventListener('input', renderSearch);
-    // Remembers only the words people search for (no names or accounts) so the Broker Panel can show what tenants want.
-    let logTimer = null; const logged = new Set();
-    function logSearch(el) {
-      clearTimeout(logTimer);
-      logTimer = setTimeout(() => {
-        const t = el.value.trim().toLowerCase().replace(/\s+/g, ' ');
-        if (t.length < 3 || t.length > 60 || logged.has(t) || !navigator.onLine) return;
-        logged.add(t);
-        try { Promise.resolve(sb.from('search_log').insert({ term: t })).catch(() => {}); } catch (e) {}
-      }, 1500);
-    }
-    $('sp-q').addEventListener('input', () => logSearch($('sp-q')));
-    $('q').addEventListener('input', () => logSearch($('q')));
     $('sp-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
 
     // ================= Auth =================
@@ -983,24 +919,6 @@
       setNotice('n-login', error ? error.message : 'Password reset email sent.', !error);
     };
 
-    // ---- Announcement banner + pause switch (set by the broker in the Broker Panel) ----
-    let settings = { banner_on: false, banner_text: '', submissions_paused: false };
-    function renderAnn() {
-      const a = $('ann'); let gone = false;
-      try { gone = localStorage.getItem('locally_ann_off') === settings.banner_text; } catch (e) {}
-      if (settings.banner_on && settings.banner_text && !gone) {
-        a.innerHTML = `${esc(settings.banner_text)}<button aria-label="Close" id="ann-x">×</button>`; a.classList.remove('hidden');
-        $('ann-x').onclick = () => { try { localStorage.setItem('locally_ann_off', settings.banner_text); } catch (e) {} a.classList.add('hidden'); };
-      } else a.classList.add('hidden');
-    }
-    async function loadSettings() {
-      try {
-        const { data } = await sb.from('app_settings').select('*').limit(1);
-        if (data && data[0]) settings = data[0];
-      } catch (e) {}
-      renderAnn();
-    }
-
     async function checkAdmin() {
       isAdmin = false;
       if (session) {
@@ -1010,7 +928,6 @@
         } catch (e) {}
       }
       $('nc-broker').classList.toggle('hidden', !isAdmin);
-      $('view-home').classList.toggle('compact', !!session); onScroll();
     }
 
     sb.auth.onAuthStateChange((evt, s) => {
@@ -1039,7 +956,6 @@
       const form = e.target, btn = form.querySelector('.submit'), f = Object.fromEntries(new FormData(form).entries());
       if (!navigator.onLine) { setNotice('n-list', "You're offline. Please reconnect to submit.", false); return; }
       if (!f.agree) { setNotice('n-list', 'Please accept the broker agreement to continue.', false); return; }
-      if (settings.submissions_paused) { setNotice('n-list', 'New property submissions are paused right now. Please check back soon.', false); return; }
       btn.disabled = true; setNotice('n-list', '');
       try {
         let image_url = null; const images = [];
@@ -1154,12 +1070,6 @@
         <div id="b-list-out"></div>
         <button class="navcard simple" id="b-cash"><div class="tile">${gridIcon}</div><div class="t"><h3>Cash Flow</h3></div></button>
         <div id="b-cash-out"></div>
-        <button class="navcard simple" id="b-rep"><div class="tile">${gridIcon}</div><div class="t"><h3>Reports</h3></div></button>
-        <div id="b-rep-out"></div>
-        <button class="navcard simple" id="b-sub"><div class="tile">${gridIcon}</div><div class="t"><h3>Searches vs Listings</h3></div></button>
-        <div id="b-sub-out"></div>
-        <button class="navcard simple" id="b-set"><div class="tile">${gridIcon}</div><div class="t"><h3>Announcement &amp; Switches</h3></div></button>
-        <div id="b-set-out"></div>
         <a class="navcard" href="${PRIVACY_URL}" target="_blank" rel="noopener"><div class="tile"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8" stroke-linecap="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.700l1-1"/></svg></div><div class="t"><h3>Privacy Policy</h3><p style="word-break:break-all">${esc(PRIVACY_URL)}</p></div></a></div>`;
       $('b-land').onclick = () => toggleRecords('landlord_submissions', 'b-land-out', r =>
         `<div class="rec"><b>${esc(r.property_title || 'Untitled property')}</b><br>${esc(r.address || '')} ${esc(r.city || '')} ${esc(r.state || '')}<br>
@@ -1201,88 +1111,17 @@
           Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
           <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
 
-      // ---- Manage Listings: status, hide, pin, edit, delete ----
+      // ---- Manage Listings: one-tap status (Available / Pending / Rented) ----
       $('b-list').onclick = () => toggleRecords('listings', 'b-list-out', r =>
-        `<div class="rec"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)}${r.hidden ? ' • <b style="color:#ffb74d;font-size:12px">HIDDEN</b>' : ''}${r.pinned ? ' • <b style="color:var(--accent);font-size:12px">PINNED</b>' : ''}
-          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div>
-          <div class="vbtns"><button data-lid="${esc(r.id)}" data-act="hide">${r.hidden ? 'Unhide' : 'Hide'}</button><button data-lid="${esc(r.id)}" data-act="pin">${r.pinned ? 'Unpin' : 'Pin to top'}</button><button data-lid="${esc(r.id)}" data-act="edit">Edit</button><button data-lid="${esc(r.id)}" data-act="del">Delete</button></div>
-          <div class="f2 hidden" id="ed-${esc(r.id)}"><input type="text" data-f="title" maxlength="120" value="${esc(r.title)}" placeholder="Title" /><input type="text" data-f="area" maxlength="80" value="${esc(r.area || '')}" placeholder="Area" /><input type="text" data-f="price" inputmode="decimal" value="${esc(r.price)}" placeholder="Monthly price" /><textarea data-f="description" placeholder="Description">${esc(r.description || '')}</textarea>
-            <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-act="save">Save changes</button></div></div></div>`, 'title');
+        `<div class="rec"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)}
+          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div></div>`, 'title');
       $('b-list-out').onclick = async (e) => {
         const b = e.target.closest('button[data-lid]'); if (!b) return;
-        const id = b.dataset.lid, act = b.dataset.act, r = ($('b-list-out')._rows || []).find(x => String(x.id) === id); if (!r) return;
-        if (act === 'edit') { $('ed-' + id).classList.toggle('hidden'); return; }
-        let patch = null, msg = '';
-        if (act === 'hide') { patch = { hidden: !r.hidden }; msg = r.hidden ? 'Listing is visible again' : 'Listing hidden from the app'; }
-        else if (act === 'pin') { patch = { pinned: !r.pinned }; msg = r.pinned ? 'Unpinned' : 'Pinned to the top'; }
-        else if (act === 'save') {
-          const box = $('ed-' + id), g = (k) => box.querySelector(`[data-f="${k}"]`).value.trim(), price = parseFloat(g('price'));
-          if (!g('title') || !(price >= 0)) { toast('Enter a title and a valid price.'); return; }
-          patch = { title: g('title'), area: g('area'), price, description: g('description') || null }; msg = 'Changes saved';
-        } else if (act === 'del') {
-          if (!confirm(`Delete "${r.title}" for good?\n\nThis cannot be undone. To only take it off the app for now, use Hide instead.`)) return;
-          b.disabled = true;
-          const d = await sb.from('listings').delete().eq('id', id);
-          if (d.error) { toast('Could not delete: ' + d.error.message); b.disabled = false; return; }
-          toast('Listing deleted'); $('b-list-out').innerHTML = ''; $('b-list').click(); loadListings(); return;
-        } else patch = { status: b.dataset.s }, msg = 'Status changed to ' + b.dataset.s;
         b.disabled = true;
-        const { error } = await sb.from('listings').update(patch).eq('id', id);
-        if (error) { toast('Could not update: ' + error.message + (/hidden|pinned/.test(error.message) ? ' (run the latest setup.sql in Supabase first)' : '')); b.disabled = false; return; }
-        toast(msg); $('b-list-out').innerHTML = ''; $('b-list').click(); loadListings();
-      };
-
-      // ---- Reports: what tenants flagged ----
-      $('b-rep').onclick = () => toggleRecords('listing_reports', 'b-rep-out', r =>
-        `<div class="rec"><b>${esc(r.listing_title || 'Listing #' + r.listing_id)}</b><br>${esc(r.reason)}${r.note ? ': ' + esc(r.note) : ''}<br>Status: ${statusBadge(r.status || 'Open')}
-          <div class="vbtns"><button data-rid="${esc(r.id)}" data-lid="${esc(r.listing_id)}" data-ra="hide" class="go">Hide listing</button><button data-rid="${esc(r.id)}" data-ra="dismiss">Dismiss</button></div>
-          <div class="meta">${new Date(r.created_at).toLocaleString()}</div></div>`);
-      $('b-rep-out').onclick = async (e) => {
-        const b = e.target.closest('button[data-rid]'); if (!b) return;
-        b.disabled = true;
-        if (b.dataset.ra === 'hide') {
-          const h = await sb.from('listings').update({ hidden: true }).eq('id', b.dataset.lid);
-          if (h.error) { toast('Could not hide: ' + h.error.message); b.disabled = false; return; }
-        }
-        const { error } = await sb.from('listing_reports').update({ status: b.dataset.ra === 'hide' ? 'Hidden' : 'Dismissed' }).eq('id', b.dataset.rid);
+        const { error } = await sb.from('listings').update({ status: b.dataset.s }).eq('id', b.dataset.lid);
         if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
-        toast(b.dataset.ra === 'hide' ? 'Listing hidden' : 'Report dismissed');
-        $('b-rep-out').innerHTML = ''; $('b-rep').click(); if (b.dataset.ra === 'hide') loadListings();
-      };
-
-      // ---- Searches vs Listings: what tenants type vs what you have ----
-      $('b-sub').onclick = async () => {
-        const out = $('b-sub-out');
-        if (out.innerHTML) { out.innerHTML = ''; return; }
-        out.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>';
-        const since = new Date(Date.now() - 30 * 864e5).toISOString();
-        const { data, error } = await sb.from('search_log').select('term').gte('created_at', since).limit(2000);
-        if (error) { out.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}<br>Run the latest setup.sql in Supabase first.</div></div>`; return; }
-        const counts = {}; (data || []).forEach(x => { counts[x.term] = (counts[x.term] || 0) + 1; });
-        const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([t, n]) => ({ t, n, have: listings.filter(l => String(l.status).toLowerCase() !== 'rented' && (l.title + ' ' + l.area).toLowerCase().includes(t)).length }));
-        out.innerHTML = `<div class="panel"><div class="rec"><span class="meta">Last 30 days. "Available" counts listings that are not rented.</span></div>${rows.length ? rows.map(r =>
-          `<div class="rec"><b>${esc(r.t)}</b> • searched ${r.n} ${r.n === 1 ? 'time' : 'times'} • ${r.have ? r.have + ' available' : '<b style="color:#ffb74d">0 available, tenants want this</b>'}</div>`).join('') : '<div class="rec">No searches recorded yet.</div>'}</div>`;
-      };
-
-      // ---- Announcement banner + switches ----
-      $('b-set').onclick = () => {
-        const out = $('b-set-out');
-        if (out.innerHTML) { out.innerHTML = ''; return; }
-        out.innerHTML = `<div class="panel"><div class="rec f2">
-          <label class="chk"><input type="checkbox" id="s-on" ${settings.banner_on ? 'checked' : ''} /> Show announcement banner on Home</label>
-          <textarea id="s-text" maxlength="200" placeholder="e.g. Viewings this weekend are by appointment only.">${esc(settings.banner_text || '')}</textarea>
-          <label class="chk"><input type="checkbox" id="s-pause" ${settings.submissions_paused ? 'checked' : ''} /> Pause new property submissions</label>
-          <div class="hint">Nothing is ever published without your "Approve &amp; publish", so no separate approval switch is needed.</div>
-          <div class="vbtns"><button class="go" id="s-save">Save</button></div></div></div>`;
-        $('s-save').onclick = async () => {
-          const row = { id: 1, banner_on: $('s-on').checked, banner_text: $('s-text').value.trim() || null, submissions_paused: $('s-pause').checked };
-          if (row.banner_on && !row.banner_text) { toast('Type the announcement first, or untick the banner.'); return; }
-          $('s-save').disabled = true;
-          const { error } = await sb.from('app_settings').upsert(row);
-          $('s-save').disabled = false;
-          if (error) { toast('Could not save: ' + error.message + ' (run the latest setup.sql in Supabase first)'); return; }
-          settings = row; renderAnn(); toast('Saved');
-        };
+        toast('Status changed to ' + b.dataset.s);
+        $('b-list-out').innerHTML = ''; $('b-list').click(); loadListings();
       };
 
       // ---- Cash Flow: admin-only income / expense ledger ----
@@ -1344,7 +1183,6 @@
       await checkAdmin();
       useImage('tile-browse', 'IMG_1146.jpeg');
       loadListings();
-      loadSettings();
       route();
       if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
     })();
