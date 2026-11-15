@@ -1,5 +1,5 @@
 // Locally service worker: lets the app open and browse saved listings without internet.
-const CACHE = 'locally-v3';
+const CACHE = 'locally-v4';
 const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
 const SHELL = ['./', 'index.html', 'locally-logo.png', 'manifest.json', 'icon-192.png?v=3', 'icon-512.png?v=3', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'IMG_1146.jpeg', 'IMG_1147.webp', 'IMG_1148.jpeg', 'IMG_1149.webp', 'IMG_1151.jpeg'];
 
@@ -23,6 +23,9 @@ self.addEventListener('fetch', (e) => {
   const isCdn = url.hostname === 'cdn.jsdelivr.net';
   // Never cache login or database calls.
   if (!sameOrigin && !isStorage && !isCdn) return;
+
+  // Other pages (like /privacy.html) load normally and must not replace the saved app page.
+  if (req.mode === 'navigate' && !/^\/(index\.html)?$/.test(url.pathname)) return;
 
   if (req.mode === 'navigate') {
     // Newest page when online, saved page when offline.
