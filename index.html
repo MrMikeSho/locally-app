@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="color-scheme" content="dark" />
+  <style>html, body { background: #02070c; }</style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Locally</title>
 
@@ -152,6 +154,51 @@
     .notice { margin: 14px 18px 0; padding: 14px 16px; border-radius: 14px; font-size: 12px; display: none; }
     .notice.ok { display: block; background: #0f2a22; color: #7be0a8; border: 1px solid #1b4a39; }
     .notice.bad { display: block; background: #2a1316; color: #ff9aa0; border: 1px solid #52222a; }
+
+    /* ---------- Viewing fee / payment sheet ---------- */
+    .badge.info { background: rgba(79,180,222,.16); color: #7cc8e8; }
+    .rec .vbtns a { flex: 1; text-align: center; padding: 8px 0; border-radius: 12px; border: 1.5px solid var(--line); background: #0d1a22; color: #4ade80; font: 600 13px inherit; font-family: inherit; }
+    .rec select { margin-top: 10px; }
+    .payview { padding: calc(env(safe-area-inset-top) + 22px) 14px 40px; }
+    .pz-brand { text-align: center; font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 16px; }
+    .pz-card { margin-bottom: 14px; padding: 18px; border: 1.5px solid var(--line); border-radius: 24px; background: var(--card); }
+    .pz-card h2 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .pz-card h3 { font-size: 17px; margin-bottom: 6px; }
+    .pz-card p { color: #aab5c0; font-size: 14px; line-height: 1.5; }
+    .pz-center { text-align: center; padding: 28px 18px; }
+    .pz-ic { font-size: 42px; margin-bottom: 10px; }
+    .pz-sum { color: #aab5c0; font-size: 14px; line-height: 1.5; }
+    .pz-timer { margin-top: 12px; display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(250,204,21,.12); color: #facc15; font-size: 13px; }
+    .pz-timer b { font-variant-numeric: tabular-nums; }
+    .pz-h { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .pz-fee { font-size: 38px; font-weight: 700; color: #4ade80; line-height: 1.1; }
+    .pz-fee small { font-size: 13px; font-weight: 500; color: #aab5c0; margin-left: 6px; }
+    .tierbar { margin-top: 18px; --p: 0%; }
+    .tierbar input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 6px; outline: none; background: linear-gradient(90deg, #84cc16 0, #22c55e var(--p), #1c2833 var(--p)); }
+    .tierbar input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: #22c55e; border: 4px solid #02070c; box-shadow: 0 0 0 2px #22c55e; }
+    .tierbar input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #22c55e; border: 4px solid #02070c; box-shadow: 0 0 0 2px #22c55e; }
+    .pz-stops { display: grid; grid-template-columns: 1fr 1fr 1fr; margin-top: 12px; }
+    .pz-stops button { font: inherit; font-size: 12px; color: var(--muted); line-height: 1.3; padding: 4px 0; text-align: center; }
+    .pz-stops button:first-child { text-align: left; } .pz-stops button:last-child { text-align: right; }
+    .pz-stops button b { display: block; font-size: 17px; color: #fff; }
+    .pz-stops button.on b { color: #4ade80; }
+    .pz-stops button.lock { opacity: .35; }
+    .pz-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .pz-m { text-align: left; padding: 14px; border: 1.5px solid var(--line); border-radius: 18px; background: #02060a; color: var(--text); font: inherit; }
+    .pz-m b { display: block; font-size: 16px; margin-bottom: 4px; }
+    .pz-m span { font-size: 12px; color: var(--muted); line-height: 1.35; display: block; }
+    .pz-m.on { border-color: var(--accent); background: #0d1a22; }
+    #pz-eco { margin-top: 16px; }
+    #pz-eco label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+    #pz-eco input { width: 100%; height: 42px; padding: 0 14px; background: var(--bg); border: 1px solid var(--field); border-radius: 13px; outline: none; font-size: 16px; }
+    #pz-eco input:focus { border-color: var(--accent); }
+    .pz-card .notice { margin: 14px 0 0; }
+    .pz-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 46px; margin-top: 22px; border-radius: 23px; background: var(--btn); color: #fff; font-size: 16px; font-weight: 600; }
+    .pz-btn:disabled { opacity: .5; }
+    .pz-link { display: block; margin: 18px auto 0; color: var(--accent); font: 600 14px inherit; font-family: inherit; background: none; border: 0; }
+    .pz-foot { text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .pz-spin { width: 36px; height: 36px; margin: 0 auto 14px; border: 3px solid var(--line); border-top-color: #4ade80; border-radius: 50%; animation: pzs 1s linear infinite; }
+    @keyframes pzs { to { transform: rotate(360deg); } }
 
     /* ---------- Search page ---------- */
     .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
@@ -408,8 +455,11 @@
       <div class="fgroup"><label class="lbl">Monthly Budget (USD)</label><input type="number" inputmode="decimal" name="budget" placeholder="e.g., 23" /></div>
       <div class="fgroup"><label class="lbl">Bedrooms Needed</label><input type="number" inputmode="numeric" name="bedrooms" placeholder="e.g., 23" /></div>
       <div class="fgroup"><label class="lbl">Move-in Timeline</label><input type="text" name="timeline" /></div>
+      <div class="fgroup"><label class="lbl">Property Type</label>
+        <select name="property_tier"><option value="cottage_1_4">1–4 Rooms Cottage — $5</option><option value="house_2_3">2–3 Bed House — $7</option><option value="house_4_7">4–7 Bed House — $10</option></select></div>
       <div class="fgroup"><label class="lbl">Notes</label><textarea name="notes"></textarea></div>
       <div class="fgroup"><label class="chk"><input type="checkbox" name="agree" required /><span>I understand that Locally acts as the exclusive broker for this listing, and viewing arrangements must be coordinated through the platform.</span></label></div>
+      <div class="picked" style="margin-top:22px"><b>Free to submit</b>You only pay the viewing fee once we confirm we have matching properties for you.</div>
       <button class="submit" type="submit">Submit</button>
     </form>
     <div class="notice" id="n-find"></div>
@@ -420,6 +470,9 @@
     <h1 class="page-title">Broker Panel</h1>
     <div id="broker-body"></div>
   </section>
+
+  <!-- ===== PAY (opened from the WhatsApp link, no login) ===== -->
+  <section class="view hidden payview" id="view-pay"><div id="pay-body"></div></section>
 
   <!-- ===== SEARCH ===== -->
   <section class="view hidden" id="view-search">
@@ -510,8 +563,13 @@
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const money = (n) => '$' + Number(n || 0).toLocaleString();
+    // Viewing fee tiers (the server has its own copy of these prices)
+    const TIERS = { cottage_1_4: { label: '1–4 Rooms Cottage', fee: 5 }, house_2_3: { label: '2–3 Bed House', fee: 7 }, house_4_7: { label: '4–7 Bed House', fee: 10 } };
+    const TIER_KEYS = Object.keys(TIERS);
+    // Opened from the WhatsApp link: https://locally.co.zw/?pay_request=<secret token>
+    let payToken = new URLSearchParams(location.search).get('pay_request');
 
-    let session = null, isAdmin = false, loginMode = 'login';
+    let session = null, isAdmin = false, isViewer = false, loginMode = 'login';
 
     // ================= Listings =================
     const LOCAL_IMG = {
@@ -743,13 +801,13 @@
     }
 
     // ================= Router =================
-    const VIEWS = ['home', 'list', 'find', 'broker', 'search', 'login', 'detail'];
+    const VIEWS = ['home', 'list', 'find', 'broker', 'search', 'login', 'detail', 'pay'];
     function tabFor(h) { return h === 'list' || h === 'find' ? h : h === 'home' ? 'home' : null; }
 
     function route() {
       const raw = (location.hash || '#/home').replace(/^#\/?/, '');
       const [name, arg] = raw.split('/');
-      let v = VIEWS.includes(name) ? name : 'home';
+      let v = payToken !== null ? 'pay' : (VIEWS.includes(name) ? name : 'home');
 
       if ((v === 'list' || v === 'find' || v === 'broker') && !session) {
         localStorage.setItem('locally_after', '#/' + v + (arg ? '/' + arg : ''));
@@ -762,10 +820,10 @@
       const showHdr = ['home', 'list', 'find', 'broker'].includes(v);
       $('hdr').classList.toggle('hidden', !showHdr);
       $('hdr').classList.toggle('titled', ['list', 'find', 'broker'].includes(v));
-      $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: 'Broker Panel' })[v] || '';
-      $('tabbar').classList.toggle('hidden', ['search', 'detail'].includes(v));
+      $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: isAdmin ? 'Broker Panel' : 'Cash Flow' })[v] || '';
+      $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker'].includes(v));
      
-      document.body.style.paddingBottom = ['search', 'detail'].includes(v) ? '0' : '';
+      document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker'].includes(v) ? '0' : '';
 
       let active = tabFor(v);
       if (v === 'login') active = tabFor((localStorage.getItem('locally_after') || '#/list').replace('#/', '')) || 'list';
@@ -777,6 +835,7 @@
       if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
       if (v === 'broker') renderBroker();
+      if (v === 'pay') renderPay();
       if (v === 'home') renderRecent();
       if (v === 'find') setFindMode(arg ? 'view' : (findMode || 'search'), arg);
       if (v === 'login') setLoginMode('login');
@@ -842,7 +901,7 @@
       $('m-list').innerHTML = link('#/home', 'Home', 'home') +
         acc('p-about', 'About Locally', 'info') + aboutPanel +
         acc('p-contact', 'Contact Us', 'phone') + contactPanel +
-        (isAdmin ? link('#/broker', 'Broker Panel', 'shield') : '') +
+        ((isAdmin || isViewer) ? link('#/broker', isAdmin ? 'Broker Panel' : 'Cash Flow', 'shield') : '') +
         `<div class="sep"></div><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${svg('doc')}Privacy Policy</a>` +
         (session ? `<button id="m-out">${svg('out')}Sign out<span style="font-weight:400;color:#8b97a3;font-size:12.5px;margin-left:auto;overflow:hidden;text-overflow:ellipsis;max-width:46%">${esc(session.user.email || '')}</span></button>` : link('#/login', 'Sign in', 'user'));
       if (session) $('m-out').onclick = async () => { await sb.auth.signOut(); session = null; isAdmin = false; location.hash = '#/home'; location.reload(); };
@@ -950,8 +1009,12 @@
           const { data } = await sb.from('admins').select('email').limit(1);
           isAdmin = !!(data && data.length);
         } catch (e) {}
+        isViewer = false;
+        if (!isAdmin) {
+          try { const { data } = await sb.from('cashflow_viewers').select('email').limit(1); isViewer = !!(data && data.length); } catch (e) {}
+        }
       }
-      $('nc-broker').classList.toggle('hidden', !isAdmin);
+      $('nc-broker').classList.toggle('hidden', !(isAdmin || isViewer));
       $('view-home').classList.toggle('compact', !!session); onScroll();
     }
 
@@ -1066,9 +1129,11 @@
       if (!f.agree) { setNotice('n-find', 'Please accept the broker agreement to continue.', false); return; }
       btn.disabled = true; setNotice('n-find', '');
       try {
+        const tier = TIERS[f.property_tier] ? f.property_tier : 'cottage_1_4';
         const { error } = await sb.from('renter_requests').insert({
           user_id: session.user.id, first_name: f.first_name, last_name: f.last_name, email: f.email, area_code: f.area_code, phone: f.phone,
           neighborhood: f.neighborhood, budget: num(f.budget), bedrooms: num(f.bedrooms), timeline: f.timeline, notes: f.notes,
+          property_tier: tier, fee_amount: TIERS[tier].fee,
           agreed_terms: true, agreed_at: new Date().toISOString()
         });
         if (error) throw error;
@@ -1080,9 +1145,58 @@
     };
 
     // ================= Broker panel =================
+    // WhatsApp number in international digits, e.g. 0779304950 -> 263779304950
+    function waNum(areaCode, phone) {
+      const a = String(areaCode || '').replace(/\D/g, ''); let p = String(phone || '').replace(/\D/g, '');
+      let n;
+      if (p.startsWith('263')) n = p;
+      else { p = p.replace(/^0+/, ''); n = (a === '' || a.startsWith('0')) ? '263' + (a + p).replace(/^0+/, '') : a + p; }
+      return n.length >= 11 && n.length <= 15 ? n : '';
+    }
+    function waLink(r) {
+      const t = TIERS[r.property_tier] || TIERS.cottage_1_4;
+      const text = `Hi ${r.first_name || ''}, your Locally rental request for ${r.neighborhood || 'your area'} (${t.label}) has been accepted! Tap here within 24 hours to confirm your viewing fee ($${Number(r.fee_amount)}) and pay via EcoCash or Paynow: https://locally.co.zw/?pay_request=${r.pay_token}`;
+      return 'https://wa.me/' + waNum(r.area_code, r.phone) + '?text=' + encodeURIComponent(text);
+    }
+    function rrCard(r) {
+      const state = r.payment_status === 'paid' ? 'paid' : r.request_status === 'declined' ? 'declined' : r.request_status === 'pending' ? 'pending'
+        : (r.expires_at && new Date(r.expires_at).getTime() <= Date.now() ? 'expired' : 'awaiting');
+      const badge = { paid: `<span class="badge ok">● Paid & Active (${money(r.fee_amount)})</span>`, declined: '<span class="badge bad">● Declined</span>',
+        pending: '<span class="badge warn">● Pending Review</span>', expired: '<span class="badge neutral">● Expired</span>',
+        awaiting: `<span class="badge info">● Accepted • Awaiting Fee (${money(r.fee_amount)})</span>` }[state];
+      const tierOpts = TIER_KEYS.map(k => `<option value="${k}"${k === r.property_tier ? ' selected' : ''}>${esc(TIERS[k].label)} — $${TIERS[k].fee}</option>`).join('');
+      const actions = state === 'pending'
+        ? `<select data-tier-for="${esc(r.id)}">${tierOpts}</select><div class="vbtns"><button class="go" data-rr="accept" data-id="${esc(r.id)}">Accept</button><button data-rr="decline" data-id="${esc(r.id)}">Decline</button></div>`
+        : (state === 'awaiting' || state === 'expired')
+          ? `<div class="vbtns"><button class="go" data-rr="resend" data-id="${esc(r.id)}">Resend Link (Reset 24h)</button><a href="${esc(waLink(r))}" target="_blank" rel="noopener">WhatsApp</a></div>` : '';
+      return `<div class="rec"><b>${esc(r.first_name)} ${esc(r.last_name)}</b> &nbsp;${badge}<br>${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
+        Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd • ${esc((TIERS[r.property_tier] || {}).label || '')}<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
+        ${actions}
+        <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Terms signed' : ''}</div></div>`;
+    }
+    let rtChan = null, brokerRefresh = null;
+    function renderCashViewer(body) {
+      body.innerHTML = '<div class="navcards" style="padding-top:0"><div id="b-cash-out"></div></div>';
+      const cash = $('b-cash-out');
+      async function draw() {
+        const { data, error } = await sb.from('transactions').select('*').order('created_at', { ascending: false }).limit(200);
+        if (error) { cash.innerHTML = `<div class="panel"><div class="rec">${esc(error.message)}</div></div>`; return; }
+        let inc = 0, exp = 0;
+        data.forEach(t => { if (t.type === 'income') inc += Number(t.amount); else exp += Number(t.amount); });
+        const f = n => '$' + n.toFixed(2);
+        cash.innerHTML = `<div class="panel"><div class="rec"><b>Income</b> ${f(inc)} &nbsp;•&nbsp; <b>Expenses</b> ${f(exp)} &nbsp;•&nbsp; <b>Net</b> ${f(inc - exp)}</div>
+          ${data.map(t => `<div class="rec"><b>${t.type === 'income' ? '+' : '-'}${f(Number(t.amount))}</b> • ${esc(t.category)}<br>${esc(t.note || '')}<div class="meta">${new Date(t.created_at).toLocaleString()}</div></div>`).join('')}</div>`;
+      }
+      cash.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>'; draw();
+      brokerRefresh = { rent: () => {}, cash: draw };
+      if (!rtChan && sb.channel) {
+        try { rtChan = sb.channel('broker-live').on('postgres_changes', { event: '*', schema: 'public', table: 'transactions' }, () => brokerRefresh && brokerRefresh.cash()).subscribe(); } catch (e) { /* optional */ }
+      }
+    }
     function renderBroker() {
       const body = $('broker-body');
-      if (!isAdmin) { body.innerHTML = '<div class="empty">This area is for admins only.</div>'; return; }
+      if (!isAdmin && !isViewer) { body.innerHTML = '<div class="empty">This area is for admins only.</div>'; return; }
+      if (!isAdmin) { renderCashViewer(body); return; }
       const gridIcon = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>';
       body.innerHTML = `<div class="navcards" style="padding-top:0">
         <button class="navcard simple" id="b-land"><div class="tile">${gridIcon}</div><div class="t"><h3>Landlord Submissions</h3></div></button>
@@ -1131,10 +1245,21 @@
         if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
         $('b-view-out').innerHTML = ''; $('b-view').click();
       };
-      $('b-rent').onclick = () => toggleRecords('renter_requests', 'b-rent-out', r =>
-        `<div class="rec"><b>${esc(r.first_name)} ${esc(r.last_name)}</b><br>${esc(r.email)} • ${esc((r.area_code || '') + ' ' + (r.phone || ''))}<br>
-          Area: ${esc(r.neighborhood || '-')} • Budget: ${r.budget != null ? money(r.budget) : '-'} • ${esc(r.bedrooms ?? '-')} bd<br>Move-in: ${esc(r.timeline || '-')}<br>${esc(r.notes || '')}
-          <div class="meta">${new Date(r.created_at).toLocaleString()}${r.agreed_terms ? ' • Broker agreement accepted' : ''}</div></div>`);
+      $('b-rent').onclick = () => toggleRecords('renter_requests', 'b-rent-out', rrCard);
+      $('b-rent-out').onclick = async (e) => {
+        const b = e.target.closest('button[data-rr]'); if (!b) return;
+        const id = b.dataset.id, action = b.dataset.rr;
+        const sel = $('b-rent-out').querySelector(`select[data-tier-for="${id}"]`);
+        if (action === 'decline' && !confirm('Decline this request?')) return;
+        b.disabled = true;
+        const { data, error } = await sb.rpc('broker_review_request', { p_id: Number(id), p_action: action, p_tier: sel ? sel.value : null });
+        if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
+        const row = Array.isArray(data) ? data[0] : data;
+        $('b-rent-out').innerHTML = ''; $('b-rent').click();
+        if (action === 'decline') { toast('Request declined'); return; }
+        const w = window.open(waLink(row), '_blank');
+        toast(w ? 'Opening WhatsApp…' : 'Saved. Tap WhatsApp on the card to send the link.');
+      };
 
       // ---- Manage Listings: one-tap status (Available / Pending / Rented) ----
       $('b-list').onclick = () => toggleRecords('listings', 'b-list-out', r =>
@@ -1157,6 +1282,11 @@
         let inc = 0, exp = 0;
         data.forEach(t => { if (t.type === 'income') inc += Number(t.amount); else exp += Number(t.amount); });
         const f = n => '$' + n.toFixed(2);
+        const vw = await sb.from('cashflow_viewers').select('*').order('created_at');
+        const shareBlock = vw.error ? '' : `<div class="rec"><b>Share Cash Flow (read-only)</b><div class="hint">These Gmail accounts can sign in to Locally and see ONLY Cash Flow. They cannot add, change or delete anything.</div>
+          ${(vw.data || []).map(v => `<div style="margin-top:8px">${esc(v.email)} <button data-cvdel="${esc(v.email)}" style="margin-left:8px">Remove</button></div>`).join('')}
+          <input id="cv-email" type="email" placeholder="name@gmail.com" style="margin-top:10px;width:100%;height:38px;padding:0 12px;border-radius:13px;border:1.5px solid var(--line);background:#02060a;color:#fff;font:inherit;font-size:15px" />
+          <div class="vbtns"><button class="go" id="cv-add">Share</button></div></div>`;
         cash.innerHTML = `<div class="panel">
           <div class="rec"><b>Income</b> ${f(inc)} &nbsp;•&nbsp; <b>Expenses</b> ${f(exp)} &nbsp;•&nbsp; <b>Net</b> ${f(inc - exp)}</div>
           <div class="rec"><b>Log a transaction</b><br>
@@ -1166,7 +1296,7 @@
             <input id="tx-note" type="text" maxlength="200" placeholder="Note (optional)" />
             <div class="vbtns"><button class="go" id="tx-save">Save</button></div></div>
           ${data.map(t => `<div class="rec"><b>${t.type === 'income' ? '+' : '-'}${f(Number(t.amount))}</b> • ${esc(t.category)}<br>${esc(t.note || '')}
-            <div class="meta">${new Date(t.created_at).toLocaleString()} <button data-del="${esc(t.id)}" style="margin-left:8px">Delete</button></div></div>`).join('')}</div>`;
+            <div class="meta">${new Date(t.created_at).toLocaleString()} <button data-del="${esc(t.id)}" style="margin-left:8px">Delete</button></div></div>`).join('')}${shareBlock}</div>`;
       }
       $('b-cash').onclick = () => { if (cash.innerHTML) { cash.innerHTML = ''; return; } cash.innerHTML = '<div class="panel"><div class="rec">Loading…</div></div>'; drawCash(); };
       cash.onclick = async (e) => {
@@ -1178,12 +1308,40 @@
           if (error) { toast('Could not save: ' + error.message); e.target.disabled = false; return; }
           toast('Saved'); drawCash();
         }
+        if (e.target.id === 'cv-add') {
+          const em = $('cv-email').value.trim().toLowerCase();
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { toast('Enter a valid email address.'); return; }
+          e.target.disabled = true;
+          const { error } = await sb.from('cashflow_viewers').insert({ email: em });
+          if (error) { toast('Could not share: ' + error.message); e.target.disabled = false; return; }
+          toast('Shared with ' + em); drawCash(); return;
+        }
+        const cv = e.target.closest('button[data-cvdel]');
+        if (cv && confirm('Stop sharing Cash Flow with ' + cv.dataset.cvdel + '?')) {
+          const { error } = await sb.from('cashflow_viewers').delete().eq('email', cv.dataset.cvdel);
+          if (error) toast('Could not remove: ' + error.message); else drawCash();
+          return;
+        }
         const d = e.target.closest('button[data-del]');
         if (d && confirm('Delete this transaction?')) {
           const { error } = await sb.from('transactions').delete().eq('id', d.dataset.del);
           if (error) toast('Could not delete: ' + error.message); else drawCash();
         }
       };
+
+      // ---- Live updates: a Paynow payment shows up here by itself ----
+      brokerRefresh = {
+        rent: () => { const o = $('b-rent-out'); if (o && o.innerHTML && !(document.activeElement && document.activeElement.tagName === 'SELECT')) { o.innerHTML = ''; $('b-rent').click(); } },
+        cash: () => { if (cash.innerHTML) drawCash(); }
+      };
+      if (!rtChan && sb.channel) {
+        try {
+          rtChan = sb.channel('broker-live')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'renter_requests' }, () => brokerRefresh && brokerRefresh.rent())
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'transactions' }, () => brokerRefresh && brokerRefresh.cash())
+            .subscribe();
+        } catch (e) { /* live updates are optional */ }
+      }
     }
     async function toggleRecords(table, outId, fmt, orderCol = 'created_at') {
       const out = $(outId);
@@ -1200,6 +1358,104 @@
       im.onload = () => { const t = $(id); t.style.backgroundImage = `url('${src}')`; t.classList.add('has-img'); };
       im.src = src;
     }
+
+    // ================= Pay sheet (opened from the WhatsApp link, no login) =================
+    let payTimer = null, payPoll = null, payS = null;
+    const payApi = (path, body) => fetch('/api/' + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, cache: 'no-store', body: JSON.stringify(body) })
+      .then(async r => ({ ok: r.ok, status: r.status, j: await r.json().catch(() => ({})) }))
+      .catch(() => ({ ok: false, status: 0, j: { error: "Can't reach Locally. Please check your internet and try again." } }));
+    const payHome = '<button class="pz-btn" id="pz-home" type="button">Back to Locally</button>';
+    function payMsg(icon, title, text, extra) {
+      clearInterval(payTimer); clearInterval(payPoll);
+      $('pay-body').innerHTML = `<div class="pz-brand">Locally</div><div class="pz-card pz-center"><div class="pz-ic">${icon}</div><h2>${esc(title)}</h2><p>${esc(text)}</p>${extra || ''}</div>`;
+    }
+    function leavePay() { clearInterval(payTimer); clearInterval(payPoll); payToken = null; history.replaceState({}, '', '/#/home'); route(); }
+    async function renderPay() {
+      if (!/^[0-9a-f-]{36}$/i.test(payToken || '')) { payMsg('⚠️', 'This link is not valid', 'Please ask your broker to send it again.', payHome); return; }
+      payMsg('⏳', 'Opening your request…', '');
+      const r = await payApi('get-request', { token: payToken, check: true });
+      if (!r.ok) { payMsg('⚠️', r.j.error && r.j.error !== 'not_found' ? r.j.error : 'We could not find this request', 'Please ask your broker to send the link again.', payHome); return; }
+      drawPay(r.j);
+    }
+    function drawPay(d) {
+      clearInterval(payTimer); clearInterval(payPoll);
+      const name = d.first_name || 'there';
+      if (d.state === 'paid') return payMsg('✅', 'Fee paid • Viewing active', `Thank you, ${name}. Your viewing fee of ${money(d.fee_amount)} has been received. Your broker will be in touch.`, payHome);
+      if (d.state === 'pending') return payMsg('🕒', 'Still being reviewed', 'Your broker is still looking at your request. You will get a WhatsApp message with a payment link once it is accepted.', payHome);
+      if (d.state === 'declined') return payMsg('ℹ️', 'Request not taken', 'Sorry, we could not take this request. You are welcome to send a new one.', payHome);
+      if (d.state === 'expired') return payMsg('⏰', 'This link has expired', 'Payment links last 24 hours. Message us on WhatsApp and we will send you a new one.', `<a class="pz-btn" href="${WA_LINK}" target="_blank" rel="noopener">Message us on WhatsApp</a>`);
+      const minIdx = Math.max(0, TIER_KEYS.indexOf(d.property_tier));
+      payS = { d, minIdx, idx: minIdx, method: null };
+      const sum = [esc(d.neighborhood || 'Any area'), d.budget != null ? 'Budget ' + money(d.budget) : '', d.bedrooms != null ? esc(d.bedrooms) + ' bd' : '', d.timeline ? 'Move-in: ' + esc(d.timeline) : ''].filter(Boolean).join(' • ');
+      $('pay-body').innerHTML = `<div class="pz-brand">Locally</div>
+        <div class="pz-card"><h2>Hi ${esc(name)}, your request was accepted</h2><div class="pz-sum">${sum}</div><div class="pz-timer">Expires in <b id="pz-left">--:--:--</b></div></div>
+        <div class="pz-card"><div class="pz-h">Viewing fee</div><div class="pz-fee" id="pz-fee"></div>
+          <div class="tierbar" id="pz-bar"><input type="range" id="pz-range" min="0" max="2" step="1" value="${minIdx}" aria-label="Property size" />
+            <div class="pz-stops" id="pz-stops">${TIER_KEYS.map((k, i) => `<button type="button" data-i="${i}"><b>$${TIERS[k].fee}</b>${esc(TIERS[k].label)}</button>`).join('')}</div></div>
+          <div class="hint">You can move up to a bigger property size. The size your broker approved is the lowest.</div></div>
+        <div class="pz-card" id="pz-paybox"><div class="pz-h">Choose how to pay</div>
+          <div class="pz-methods"><button type="button" class="pz-m" data-m="ecocash"><b>EcoCash</b><span>Instant prompt on your phone</span></button>
+            <button type="button" class="pz-m" data-m="paynow"><b>Paynow</b><span>InnBucks, OneMoney, Zimswitch, Visa, Mastercard</span></button></div>
+          <div id="pz-eco" class="hidden"><label>EcoCash number</label><input id="pz-phone" type="tel" inputmode="tel" placeholder="077 123 4567" autocomplete="tel" /></div>
+          <div class="notice" id="pz-note"></div>
+          <button class="pz-btn" id="pz-pay" type="button" disabled>Choose a payment method</button></div>
+        <div class="pz-foot">Secure payment by Paynow. Your EcoCash PIN is never shared with Locally.</div>`;
+      $('pz-range').oninput = (e) => { if (+e.target.value < payS.minIdx) e.target.value = payS.minIdx; payS.idx = +e.target.value; paintPay(); };
+      const end = Date.now() + d.seconds_left * 1000;
+      const tick = () => {
+        const s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+        if ($('pz-left')) $('pz-left').textContent = [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, '0')).join(':');
+        if (s <= 0) drawPay({ ...d, state: 'expired' });
+      };
+      tick(); payTimer = setInterval(tick, 1000);
+      paintPay();
+    }
+    function paintPay() {
+      const t = TIER_KEYS[payS.idx], fee = TIERS[t].fee;
+      $('pz-fee').innerHTML = `$${fee}<small>USD • ${esc(TIERS[t].label)}</small>`;
+      $('pz-bar').style.setProperty('--p', (payS.idx * 50) + '%');
+      document.querySelectorAll('#pz-stops button').forEach((b, i) => { b.classList.toggle('on', i === payS.idx); b.classList.toggle('lock', i < payS.minIdx); });
+      document.querySelectorAll('.pz-m').forEach(b => b.classList.toggle('on', b.dataset.m === payS.method));
+      $('pz-eco').classList.toggle('hidden', payS.method !== 'ecocash');
+      const btn = $('pz-pay'); btn.disabled = !payS.method;
+      btn.textContent = payS.method ? `Pay $${fee} with ${payS.method === 'ecocash' ? 'EcoCash' : 'Paynow'}` : 'Choose a payment method';
+    }
+    async function startPay() {
+      setNotice('pz-note', '');
+      let phone = '';
+      if (payS.method === 'ecocash') {
+        phone = $('pz-phone').value.replace(/[\s()-]/g, '');
+        if (!/^(\+?263|0)7[78]\d{7}$/.test(phone)) { setNotice('pz-note', 'Enter a valid EcoCash number, like 077 123 4567.', false); return; }
+      }
+      const btn = $('pz-pay'); btn.disabled = true; btn.textContent = 'Starting payment…';
+      const r = await payApi('initiate-request-payment', { token: payToken, selected_tier: TIER_KEYS[payS.idx], method: payS.method, ecocash_phone: phone });
+      if (!r.ok) {
+        if (r.status === 409 || r.status === 410) { renderPay(); return; }
+        setNotice('pz-note', r.j.error || 'Could not start the payment.', false); paintPay(); return;
+      }
+      if (r.j.mode === 'redirect' && r.j.browserUrl) { location.href = r.j.browserUrl; return; }
+      clearInterval(payTimer); const tm = document.querySelector('.pz-timer'); if (tm) tm.textContent = 'Payment in progress';
+      $('pz-paybox').innerHTML = `<div class="pz-center" style="padding:14px 0"><div class="pz-spin"></div><h3>Check your phone</h3><p>${esc(r.j.instructions || 'Approve the EcoCash prompt and enter your PIN.')}</p>
+        <div class="notice" id="pz-note"></div><button class="pz-link" id="pz-recheck" type="button">I have paid. Check again</button></div>`;
+      let tries = 0;
+      const ask = async () => {
+        const c = await payApi('get-request', { token: payToken, check: true });
+        if (c.ok && c.j.state === 'paid') { drawPay(c.j); return; }
+        if (c.ok && c.j.paynow_status === 'cancelled') { payMsg('❌', 'Payment cancelled', 'No money was taken. You can try again.', '<button class="pz-btn" id="pz-retry" type="button">Try again</button>'); return; }
+        if (++tries >= 45) { clearInterval(payPoll); setNotice('pz-note', 'Still waiting. If you have paid, this will update shortly.', false); }
+      };
+      payPoll = setInterval(ask, 4000);
+    }
+    $('pay-body').addEventListener('click', (e) => {
+      if (e.target.closest('#pz-home')) { leavePay(); return; }
+      if (e.target.closest('#pz-retry')) { renderPay(); return; }
+      if (e.target.closest('#pz-recheck')) { payApi('get-request', { token: payToken, check: true }).then(c => { if (c.ok && c.j.state === 'paid') drawPay(c.j); else toast('Not confirmed yet'); }); return; }
+      if (!payS) return;
+      const st = e.target.closest('#pz-stops button');
+      if (st) { const i = +st.dataset.i; if (i >= payS.minIdx) { payS.idx = i; $('pz-range').value = i; paintPay(); } return; }
+      const m = e.target.closest('.pz-m'); if (m) { payS.method = m.dataset.m; paintPay(); return; }
+      if (e.target.closest('#pz-pay')) startPay();
+    });
 
     // ================= Init =================
     (async function init() {
