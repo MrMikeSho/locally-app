@@ -1142,9 +1142,9 @@
       $('hdr').classList.toggle('hidden', !showHdr);
       $('hdr').classList.toggle('titled', ['list', 'find', 'broker'].includes(v));
       $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: isAdmin ? 'Broker Dashboard' : 'Cash Flow' })[v] || '';
-      $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker'].includes(v) || (session && v === 'home'));
+      $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker', 'login'].includes(v) || (session && v === 'home'));
      
-      document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker'].includes(v) || (session && v === 'home') ? '0' : '';
+      document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker', 'login'].includes(v) || (session && v === 'home') ? '0' : '';
       document.body.classList.toggle('x4', !!session && v === 'home'); $('q').placeholder = session ? 'Search suburb, street...' : 'Search';
       document.body.classList.toggle('xbrk', v === 'broker' && isAdmin);
       $('xbar').classList.add('hidden');
