@@ -200,6 +200,197 @@
     .pz-spin { width: 36px; height: 36px; margin: 0 auto 14px; border: 3px solid var(--line); border-top-color: #4ade80; border-radius: 50%; animation: pzs 1s linear infinite; }
     @keyframes pzs { to { transform: rotate(360deg); } }
 
+    /* ---------- Design refresh (layout only: same data, same buttons) ---------- */
+    body.x4 .searchbar .search { background: #0b151d; border: 1px solid var(--line); border-radius: 22px; height: 50px; }
+    body.x4 .searchbar .filter-btn { background: #0b151d; border: 1px solid var(--line); border-radius: 22px; width: 50px; height: 50px; }
+    #xchips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 18px 14px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    #xchips::-webkit-scrollbar { display: none; }
+    #xchips button { flex: 0 0 auto; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line); background: #0b151d; color: #d5dde5; font: 600 14px inherit; font-family: inherit; }
+    #xchips button.on { background: #2b8fd6; border-color: #2b8fd6; color: #fff; }
+    body.x4 #list { display: flex; flex-direction: column; gap: 16px; padding-top: 4px; }
+    .item.xcard { display: block; padding: 0; border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: #0b151d; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .xcard .xph { position: relative; height: 210px; background-size: cover; background-position: center; }
+    .xcard .xph::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,7,12,0) 45%, rgba(2,7,12,.78) 100%); }
+    .xcard .xstat { position: absolute; z-index: 1; top: 12px; left: 12px; }
+    .xcard .xstat .badge { padding: 4px 14px; font-size: 13px; background: rgba(2,7,12,.72); border: 1.5px solid currentColor; }
+    .xcard .xprice { position: absolute; z-index: 1; left: 12px; bottom: 12px; padding: 6px 14px; border-radius: 14px; background: rgba(2,7,12,.78); font-size: 22px; font-weight: 700; }
+    .xcard .xprice small { font-size: 14px; font-weight: 500; color: #c9d2db; }
+    .xcard .info { padding: 14px 16px 16px; }
+    .xcard .info h3 { font-size: 19px; margin: 0 0 6px; }
+    .xcard .info p { margin: 0; font-size: 14px; color: #aab5c0; }
+    .bstats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 4px 18px 16px; }
+    .bstats div { padding: 14px 8px; text-align: center; background: #0b151d; border: 1px solid var(--line); border-radius: 18px; }
+    .bstats b { display: block; font-size: 28px; line-height: 1.1; }
+    .bstats span { font-size: 12px; color: #aab5c0; }
+    .bstats div:nth-child(1) b { color: #4ade80; } .bstats div:nth-child(2) b { color: #facc15; } .bstats div:nth-child(3) b { color: #f87171; }
+    #broker-body .navcard { padding: 14px 16px; border-radius: 22px; background: #0b151d; }
+    #broker-body .navcard .tile { width: 50px; height: 50px; border-radius: 14px; }
+    #broker-body .rec { background: #0b151d; border-radius: 18px; }
+    .rec.mrow { display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: center; }
+    .rec.mrow .thumb { width: 64px; height: 64px; border-radius: 14px; }
+    .rec.mrow .mi { flex: 1; min-width: 0; }
+    .rec.mrow .vbtns { flex-basis: 100%; margin-top: 2px; }
+
+    /* ---------- Design refresh 2: map, saved, facts, profile, views, edit ---------- */
+    #xmap-wrap { margin: 0 18px 16px; border-radius: 24px; overflow: hidden; border: 1px solid var(--line); }
+    #xmap { height: 230px; background: #0b151d; }
+    #xmap .leaflet-control-attribution { background: rgba(2,7,12,.7); color: #8795a3; font-size: 9px; }
+    #xmap .leaflet-control-attribution a { color: #8795a3; }
+    #xmap .leaflet-bar a { background: #0b151d; color: #fff; border-color: var(--line); }
+    .xpin { background: none; border: 0; }
+    .xpin span { display: block; width: 64px; padding: 6px 0; text-align: center; border-radius: 16px; background: #0b151d; color: #fff; font: 700 14px/1 inherit; font-family: inherit; border: 2px solid #2b8fd6; box-shadow: 0 4px 14px rgba(43,143,214,.45); position: relative; }
+    .xpin span::after { content: ''; position: absolute; left: 50%; bottom: -8px; margin-left: -6px; border: 6px solid transparent; border-top-color: #2b8fd6; border-bottom: 0; }
+    .xcard .xheart { position: absolute; z-index: 2; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; background: rgba(2,7,12,.65); color: #cbd5e1; font-size: 20px; display: grid; place-items: center; border: 0; }
+    .xcard .xheart.on { color: #f87171; }
+    .facts { margin-top: 6px; font-size: 13.5px; color: #cbd5e1; }
+    .d-body .facts { margin: 4px 0 12px; font-size: 15px; }
+    #h-me { display: flex; align-items: center; gap: 8px; padding: 3px 12px 3px 3px; border: 1px solid var(--line); border-radius: 999px; background: #0b151d; max-width: 118px; }
+    #h-me .av { width: 30px; height: 30px; flex: none; border-radius: 50%; background: #2b8fd6 center / cover; display: grid; place-items: center; font-weight: 700; font-size: 14px; color: #fff; }
+    #h-me .nm { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bstats { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .bstats b { font-size: 24px; }
+    .bstats div:nth-child(4) b { color: #7cc8e8; }
+    .medit { flex-basis: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: #02060a; }
+    .medit .mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .medit label { font-size: 13px; color: #aab5c0; }
+    .medit input[type=number] { display: block; width: 100%; height: 38px; margin-top: 4px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--field); background: var(--bg); color: #fff; font-size: 15px; }
+    .medit .mfeat { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; }
+    .medit .mfeat label { display: flex; align-items: center; gap: 6px; color: #fff; }
+
+
+    /* ---------- Design refresh 3: match the mockups ---------- */
+    :root { --xcard: #111c2a; --xline: rgba(130,170,210,.2); }
+    body.xhome .hero, body.xhome .intro, body.xhome .sub, body.xhome .navcards, body.xhome #recent, body.xhome h2.section { display: none; }
+    body.xhome #view-home { padding-top: calc(env(safe-area-inset-top) + 76px); }
+    body.xhome #hdr { background: rgba(8,14,23,.96); }
+    body.xhome .hbrand { opacity: 1; }
+    body.xhome #h-search, body.xhome #h-menu { display: none; }
+    body.xhome .hicons { align-items: center; gap: 14px; }
+    #h-me { flex-direction: row-reverse; padding: 3px 3px 3px 16px; max-width: 190px; background: var(--xcard); border-color: var(--xline); }
+    #h-me .nm { font-weight: 500; font-size: 15px; }
+    #h-me .av { width: 34px; height: 34px; }
+    body.xbrk #h-search, body.xbrk #h-bell, body.xbrk #h-me { display: none; }
+    body.xbrk .htitle { font-size: 30px; font-weight: 700; }
+    body.x4 .searchbar .search { background: var(--xcard); border: 1px solid var(--xline); border-radius: 999px; height: 52px; }
+    body.x4 .searchbar .filter-btn { background: var(--xcard); border: 1px solid var(--xline); border-radius: 50%; width: 52px; height: 52px; }
+    #xchips button, #xb-chips button { background: var(--xcard); border-color: var(--xline); font-size: 15px; padding: 9px 20px; }
+    #xchips button.on, #xb-chips button.on { background: #2b8fd6; border-color: #2b8fd6; }
+    #xb-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 18px 14px; scrollbar-width: none; }
+    #xb-chips::-webkit-scrollbar { display: none; }
+    #xb-chips button { flex: 0 0 auto; border: 1px solid var(--xline); border-radius: 999px; color: #d5dde5; font-weight: 600; font-family: inherit; }
+    #xmap-wrap { margin: 0 18px 12px; border-radius: 26px; border-color: var(--xline); }
+    #xmap { height: 215px; }
+    .xpin span { width: 62px; height: 62px; padding: 0; display: grid; place-items: center; border-radius: 50%; font-size: 16px; border-width: 3px; background: #0c1521; box-shadow: 0 0 18px rgba(43,143,214,.6); }
+    #xpager { width: 72px; height: 5px; margin: 0 auto 12px; border-radius: 3px; background: rgba(255,255,255,.16); position: relative; overflow: hidden; }
+    #xpager i { position: absolute; top: 0; left: 0; width: 50%; height: 100%; border-radius: 3px; background: #5aa7d8; }
+    body.x4 #list { flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding: 4px 18px 24px; scrollbar-width: none; }
+    body.x4 #list::-webkit-scrollbar { display: none; }
+    body.x4 #list .empty { flex: 1; }
+    body.x4 .item.xcard { flex: 0 0 86%; scroll-snap-align: center; padding: 10px; background: var(--xcard); border-color: var(--xline); border-radius: 26px; }
+    .xcard .xph { border-radius: 18px; overflow: hidden; height: 215px; }
+    .xcard .xheart { top: auto; bottom: 12px; right: 12px; }
+    .xcard .xrib { position: absolute; top: 0; right: 0; width: 140px; height: 140px; overflow: hidden; z-index: 2; pointer-events: none; }
+    .xcard .xrib i { position: absolute; top: 30px; right: -40px; width: 180px; text-align: center; transform: rotate(45deg); background: #2b8fd6; color: #fff; font: 700 18px/1 inherit; font-family: inherit; font-style: normal; padding: 9px 0; }
+    .xcard .info { padding: 14px 8px 8px; }
+    .xcard .info h3 { font-size: 20px; }
+    .xcard .info p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 15px; color: #b8c3ce; }
+    .xcard .info p svg { flex: none; color: #9fb0c0; }
+    #xbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; background: #0c1520; border-top: 1px solid var(--xline); padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); }
+    #xbar button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #9aa6b2; font-size: 14px; position: relative; }
+    #xbar button svg { width: 26px; height: 26px; }
+    #xbar button.on { color: #2b8fd6; }
+    #xbar button.on::before { content: ''; position: absolute; top: -9px; left: 18%; right: 18%; height: 3px; border-radius: 2px; background: #2b8fd6; }
+    .bstats3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 4px 18px 16px; }
+    .bstats3 div { padding: 14px 6px; text-align: center; background: var(--xcard); border: 1px solid var(--xline); border-radius: 18px; font-size: 15px; line-height: 1.3; color: #d5dde5; }
+    .bstats3 b { display: block; margin-top: 6px; font-size: 30px; line-height: 1; color: #fff; }
+    .xtabs { display: flex; margin: 0 18px 14px; padding: 4px; border-radius: 999px; background: var(--xcard); border: 1px solid var(--xline); }
+    .xtabs button { flex: 1; padding: 12px 0; border-radius: 999px; color: #c9d2db; font-size: 16px; font-weight: 500; }
+    .xtabs button.on { background: #2b8fd6; color: #fff; }
+    #xb-list { padding: 0 18px 8px; display: flex; flex-direction: column; gap: 12px; }
+    #broker-body .rec.xrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px; margin: 0; background: var(--xcard); border: 1px solid var(--xline); border-radius: 20px; }
+    .xrow .thumb { width: 98px; height: 80px; flex: none; border-radius: 12px; background-size: cover; background-position: center; }
+    .xrow .xri { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .xrow .xri b { font-size: 17px; line-height: 1.25; }
+    .xrow .xri strong { font-size: 17px; }
+    .xrow .xri span { font-size: 13px; color: #aab5c0; }
+    .xrow .xact { display: flex; gap: 14px; align-items: flex-start; }
+    .xrow .xact button { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #d5dde5; }
+    .xrow .xact small { font-size: 13px; color: #c9d2db; }
+    .xrow .sw { width: 46px; height: 28px; border-radius: 999px; background: #3a4654; position: relative; }
+    .xrow .sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: left .15s; }
+    .xrow .sw.on { background: #2b8fd6; } .xrow .sw.on::after { left: 21px; }
+    .xrow .sw.pend { background: #a67c12; }
+    .xrow .xpick { flex-basis: 100%; }
+    #b-list, #b-list-out { display: none; }
+
+
+    /* ---------- Redesign 4: glowing Explore ---------- */
+    body.x4 { background: radial-gradient(120% 34% at 50% 0, #0b2c47 0, #04090f 65%) no-repeat, #03070c; }
+    body:not(.x4) .xsec, body:not(.x4) #xfeat, body:not(.x4) #xbar, body:not(.x4) #xchips, body:not(.x4) #xmap-wrap, body:not(.x4) .fi-new, body.x4 .fi-old { display: none !important; }
+    body.x4 .hero, body.x4 .intro, body.x4 .sub, body.x4 .navcards, body.x4 #recent, body.x4 h2.section { display: none; }
+    body.x4 #view-home { padding-top: calc(env(safe-area-inset-top) + 82px); }
+    body.x4 #hdr { background: linear-gradient(180deg, rgba(4,10,18,.97), rgba(4,10,18,.72)); }
+    body.x4 .hbrand { opacity: 1; font-size: 27px; text-shadow: 0 0 18px rgba(60,170,255,.55); }
+    body.x4 .hlogo { filter: drop-shadow(0 0 10px rgba(60,170,255,.7)); }
+    body.x4 #h-me { display: none; }
+    body.x4 .hicons { gap: 10px; align-items: center; }
+    body.x4 .hicons button { width: 48px; height: 48px; padding: 0; display: grid; place-items: center; border-radius: 15px; background: rgba(255,255,255,.07); border: 1px solid rgba(120,185,235,.28); box-shadow: 0 0 14px rgba(40,150,230,.18); }
+    body.x4 .xsearchcard { margin: 6px 14px 20px; padding: 14px; border-radius: 28px; border: 1px solid rgba(70,200,255,.4); background: linear-gradient(180deg, rgba(14,30,48,.92), rgba(5,11,19,.92)); box-shadow: 0 0 36px rgba(40,160,230,.25), inset 0 0 22px rgba(40,160,230,.07); }
+    body.x4 .xsearchcard .searchbar { padding: 0; }
+    body.x4 .xsearchcard .search { background: rgba(4,10,18,.8); border: 1px solid rgba(130,170,210,.3); border-radius: 999px; height: 50px; }
+    body.x4 .xsearchcard .filter-btn { background: rgba(4,10,18,.8); border: 1px solid rgba(130,170,210,.3); border-radius: 50%; width: 50px; height: 50px; }
+    #xquick { display: flex; gap: 8px; }
+    #xquick button { flex: 1; min-height: 50px; padding: 6px 4px; border-radius: 15px; border: 1.5px solid #3bd4ff; background: rgba(20,70,105,.4); color: #fff; font-weight: 700; font-size: 13px; line-height: 1.15; font-family: inherit; box-shadow: 0 0 14px rgba(59,212,255,.55), inset 0 0 12px rgba(59,212,255,.2); text-shadow: 0 0 8px rgba(59,212,255,.6); }
+    #xquick button[data-q="saved"] { flex: .62; }
+    #xquick button.on { background: rgba(59,212,255,.34); box-shadow: 0 0 20px rgba(59,212,255,.85), inset 0 0 14px rgba(59,212,255,.4); }
+    body.x4 .filter-panel { margin: -6px 14px 18px; }
+    .xsec { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 18px 12px; }
+    .xsec h2 { margin: 0; font-size: 20px; font-weight: 700; }
+    .xsec a { color: #4fb4de; font-weight: 600; font-size: 16px; white-space: nowrap; margin-left: 10px; }
+    #xfeat { scroll-padding-left: 18px; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 18px 22px; scrollbar-width: none; }
+    #xfeat::-webkit-scrollbar { display: none; }
+    .fcard { flex: 0 0 82%; scroll-snap-align: start; border-radius: 22px; overflow: hidden; border: 1px solid rgba(110,180,230,.3); background: rgba(14,26,40,.92); box-shadow: 0 0 22px rgba(40,150,230,.2); }
+    .fcard .fph { position: relative; height: 150px; background-size: cover; background-position: center; }
+    .fcard .fph::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,7,12,0) 45%, rgba(2,7,12,.7)); }
+    .fcard .frow { position: absolute; z-index: 1; left: 12px; bottom: 10px; display: flex; gap: 8px; align-items: center; }
+    .fcard .fprice { padding: 5px 12px; border-radius: 12px; background: rgba(60,64,70,.75); font-size: 18px; font-weight: 700; }
+    .fcard .fver { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; border: 1.5px solid #34d27b; background: rgba(6,40,24,.75); color: #6ee7a0; font-size: 13px; font-weight: 600; }
+    .fcard .fin { padding: 10px 14px 12px; display: flex; align-items: center; gap: 10px; }
+    .fcard .ftx { flex: 1; min-width: 0; }
+    .fcard .ftx b { display: block; font-size: 20px; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fcard .ftx span { display: block; font-size: 14.5px; color: #b8c3ce; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .gic { display: flex; gap: 8px; align-items: center; color: #b8c3ce; font-size: 13px; }
+    .gic i { display: inline-flex; align-items: center; gap: 3px; font-style: normal; }
+    body.x4 #list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; overflow: visible; padding: 0 18px 28px; }
+    body.x4 #list .empty { grid-column: 1 / -1; }
+    body.x4 .item.xcard { flex: none; padding: 0; border-radius: 22px; background: rgba(12,22,34,.92); border: 1px solid rgba(110,180,230,.25); box-shadow: 0 0 16px rgba(40,150,230,.14); }
+    .gcard .gph { position: relative; height: 128px; background-size: cover; background-position: center; border-radius: 22px 22px 0 0; }
+    .gcard .xheart { top: 8px; right: 8px; bottom: auto; width: 38px; height: 38px; }
+    .gcard .gst { position: absolute; z-index: 1; top: 8px; left: 8px; }
+    .gcard .gst .badge { padding: 2px 10px; font-size: 11.5px; background: rgba(2,7,12,.75); border: 1.5px solid currentColor; }
+    .gcard .gin { padding: 10px 12px 12px; }
+    .gcard .gin b { display: block; font-size: 20px; }
+    .gcard .gin .gs { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 4px; color: #b8c3ce; font-size: 14px; }
+    .gcard .gin .gs > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    #xmap-wrap button#xmap-x { display: none; }
+    body.x4 #xmap-wrap { display: none !important; }
+    body.x4 #xmap-wrap.full { display: block !important; position: fixed; left: 0; right: 0; top: 0; bottom: 84px; margin: 0; border-radius: 0; border: 0; z-index: 55; }
+    body.x4 #xmap-wrap.full #xmap { height: 100%; }
+    body.x4 #xmap-wrap.full button#xmap-x { display: block; position: absolute; z-index: 1000; top: calc(env(safe-area-inset-top) + 14px); left: 14px; padding: 10px 16px; border-radius: 14px; background: rgba(4,10,18,.9); border: 1.5px solid #3bd4ff; color: #fff; font-weight: 700; box-shadow: 0 0 14px rgba(59,212,255,.5); }
+    #xbar { background: linear-gradient(180deg, rgba(10,24,40,.97), rgba(4,10,18,.99)); border-top: 1px solid rgba(70,200,255,.35); box-shadow: 0 -4px 26px rgba(40,160,230,.2); align-items: flex-end; padding-top: 12px; }
+    #xbar button.on { text-shadow: 0 0 10px rgba(59,212,255,.9); color: #3bd4ff; }
+    #xbar button.on svg { filter: drop-shadow(0 0 6px rgba(59,212,255,.9)); }
+    #xbar button.on::before { display: none; }
+    #xbar button[data-x="list"] { flex: 1.15; color: #fff; margin-top: -22px; }
+    #xbar button[data-x="list"] span { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; padding: 10px 0; border-radius: 26px; border: 1.5px solid #3bd4ff; background: rgba(20,70,105,.7); box-shadow: 0 0 18px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.25); }
+
+
+    #xbar { left: 50%; right: auto; width: calc(100% - 32px); max-width: 420px; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom)); gap: 0; padding: 6px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); align-items: stretch; }
+    #xbar button { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 5px; min-height: 0; margin: 0; padding: 10px 2px 9px; border: 0; border-radius: 999px; background: none; box-shadow: none; color: #cfeaff; font-size: 11px; font-weight: 700; line-height: 1.15; white-space: nowrap; letter-spacing: -.1px; font-family: inherit; text-align: center; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
+    #xbar button svg { width: 24px; height: 24px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
+    #xbar button + button::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: linear-gradient(180deg, transparent, rgba(59,212,255,.7), transparent); box-shadow: 0 0 6px rgba(59,212,255,.7); }
+    #xbar button.on { background: rgba(59,212,255,.2); box-shadow: 0 0 16px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.3); color: #fff; }
+    #xbar button.on svg { fill: #3bd4ff; }
     /* ---------- Search page ---------- */
     .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
     .sp-top .search { height: 58px; }
@@ -239,19 +430,6 @@
     #app-banner .ab-go { flex: 0 0 auto; padding: 8px 14px; border-radius: 999px; background: #1f7f9c; color: #fff; font-weight: 700; font-size: 13px; }
     body.has-app-banner { padding-top: 56px; }
     body.has-app-banner #hdr { top: 56px; }
-    /* signed-in Home: compact top bar + a row of available listings (no profile/description) */
-    #view-home.compact .hero, #view-home.compact .intro, #view-home.compact .sub { display: none; }
-    #view-home.compact { padding-top: calc(env(safe-area-inset-top) + 66px); }
-    #trend { display: none; }
-    #view-home.compact #trend { display: block; }
-    #trend .thead { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 18px 10px; }
-    #trend .thead h2 { margin: 0; font-size: 20px; color: #fff; }
-    #trend .thead a { color: #4fb4de; font-weight: 600; font-size: 14px; }
-    #trend .trow { display: flex; gap: 12px; overflow-x: auto; padding: 0 18px 6px; scroll-snap-type: x proximity; scroll-padding-left: 18px; -webkit-overflow-scrolling: touch; }
-    #trend .tcard { flex: 0 0 62%; max-width: 250px; border-radius: 18px; overflow: hidden; background: #0b151d; border: 1px solid var(--line); scroll-snap-align: start; cursor: pointer; }
-    #trend .tph { height: 132px; background-size: cover; background-position: center; }
-    #trend .tp { padding: 10px 12px 0; font-weight: 700; color: #6fd3e6; font-size: 17px; }
-    #trend .ta { padding: 2px 12px 12px; color: #b0b3b8; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #menu { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.55); }
     .m-sheet { height: 50vh; height: 50dvh; background: var(--bg); overflow-y: auto; border-radius: 0 0 28px 28px; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
     .m-top { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 18px) 18px 18px; border-bottom: 1px solid #0c141c; }
@@ -332,6 +510,7 @@
     <div class="hicons">
       <button id="h-search" aria-label="Search"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
       <button id="h-bell" aria-label="Notifications"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.500 2.500 0 002.400-1.800h-4.800A2.500 2.500 0 0012 22zm7-5.500V11a7 7 0 10-14 0v5.500L3 18.500V20h18v-1.500z"/></svg></button>
+      <button id="h-me" class="hidden" aria-label="Account"></button>
       <button id="h-menu" aria-label="Menu"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
@@ -348,8 +527,6 @@
     </div>
     <p class="sub">Explore local rentals, submit your property, or start a guided search with broker support throughout the deal.</p>
 
-    <div id="trend"><div class="thead"><h2>Available now</h2><a href="#/home" id="trend-all">View all</a></div><div class="trow" id="trow"></div></div>
-
     <div class="navcards">
       <button class="navcard" id="nc-browse">
         <div class="tile" id="tile-browse"><svg width="38" height="38" viewBox="0 0 40 40"><rect x="14" y="4" width="12" height="30" rx="1.5" fill="#d7dce1"/><rect x="4" y="20" width="14" height="14" rx="1.5" fill="#aeb4ba"/><rect x="22" y="16" width="14" height="18" rx="1.5" fill="#6d757c"/><rect x="25" y="20" width="3" height="3" fill="#8ec9ee"/><rect x="30" y="20" width="3" height="3" fill="#8ec9ee"/><rect x="25" y="25" width="3" height="3" fill="#8ec9ee"/><rect x="30" y="25" width="3" height="3" fill="#8ec9ee"/><rect x="7" y="24" width="3" height="3" fill="#fff"/><rect x="12" y="24" width="3" height="3" fill="#fff"/></svg></div>
@@ -365,14 +542,16 @@
 
     <div id="recent"></div>
     <h2 class="section" id="rentals">Available rentals</h2>
-    <div class="searchbar">
+    <div class="xsearchcard"><div class="searchbar">
       <label class="search">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input id="q" type="search" placeholder="Search" />
       </label>
-      <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg></button>
+      <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg class="fi-old" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><svg class="fi-new" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
     </div>
+</div>
     <div class="filter-panel hidden" id="filter-panel">
+      <div id="xchips"></div>
       <label>Max price per month</label>
       <div class="row"><span>$0</span><span id="price-label">$5,000</span></div>
       <input type="range" id="price" min="300" max="5000" step="50" value="5000" />
@@ -386,6 +565,11 @@
         <input type="range" id="radius" min="1" max="51" step="1" value="51" />
       </div>
     </div>
+    <div class="xsec"><h2>Welcome To Your Next Home</h2><a href="#/home" id="xsee">See All</a></div>
+    <div id="xfeat"></div>
+    <div id="xmap-wrap" class="hidden"><button type="button" id="xmap-x">✕ Close map</button><div id="xmap"></div></div>
+    <div id="xpager" style="display:none"><i></i></div>
+    <div class="xsec"><h2 id="xrent">Available Rentals</h2></div>
     <div class="items" id="list"></div>
   </section>
 
@@ -537,6 +721,8 @@
     <a href="#/list" data-t="list"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a>
     <a href="#/find" data-t="find"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find a Rental</a>
   </nav>
+
+  <nav id="xbar" class="hidden"><button type="button" data-q="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</button><button type="button" data-q="find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.300-4.300"/></svg>Find Your Rental</button><button type="button" data-q="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.500-8-11a4.500 4.500 0 018-2.800A4.500 4.500 0 0120 10c0 5.500-8 11-8 11z"/></svg>Saved</button></nav>
 
   <script>
     // ================= Supabase =================
@@ -705,10 +891,104 @@
     $('radius').oninput = () => { const v = Number($('radius').value); radiusKm = v > 50 ? Infinity : v; $('radius-label').textContent = v > 50 ? 'Any distance' : v + ' km'; renderList(); };
     const thumbBg = (l) => `background-image:${l.image_url ? `url('${esc(l.image_url)}'),` : ''}linear-gradient(135deg,#243247,#0b1522)`;
 
+    // ---- Saved (this phone only), details, quick filters ----
+    const SAVED_KEY = 'locally-saved';
+    const readSaved = () => { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]').map(String); } catch (e) { return []; } };
+    let savedIds = readSaved();
+    const toggleSaved = (id) => { id = String(id); savedIds = savedIds.includes(id) ? savedIds.filter(x => x !== id) : [...savedIds, id]; try { localStorage.setItem(SAVED_KEY, JSON.stringify(savedIds)); } catch (e) {} };
+    const FEATURES = ['Solar Backup', 'Borehole Water'];
+    const hasFeat = (l, f) => Array.isArray(l.features) && l.features.includes(f);
+    const hasNum = (v) => v != null && v !== '' && !isNaN(Number(v));
+    function factBits(l) {
+      const bits = [];
+      if (hasNum(l.bedrooms)) bits.push(`🛏 ${Number(l.bedrooms)} Bed${Number(l.bedrooms) === 1 ? '' : 's'}`);
+      if (hasNum(l.bathrooms)) bits.push(`🛁 ${Number(l.bathrooms)} Bath${Number(l.bathrooms) === 1 ? '' : 's'}`);
+      (Array.isArray(l.features) ? l.features : []).forEach(f => bits.push(esc(f)));
+      return bits;
+    }
+    function factsHtml(l) {
+      const bits = factBits(l);
+      return bits.length ? `<div class="facts">${bits.join(' • ')}</div>` : '';
+    }
+    const xf = new Set();
+    const passX = (l) => (!xf.has('Solar Backup') || hasFeat(l, 'Solar Backup')) && (!xf.has('Borehole Water') || hasFeat(l, 'Borehole Water'))
+      && (!xf.has('u500') || Number(l.price) < 500) && (!xf.has('beds24') || (hasNum(l.bedrooms) && Number(l.bedrooms) >= 2 && Number(l.bedrooms) <= 4))
+      && (!xf.has('saved') || savedIds.includes(String(l.id)));
+
+    // ---- Map of the listings shown (pins sit on the suburb, never on a street address) ----
+    let xmap = null, xlayer = null, xpts = [], leafletP = null;
+    function loadLeaflet() {
+      if (window.L) return Promise.resolve();
+      if (leafletP) return leafletP;
+      leafletP = new Promise((res, rej) => {
+        const c = document.createElement('link'); c.rel = 'stylesheet'; c.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'; document.head.appendChild(c);
+        const j = document.createElement('script'); j.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js'; j.onload = res; j.onerror = () => { leafletP = null; rej(); }; document.head.appendChild(j);
+      });
+      return leafletP;
+    }
+    const jitter = (l) => { const h = Number(l.id) || 0; return [((h * 37) % 11 - 5) * 0.0006, ((h * 53) % 11 - 5) * 0.0006]; };
+    function fitMap() { if (!xmap || !xpts.length) return; xmap.invalidateSize(); xpts.length === 1 ? xmap.setView(xpts[0], 14) : xmap.fitBounds(xpts, { padding: [34, 34], maxZoom: 15 }); }
+    function renderMap(rows) {
+      const wrap = $('xmap-wrap');
+      const pts = rows.filter(l => hasNum(l.latitude) && hasNum(l.longitude));
+      if (!pts.length) { wrap.classList.add('hidden'); return; }
+      wrap.classList.remove('hidden');
+      loadLeaflet().then(() => {
+        if (!xmap) {
+          xmap = L.map('xmap', { dragging: !L.Browser.mobile, tap: false, scrollWheelZoom: false });
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '© OpenStreetMap © CARTO' }).addTo(xmap);
+          xlayer = L.layerGroup().addTo(xmap);
+        }
+        xlayer.clearLayers(); xpts = [];
+        pts.forEach(l => {
+          const j = jitter(l), p = [Number(l.latitude) + j[0], Number(l.longitude) + j[1]]; xpts.push(p);
+          L.marker(p, { icon: L.divIcon({ className: 'xpin', html: `<span>${money(l.price)}</span>`, iconSize: [64, 72], iconAnchor: [32, 72] }) }).on('click', () => { location.hash = '#/detail/' + l.id; }).addTo(xlayer);
+        });
+        fitMap();
+      }).catch(() => wrap.classList.add('hidden'));
+    }
+
     function buildChips() {
       const sts = ['All', ...new Set(listings.map(l => l.status).filter(Boolean))];
       $('status-chips').innerHTML = sts.map(s => `<button class="chip ${s === statusFilter ? 'on' : ''}" data-s="${esc(s)}">${esc(s)}</button>`).join('');
       $('status-chips').querySelectorAll('.chip').forEach(c => c.onclick = () => { statusFilter = c.dataset.s; buildChips(); renderList(); });
+      const extra = [];
+      FEATURES.forEach(f => extra.push([f, f]));
+      extra.push(['u500', 'Under $500']);
+      extra.push(['beds24', '2-4 Beds']);
+      extra.push(['saved', '♥ Saved']);
+      const allOn = statusFilter === 'All' && xf.size === 0;
+      $('xchips').innerHTML = `<button class="${allOn ? 'on' : ''}" data-all="1">All</button>`
+        + extra.map(([k, t]) => `<button class="${xf.has(k) ? 'on' : ''}" data-x="${esc(k)}">${esc(t)}</button>`).join('');
+      $('xchips').querySelectorAll('button').forEach(c => c.onclick = () => {
+        if (c.dataset.all) { xf.clear(); statusFilter = 'All'; }
+        else xf.has(c.dataset.x) ? xf.delete(c.dataset.x) : xf.add(c.dataset.x);
+        buildChips(); renderList();
+      });
+      document.querySelector('#xbar [data-q="saved"]').classList.toggle('on', xf.has('saved'));
+    }
+
+    // Explore card (new look). Same fields as the old row: photo, status, price, title, area, distance.
+    const IC = { bed: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-7a2 2 0 012-2h14a2 2 0 012 2v7M3 15h18M7 9V7h4v2"/></svg>', bath: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4zM6 12V6a2 2 0 014 0M7 19l-1 2M17 19l1 2"/></svg>', sun: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M5 19l1.500-1.500M17.500 6.500L19 5"/></svg>', drop: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.500 6 11a6 6 0 01-12 0c0-4.500 6-11 6-11z"/></svg>' };
+    const icons = (l) => {
+      const b = [];
+      if (hasNum(l.bedrooms)) b.push(`<i>${IC.bed}${Number(l.bedrooms)}</i>`);
+      if (hasNum(l.bathrooms)) b.push(`<i>${IC.bath}${Number(l.bathrooms)}</i>`);
+      if (hasFeat(l, 'Solar Backup')) b.push(`<i style="color:#facc15">${IC.sun}</i>`);
+      if (hasFeat(l, 'Borehole Water')) b.push(`<i style="color:#7cc8e8">${IC.drop}</i>`);
+      return b.length ? `<span class="gic">${b.join('')}</span>` : '';
+    };
+    const suburb = (l) => { const a = String(l.area || '').split(',')[0].trim(); return a && !/^mutare$/i.test(a) ? a : l.title; };
+    function cardHtml(l) {
+      return `<div class="item xcard gcard" data-id="${esc(l.id)}"><div class="gph" style="${thumbBg(l)}"><span class="gst">${statusBadge(l.status)}</span><button class="xheart ${savedIds.includes(String(l.id)) ? 'on' : ''}" data-save="${esc(l.id)}" aria-label="Save">♥</button></div>
+        <div class="gin"><b>${money(l.price)}/mo</b><div class="gs"><span>${esc(suburb(l))}${distKm(l) != null ? ' • ' + fmtKm(distKm(l)) : ''}</span>${icons(l)}</div></div></div>`;
+    }
+    function renderFeat() {
+      const f = listings.filter(l => l.status === 'Available').slice().sort((a, b) => Number(b.id) - Number(a.id)).slice(0, 6);
+      $('xfeat').innerHTML = f.map(l => `<div class="fcard" data-id="${esc(l.id)}"><div class="fph" style="${thumbBg(l)}"><div class="frow"><span class="fprice">${money(l.price)}/mo</span><span class="fver"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>Verified</span></div></div>
+        <div class="fin"><div class="ftx"><b>${esc(suburb(l))}</b><span>${esc(l.description || l.title)}</span></div>${icons(l)}</div></div>`).join('');
+      $('xfeat').querySelectorAll('.fcard').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
+      $('xfeat').previousElementSibling.style.display = $('xfeat').style.display = f.length ? '' : 'none';
     }
 
     function rowHtml(l) {
@@ -721,23 +1001,18 @@
       const q = $('q').value.trim().toLowerCase();
       const max = Number($('price').value);
       $('price-label').textContent = money(max);
-      let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter));
+      let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter) && passX(l));
       if (userLoc) {
         if (radiusKm !== Infinity) rows = rows.filter(l => { const d = distKm(l); return d != null && d <= radiusKm; });
         rows = rows.map(l => ({ l, d: distKm(l) })).sort((a, b) => (a.d == null) - (b.d == null) || a.d - b.d).map(x => x.l);
       }
-      $('list').innerHTML = rows.length ? rows.map(rowHtml).join('') : '<div class="empty">No places match your search.</div>';
+      $('list').dataset.mode = session ? 'n' : 'o';
+      $('list').innerHTML = rows.length ? rows.map(session ? cardHtml : rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
-      renderTrend();
+      $('list').querySelectorAll('.xheart').forEach(b => b.onclick = (e) => { e.stopPropagation(); toggleSaved(b.dataset.save); b.classList.toggle('on'); if (xf.has('saved')) renderList(); });
+      renderFeat();
       renderRecent();
     }
-    function renderTrend() {
-      const t = listings.filter(l => String(l.status || '').toLowerCase() !== 'rented').slice(0, 8);
-      $('trow').innerHTML = t.length ? t.map(l => `<div class="tcard" data-id="${esc(l.id)}"><div class="tph" style="${thumbBg(l)}"></div><div class="tp">${money(l.price)}/mo</div><div class="ta">${esc(l.title)} • ${esc(l.area)}</div></div>`).join('') : '';
-      $('trow').querySelectorAll('.tcard').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; });
-      $('trend').style.display = t.length ? '' : 'none';
-    }
-    $('trend-all').onclick = (e) => { e.preventDefault(); $('rentals').scrollIntoView({ behavior: 'smooth' }); };
     function bindRows(root) { root.querySelectorAll('.item').forEach(el => el.onclick = () => { location.hash = '#/detail/' + el.dataset.id; }); }
 
     // ---- Photo gallery + zoom viewer ----
@@ -782,6 +1057,13 @@
     document.addEventListener('contextmenu', e => { if (e.target.closest('.gal-wrap, #viewer')) e.preventDefault(); });
     document.addEventListener('dragstart', e => { if (e.target.closest('.gal-wrap, #viewer')) e.preventDefault(); });
 
+    // Counts one view per listing per visit (the broker's own views are not counted)
+    function bumpView(l) {
+      if (isAdmin) return;
+      const k = 'lv-' + l.id;
+      try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch (e) {}
+      try { Promise.resolve(sb.rpc('bump_listing_view', { p_id: Number(l.id) })).catch(() => {}); } catch (e) {}
+    }
     function renderDetail(id) {
       const l = listings.find(x => String(x.id) === String(id));
       if (!l) { location.hash = '#/home'; return; }
@@ -790,8 +1072,9 @@
       const slides = imgs.length ? imgs.map((u, i) => `<div class="slide" data-i="${i}" style="background-image:url('${esc(u)}')"></div>`).join('') : `<div class="slide" style="${thumbBg(l)};cursor:default"></div>`;
       $('view-detail').innerHTML = `<div class="gal-wrap"><div class="gal" id="gal">${slides}</div><div class="wm"></div>${imgs.length > 1 ? `<div class="gal-count" id="gal-count">1 / ${imgs.length}</div>` : ''}<button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
         <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}${distKm(l) != null ? ` • ${fmtKm(distKm(l))} away` : ''}</div>
-        <div class="price">${money(l.price)}/mo</div><p>${esc(l.description || '')}</p>
+        <div class="price">${money(l.price)}/mo</div>${factsHtml(l)}<p>${esc(l.description || '')}</p>
         <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
+      bumpView(l);
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
       if (imgs.length) {
         const g = $('gal');
@@ -813,17 +1096,21 @@
         localStorage.setItem('locally_after', '#/' + v + (arg ? '/' + arg : ''));
         location.replace('#/login'); return;
       }
-      $('view-home').classList.toggle('compact', !!session);
       VIEWS.forEach(x => $('view-' + x).classList.toggle('hidden', x !== v));
       closeMenu();
 
       const showHdr = ['home', 'list', 'find', 'broker'].includes(v);
       $('hdr').classList.toggle('hidden', !showHdr);
       $('hdr').classList.toggle('titled', ['list', 'find', 'broker'].includes(v));
-      $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: isAdmin ? 'Broker Panel' : 'Cash Flow' })[v] || '';
-      $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker'].includes(v));
+      $('hdr-title').textContent = ({ list: 'List Your Property', find: 'Find a Rental', broker: isAdmin ? 'Broker Dashboard' : 'Cash Flow' })[v] || '';
+      $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker'].includes(v) || (session && v === 'home'));
      
-      document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker'].includes(v) ? '0' : '';
+      document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker'].includes(v) || (session && v === 'home') ? '0' : '';
+      document.body.classList.toggle('x4', !!session && v === 'home'); $('q').placeholder = session ? 'Search suburb, street...' : 'Search';
+      document.body.classList.toggle('xbrk', v === 'broker' && isAdmin);
+      $('xbar').classList.toggle('hidden', !(session && v === 'home'));
+      if (session && v === 'home') document.body.style.paddingBottom = '96px';
+      if (v === 'home' && $('list').dataset.mode && $('list').dataset.mode !== (session ? 'n' : 'o')) renderList();
 
       let active = tabFor(v);
       if (v === 'login') active = tabFor((localStorage.getItem('locally_after') || '#/list').replace('#/', '')) || 'list';
@@ -835,6 +1122,7 @@
       if (v === 'search') { $('sp-q').value = ''; renderSearch(); setTimeout(() => $('sp-q').focus(), 50); }
       if (v === 'detail') renderDetail(arg);
       if (v === 'broker') renderBroker();
+      if (v === 'home' && xmap) setTimeout(fitMap, 60);
       if (v === 'pay') renderPay();
       if (v === 'home') renderRecent();
       if (v === 'find') setFindMode(arg ? 'view' : (findMode || 'search'), arg);
@@ -843,7 +1131,7 @@
 
     function onScroll() {
       const raw = (location.hash || '#/home').replace(/^#\/?/, '').split('/')[0];
-      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : (session ? true : window.scrollY > 200));
+      $('hdr').classList.toggle('solid', raw !== 'home' && raw !== '' ? true : window.scrollY > 200);
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', route);
@@ -910,6 +1198,7 @@
     }
     function closeMenu() { $('menu').classList.add('hidden'); }
     $('h-menu').onclick = openMenu;
+    $('h-me').onclick = openMenu;
     $('h-bell').onclick = () => toast('No new notifications');
     $('m-close').onclick = closeMenu;
     $('menu').addEventListener('click', e => { if (e.target === $('menu')) closeMenu(); });
@@ -1002,6 +1291,23 @@
       setNotice('n-login', error ? error.message : 'Password reset email sent.', !error);
     };
 
+    $('xbar').onclick = (e) => {
+      const b = e.target.closest('button[data-q]'); if (!b) return;
+      if (b.dataset.q === 'list') { location.hash = '#/list'; return; }
+      if (b.dataset.q === 'find') { location.hash = '#/find'; return; }
+      xf.has('saved') ? xf.delete('saved') : xf.add('saved'); buildChips(); renderList(); $('xrent').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    $('xsee').onclick = (e) => { e.preventDefault(); $('xrent').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+    $('list').addEventListener('scroll', () => { const l = $('list'), m = l.scrollWidth - l.clientWidth; $('xpager').firstChild.style.left = (m > 0 ? l.scrollLeft / m * 50 : 0) + '%'; }, { passive: true });
+    function renderMe() {
+      const u = session && session.user, b = $('h-me');
+      if (!u) { b.classList.add('hidden'); return; }
+      const md = u.user_metadata || {};
+      const full = String(md.full_name || md.name || (u.email || '').split('@')[0] || '').trim(), first = full.split(/\s+/)[0];
+      const pic = md.avatar_url || md.picture;
+      b.innerHTML = `<span class="av" style="${pic ? `background-image:url('${esc(pic)}')` : ''}">${pic ? '' : esc((first[0] || '?').toUpperCase())}</span><span class="nm">${esc(full)}</span>`;
+      b.classList.remove('hidden');
+    }
     async function checkAdmin() {
       isAdmin = false;
       if (session) {
@@ -1015,7 +1321,7 @@
         }
       }
       $('nc-broker').classList.toggle('hidden', !(isAdmin || isViewer));
-      $('view-home').classList.toggle('compact', !!session); onScroll();
+      renderMe();
     }
 
     sb.auth.onAuthStateChange((evt, s) => {
@@ -1198,7 +1504,13 @@
       if (!isAdmin && !isViewer) { body.innerHTML = '<div class="empty">This area is for admins only.</div>'; return; }
       if (!isAdmin) { renderCashViewer(body); return; }
       const gridIcon = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4fb4de" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>';
-      body.innerHTML = `<div class="navcards" style="padding-top:0">
+      const cnt = (st) => listings.filter(l => l.status === st).length;
+      body.innerHTML = `<div class="searchbar"><label class="search"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="xb-q" type="search" placeholder="Search Mutare Rentals..." /></label><button class="filter-btn" id="xb-reset" aria-label="Reset filters"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button></div>
+        <div id="xb-chips"></div>
+        <div class="bstats3"><div>Active<br>Listings:<b>${cnt('Available')}</b></div><div>Pending<br>Reviews:<b id="xb-pend">${cnt('Pending')}</b></div><div>Total<br>Views:<b>${(() => { const v = listings.reduce((a, l) => a + (Number(l.views) || 0), 0); return v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v; })()}</b></div></div>
+        <div class="xtabs" id="xb-tabs"><button class="on" data-t="Available">Active</button><button data-t="Pending">Pending</button><button data-t="Rented">Rented</button></div>
+        <div id="xb-list"></div>
+        <div class="navcards" style="padding-top:0">
         <button class="navcard simple" id="b-land"><div class="tile">${gridIcon}</div><div class="t"><h3>Landlord Submissions</h3></div></button>
         <div id="b-land-out"></div>
         <button class="navcard simple" id="b-view"><div class="tile">${gridIcon}</div><div class="t"><h3>Viewing Requests</h3></div></button>
@@ -1224,7 +1536,7 @@
         if (r.monthly_rent == null || !r.property_title) { toast('This submission needs a title and a monthly rent before it can be published.'); return; }
         const pt = r.latitude != null ? { lat: r.latitude, lng: r.longitude } : coordsFor(r.neighborhood, r.city, r.address2);
         const row = { title: r.property_title, area: (r.neighborhood || r.city || '').trim(), price: r.monthly_rent, status: 'Available', description: r.description || null,
-          image_url: r.image_url || null, images: (Array.isArray(r.images) && r.images.length) ? r.images : null, latitude: pt ? pt.lat : null, longitude: pt ? pt.lng : null };
+          image_url: r.image_url || null, images: (Array.isArray(r.images) && r.images.length) ? r.images : null, latitude: pt ? pt.lat : null, longitude: pt ? pt.lng : null, bedrooms: r.bedrooms ?? null, bathrooms: r.bathrooms ?? null };
         if (!confirm(`Publish "${row.title}" in ${row.area || '(no area)'} at ${money(row.price)}/mo?\n\nThe street address and phone number stay private.`)) return;
         b.disabled = true;
         const ins = await sb.from('listings').insert(row).select('id').single();
@@ -1263,16 +1575,75 @@
 
       // ---- Manage Listings: one-tap status (Available / Pending / Rented) ----
       $('b-list').onclick = () => toggleRecords('listings', 'b-list-out', r =>
-        `<div class="rec"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)}
-          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button></div></div>`, 'title');
+        `<div class="rec mrow"><div class="thumb" style="${thumbBg(listings.find(x => String(x.id) === String(r.id)) || r)}"></div><div class="mi"><b>${esc(r.title)}</b><br>${esc(r.area || '')} • ${money(r.price)}/mo<br>Status: ${statusBadge(r.status)} <span style="color:#aab5c0;font-size:12px">&nbsp;👁 ${Number(r.views) || 0}</span>${factsHtml(r)}</div>
+          <div class="vbtns"><button class="go" data-lid="${esc(r.id)}" data-s="Available">Available</button><button data-lid="${esc(r.id)}" data-s="Pending">Pending</button><button data-lid="${esc(r.id)}" data-s="Rented">Rented</button><button data-edit="${esc(r.id)}">Edit</button></div></div>`, 'title');
       $('b-list-out').onclick = async (e) => {
+        const ed = e.target.closest('button[data-edit]');
+        if (ed) {
+          const row = ed.closest('.rec'), old = row.querySelector('.medit');
+          if (old) { old.remove(); return; }
+          const r = listings.find(x => String(x.id) === ed.dataset.edit) || ($('b-list-out')._rows || []).find(x => String(x.id) === ed.dataset.edit) || {};
+          const d = document.createElement('div'); d.className = 'medit';
+          d.innerHTML = `<div class="mgrid"><label>Bedrooms<input type="number" min="0" step="1" data-f="bedrooms" value="${hasNum(r.bedrooms) ? Number(r.bedrooms) : ''}" /></label><label>Bathrooms<input type="number" min="0" step="0.5" data-f="bathrooms" value="${hasNum(r.bathrooms) ? Number(r.bathrooms) : ''}" /></label></div>
+            <div class="mfeat">${FEATURES.map(f => `<label><input type="checkbox" data-feat="${esc(f)}" ${hasFeat(r, f) ? 'checked' : ''} /> ${esc(f)}</label>`).join('')}</div>
+            <div class="vbtns"><button class="go" data-esave="${esc(ed.dataset.edit)}">Save details</button></div>`;
+          row.appendChild(d); return;
+        }
+        const sv = e.target.closest('button[data-esave]');
+        if (sv) {
+          const box = sv.closest('.medit'), val = (f) => { const v = box.querySelector(`[data-f="${f}"]`).value; return v === '' ? null : Number(v); };
+          sv.disabled = true;
+          const upd = { bedrooms: val('bedrooms'), bathrooms: val('bathrooms'), features: [...box.querySelectorAll('[data-feat]')].filter(x => x.checked).map(x => x.dataset.feat) };
+          const { error } = await sb.from('listings').update(upd).eq('id', sv.dataset.esave);
+          if (error) { toast('Could not save: ' + error.message); sv.disabled = false; return; }
+          toast('Details saved');
+          await loadListings(); drawXB(); return;
+        }
         const b = e.target.closest('button[data-lid]'); if (!b) return;
         b.disabled = true;
         const { error } = await sb.from('listings').update({ status: b.dataset.s }).eq('id', b.dataset.lid);
         if (error) { toast('Could not update: ' + error.message); b.disabled = false; return; }
         toast('Status changed to ' + b.dataset.s);
-        $('b-list-out').innerHTML = ''; $('b-list').click(); loadListings();
+        await loadListings(); drawXB();
       };
+
+      // ---- Dashboard list (new look): same data, same Edit and status actions ----
+      const xb = { tab: 'Available', chip: 'All', q: '' };
+      const XB_HOUSE = /house|home|villa|duplex|bungalow|cottage/i, XB_FLAT = /flat|apartment|studio|loft|room|unit/i;
+      const pencil = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/></svg>';
+      window.drawXB = function () {
+        const q = xb.q.toLowerCase();
+        const rows = listings.filter(l => l.status === xb.tab
+          && (!q || (l.title + ' ' + (l.area || '')).toLowerCase().includes(q))
+          && (xb.chip === 'All' || (xb.chip === 'Houses' && XB_HOUSE.test(l.title)) || (xb.chip === 'Flats' && XB_FLAT.test(l.title)) || (xb.chip === 'Solar Backup' && hasFeat(l, 'Solar Backup'))));
+        $('xb-list').innerHTML = rows.length ? rows.map(l => `<div class="rec xrow" data-id="${esc(l.id)}"><div class="thumb" style="${thumbBg(l)}"></div>
+          <div class="xri"><b>${esc(l.title)}</b><strong>${money(l.price)}/mo</strong><span>📍 ${esc(l.area || '')}</span></div>
+          <div class="xact"><button data-edit="${esc(l.id)}" aria-label="Edit">${pencil}<small>Edit</small></button><button data-tog="${esc(l.id)}" aria-label="Status"><span class="sw ${l.status === 'Available' ? 'on' : l.status === 'Pending' ? 'pend' : ''}"></span><small>Status</small></button></div>
+          <div class="xpick hidden"><div class="vbtns"><button class="${l.status === 'Available' ? 'go' : ''}" data-lid="${esc(l.id)}" data-s="Available">Available</button><button class="${l.status === 'Pending' ? 'go' : ''}" data-lid="${esc(l.id)}" data-s="Pending">Pending</button><button class="${l.status === 'Rented' ? 'go' : ''}" data-lid="${esc(l.id)}" data-s="Rented">Rented</button></div></div></div>`).join('') : '<div class="empty">No listings here.</div>';
+      };
+      const listH = $('b-list-out').onclick;
+      $('xb-list').onclick = (e) => {
+        const t = e.target.closest('button[data-tog]');
+        if (t) { t.closest('.rec').querySelector('.xpick').classList.toggle('hidden'); return; }
+        return listH(e);
+      };
+      $('xb-chips').innerHTML = ['All', 'Houses', 'Flats', 'Solar Backup'].map(c => `<button class="${c === 'All' ? 'on' : ''}" data-c="${c}">${c}</button>`).join('');
+      $('xb-chips').onclick = (e) => { const b = e.target.closest('button[data-c]'); if (!b) return; xb.chip = b.dataset.c; $('xb-chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); drawXB(); };
+      $('xb-tabs').onclick = (e) => { const b = e.target.closest('button[data-t]'); if (!b) return; xb.tab = b.dataset.t; $('xb-tabs').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); drawXB(); };
+      $('xb-q').oninput = () => { xb.q = $('xb-q').value.trim(); drawXB(); };
+      $('xb-reset').onclick = () => { xb.q = ''; xb.chip = 'All'; xb.tab = 'Available'; $('xb-q').value = ''; $('xb-chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.c === 'All')); $('xb-tabs').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.t === 'Available')); drawXB(); };
+      drawXB();
+      // Pending Reviews = landlord submissions + renter requests still waiting for you
+      (async () => {
+        try {
+          let n = 0;
+          const ls = await sb.from('landlord_submissions').select('*').limit(500);
+          n += (ls.data || []).filter(r => /^pending$/i.test(String(r.status || ''))).length;
+          const rr = await sb.from('renter_requests').select('*').limit(500);
+          n += (rr.data || []).filter(r => /^pending$/i.test(String(r.request_status || ''))).length;
+          if ($('xb-pend')) $('xb-pend').textContent = n;
+        } catch (e) {}
+      })();
 
       // ---- Cash Flow: admin-only income / expense ledger ----
       const cash = $('b-cash-out');
