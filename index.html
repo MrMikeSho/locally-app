@@ -428,6 +428,16 @@
     body.x4 .gcard .gin b { font-size: 16.5px; }
     body.x4 .gcard .gin .gs { font-size: 12.5px; gap: 4px; margin-top: 3px; }
 
+
+    .xsavedrow { display: none; }
+    body.x4 .xsavedrow { display: flex; margin-top: 9px; }
+    .xsavedchip { display: flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 999px; border: 1.5px solid #3bd4ff; background: rgba(20,70,105,.4); color: #fff; font-weight: 700; font-size: 13.5px; font-family: inherit; box-shadow: 0 0 14px rgba(59,212,255,.5), inset 0 0 10px rgba(59,212,255,.18); text-shadow: 0 0 8px rgba(59,212,255,.6); }
+    .xsavedchip svg { width: 18px; height: 18px; color: #ff6b81; filter: drop-shadow(0 0 5px rgba(255,107,129,.8)); }
+    .xsavedchip b { min-width: 20px; height: 20px; line-height: 20px; border-radius: 10px; background: #3bd4ff; color: #02121c; font-size: 12px; text-align: center; padding: 0 5px; }
+    .xsavedchip b:empty { display: none; }
+    .xsavedchip.on { background: rgba(59,212,255,.34); box-shadow: 0 0 20px rgba(59,212,255,.85), inset 0 0 14px rgba(59,212,255,.4); }
+    .xsavedchip.on svg { fill: #ff6b81; }
+
     /* ---------- Search page ---------- */
     .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
     .sp-top .search { height: 58px; }
@@ -586,7 +596,7 @@
       </label>
       <button class="filter-btn" id="filter-toggle" aria-label="Filters"><svg class="fi-old" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg><svg class="fi-new" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
     </div>
-</div>
+<div class="xsavedrow"><button type="button" id="x-saved" class="xsavedchip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.500-8-11a4.500 4.500 0 018-2.800A4.500 4.500 0 0120 10c0 5.500-8 11-8 11z"/></svg><span>Saved</span><b id="x-saved-n"></b></button></div></div>
     <div class="filter-panel hidden" id="filter-panel">
       <div id="xchips"></div>
       <label>Max price per month</label>
@@ -936,7 +946,7 @@
     const SAVED_KEY = 'locally-saved';
     const readSaved = () => { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]').map(String); } catch (e) { return []; } };
     let savedIds = readSaved();
-    const toggleSaved = (id) => { id = String(id); savedIds = savedIds.includes(id) ? savedIds.filter(x => x !== id) : [...savedIds, id]; try { localStorage.setItem(SAVED_KEY, JSON.stringify(savedIds)); } catch (e) {} };
+    const toggleSaved = (id) => { setTimeout(() => window.syncSaved && syncSaved(), 0); id = String(id); savedIds = savedIds.includes(id) ? savedIds.filter(x => x !== id) : [...savedIds, id]; try { localStorage.setItem(SAVED_KEY, JSON.stringify(savedIds)); } catch (e) {} };
     const FEATURES = ['Solar Backup', 'Borehole Water'];
     const hasFeat = (l, f) => Array.isArray(l.features) && l.features.includes(f);
     const hasNum = (v) => v != null && v !== '' && !isNaN(Number(v));
@@ -1048,7 +1058,7 @@
         if (radiusKm !== Infinity) rows = rows.filter(l => { const d = distKm(l); return d != null && d <= radiusKm; });
         rows = rows.map(l => ({ l, d: distKm(l) })).sort((a, b) => (a.d == null) - (b.d == null) || a.d - b.d).map(x => x.l);
       }
-      $('list').dataset.mode = session ? 'n' : 'o';
+      $('list').dataset.mode = session ? 'n' : 'o'; if (window.syncSaved) syncSaved();
       $('list').innerHTML = rows.length ? rows.map(session ? cardHtml : rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
       $('list').querySelectorAll('.xheart').forEach(b => b.onclick = (e) => { e.stopPropagation(); toggleSaved(b.dataset.save); b.classList.toggle('on'); if (xf.has('saved')) renderList(); });
@@ -1344,6 +1354,9 @@
     };
     $('xsee').onclick = (e) => { e.preventDefault(); $('xrent').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
     $('list').addEventListener('scroll', () => { const l = $('list'), m = l.scrollWidth - l.clientWidth; $('xpager').firstChild.style.left = (m > 0 ? l.scrollLeft / m * 50 : 0) + '%'; }, { passive: true });
+
+    function syncSaved() { const b = document.getElementById('x-saved'); if (!b) return; b.classList.toggle('on', xf.has('saved')); document.getElementById('x-saved-n').textContent = savedIds.length || ''; }
+    document.getElementById('x-saved').onclick = () => { xf.has('saved') ? xf.delete('saved') : xf.add('saved'); buildChips(); renderList(); syncSaved(); document.getElementById('xrent').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
     function renderMe() {
       const u = session && session.user, b = $('h-me');
       if (!u) { b.classList.add('hidden'); return; }
