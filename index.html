@@ -606,7 +606,7 @@
     <div id="xfeat"></div>
     <div id="xmap-wrap" class="hidden"><button type="button" id="xmap-x">✕ Close map</button><div id="xmap"></div></div>
     <div id="xpager" style="display:none"><i></i></div>
-    <div class="xsec"><h2 id="xrent">Available Rentals</h2></div>
+    <div class="xsec"><h2 id="xrent">Browse Listings</h2></div>
     <div class="items" id="list"></div>
   </section>
 
@@ -1112,7 +1112,7 @@
       $('view-detail').innerHTML = `<div class="gal-wrap"><div class="gal" id="gal">${slides}</div><div class="wm"></div>${imgs.length > 1 ? `<div class="gal-count" id="gal-count">1 / ${imgs.length}</div>` : ''}<button class="d-back" id="d-back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
         <div class="d-body"><h2>${esc(l.title)}</h2><div class="st" style="color:var(--muted)">${esc(l.area)} • ${statusBadge(l.status)}${distKm(l) != null ? ` • ${fmtKm(distKm(l))} away` : ''}</div>
         <div class="price">${money(l.price)}/mo</div>${factsHtml(l)}<p>${esc(l.description || '')}</p>
-        <a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a></div>`;
+        ${l.status === 'Rented' ? '' : `<a href="#/find/${encodeURIComponent(l.id)}" class="submit" style="display:block;text-align:center;line-height:68px;margin-top:34px">Request this rental</a>`}</div>`;
       bumpView(l);
       $('d-back').onclick = () => history.length > 1 ? history.back() : (location.hash = '#/home');
       if (imgs.length) {
