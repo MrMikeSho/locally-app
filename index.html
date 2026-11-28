@@ -547,9 +547,9 @@
     #tabbar a.on svg { color: var(--accent); }
 
     /* ---------- Logged-out bar: same glowing pill as the signed-in design ---------- */
-    #tabbar { left: 50%; right: auto; width: calc(100% - 32px); max-width: 420px; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom)); gap: 0; padding: 6px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); }
-    #tabbar a { flex-direction: column; justify-content: flex-start; gap: 5px; padding: 10px 2px 9px; font-size: 11.5px; font-weight: 700; line-height: 1.15; color: #cfeaff; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
-    #tabbar a svg { width: 24px; height: 24px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
+    #tabbar { left: 50%; right: auto; width: calc(100% - 72px); max-width: 340px; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom)); gap: 0; padding: 4px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); }
+    #tabbar a { flex-direction: row; justify-content: center; gap: 6px; padding: 8px 4px; font-size: 11.5px; font-weight: 700; line-height: 1.15; color: #cfeaff; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
+    #tabbar a svg { width: 18px; height: 18px; flex: 0 0 18px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
     #tabbar a + a::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: linear-gradient(180deg, transparent, rgba(59,212,255,.7), transparent); box-shadow: 0 0 6px rgba(59,212,255,.7); }
     #tabbar a.on { background: rgba(59,212,255,.2); box-shadow: 0 0 16px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.3); color: #fff; }
 
