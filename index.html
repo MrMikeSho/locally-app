@@ -438,6 +438,7 @@
     .xsavedchip.on { background: rgba(59,212,255,.34); box-shadow: 0 0 20px rgba(59,212,255,.85), inset 0 0 14px rgba(59,212,255,.4); }
     .xsavedchip.on svg { fill: #ff6b81; }
 
+
     /* ---------- Search page ---------- */
     .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
     .sp-top .search { height: 58px; }
@@ -544,6 +545,13 @@
     #tabbar a svg { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; }
     #tabbar a.on { background: #3a3b3c; color: #fff; }
     #tabbar a.on svg { color: var(--accent); }
+
+    /* ---------- Logged-out bar: same glowing pill as the signed-in design ---------- */
+    #tabbar { left: 50%; right: auto; width: calc(100% - 32px); max-width: 420px; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom)); gap: 0; padding: 6px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); }
+    #tabbar a { flex-direction: column; justify-content: flex-start; gap: 5px; padding: 10px 2px 9px; font-size: 11.5px; font-weight: 700; line-height: 1.15; color: #cfeaff; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
+    #tabbar a svg { width: 24px; height: 24px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
+    #tabbar a + a::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: linear-gradient(180deg, transparent, rgba(59,212,255,.7), transparent); box-shadow: 0 0 6px rgba(59,212,255,.7); }
+    #tabbar a.on { background: rgba(59,212,255,.2); box-shadow: 0 0 16px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.3); color: #fff; }
 
     .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); z-index: 200; background: #12202c; border: 1px solid var(--line); padding: 14px 22px; border-radius: 16px; max-width: 86%; text-align: center; }
   </style>
