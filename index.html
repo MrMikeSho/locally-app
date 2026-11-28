@@ -18,7 +18,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -439,6 +439,27 @@
     .xsavedchip.on svg { fill: #ff6b81; }
 
 
+
+    /* ---------- Welcome hero (logged-out Home) ---------- */
+    #xhero { display: none; }
+    body.lo-hero #xhero { display: flex; flex-direction: column; min-height: 100svh; margin: 0; padding: calc(env(safe-area-inset-top) + 25vh) 20px 96px; background: linear-gradient(180deg, rgba(5,12,24,.62) 0%, rgba(5,12,24,.28) 38%, rgba(2,7,12,.78) 100%), url(IMG_1152.jpeg) center 30% / cover no-repeat; }
+    body.lo-hero .hero, body.lo-hero .intro, body.lo-hero .sub, body.lo-hero .navcards { display: none; }
+    body.lo-hero #h-search, body.lo-hero #h-bell { display: none; }
+    body.lo-hero .hbrand { opacity: 1; letter-spacing: .06em; text-transform: uppercase; color: #5bb0ee; font-weight: 700; }
+    .xh { margin: 0 0 26px; font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 50px; line-height: .98; letter-spacing: -.01em; color: #fbf6ee; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+    .xh em { font-style: italic; }
+    .xgl { padding: 18px 20px 14px; border-radius: 22px; background: rgba(20,26,36,.55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(190,205,225,.4); }
+    .xgl .xl { display: flex; align-items: baseline; flex-wrap: nowrap; white-space: nowrap; gap: 4px 10px; margin-bottom: 16px; color: #e8edf3; font-size: 17px; }
+    .xgl .xl:last-child { margin-bottom: 4px; }
+    .xgl select { appearance: none; -webkit-appearance: none; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23cfe3ff' stroke-width='1.6'/%3E%3C/svg%3E") right 2px center no-repeat; border: 0; border-bottom: 1px solid rgba(220,230,245,.45); color: #7dbbff; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 25px; padding: 0 20px 3px 0; min-width: 0; width: auto; flex: 0 1 auto; border-radius: 0; text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+    .xgl select option { color: #111; font-style: normal; font-family: 'DM Sans', sans-serif; font-size: 16px; }
+    #hs-go { margin-top: 16px; width: 100%; padding: 17px 10px; border-radius: 999px; border: 1px solid rgba(120,170,235,.55); background: linear-gradient(180deg, #1c4f8f, #0f3566); color: #fff; font-family: inherit; font-weight: 600; font-size: 15px; letter-spacing: .14em; box-shadow: 0 8px 22px rgba(10,50,110,.55), inset 0 1px 0 rgba(255,255,255,.18); }
+
+    #hbar { display: none; }
+    body.lo-hero #hbar { bottom: calc(40px + env(safe-area-inset-bottom)); }
+    body.lo-hero #hbar { display: flex; }
+    body.lo-hero #tabbar { display: none !important; }
+
     /* ---------- Search page ---------- */
     .sp-top { display: flex; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top) + 14px) 18px 10px; }
     .sp-top .search { height: 58px; }
@@ -540,18 +561,18 @@
 
     /* ---------- Tab bar ---------- */
     /* Floating, rounded pill navigation */
-    #tabbar { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; display: flex; gap: 6px; padding: 6px; background: rgba(36,37,38,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid #3a3b3c; border-radius: 999px; box-shadow: 0 8px 26px rgba(0,0,0,.55); }
-    #tabbar a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 6px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #b0b3b8; white-space: nowrap; transition: background .2s, color .2s; }
-    #tabbar a svg { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; }
-    #tabbar a.on { background: #3a3b3c; color: #fff; }
-    #tabbar a.on svg { color: var(--accent); }
+    #tabbar, #hbar { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; display: flex; gap: 6px; padding: 6px; background: rgba(36,37,38,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid #3a3b3c; border-radius: 999px; box-shadow: 0 8px 26px rgba(0,0,0,.55); }
+    #tabbar a, #hbar a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 6px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #b0b3b8; white-space: nowrap; transition: background .2s, color .2s; }
+    #tabbar a svg, #hbar a svg { width: 24px; height: 24px; margin: 0; flex: 0 0 24px; }
+    #tabbar a.on, #hbar a.on { background: #3a3b3c; color: #fff; }
+    #tabbar a.on svg, #hbar a.on svg { color: var(--accent); }
 
     /* ---------- Logged-out bar: same glowing pill as the signed-in design ---------- */
-    #tabbar { left: 50%; right: auto; width: calc(100% - 72px); max-width: 340px; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom)); gap: 0; padding: 4px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); }
-    #tabbar a { flex-direction: row; justify-content: center; gap: 6px; padding: 8px 4px; font-size: 11.5px; font-weight: 700; line-height: 1.15; color: #cfeaff; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
-    #tabbar a svg { width: 18px; height: 18px; flex: 0 0 18px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
-    #tabbar a + a::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: linear-gradient(180deg, transparent, rgba(59,212,255,.7), transparent); box-shadow: 0 0 6px rgba(59,212,255,.7); }
-    #tabbar a.on { background: rgba(59,212,255,.2); box-shadow: 0 0 16px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.3); color: #fff; }
+    #tabbar, #hbar { left: 50%; right: auto; width: calc(100% - 72px); max-width: 340px; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom)); gap: 0; padding: 4px; border-radius: 999px; border: 1.5px solid rgba(59,212,255,.7); background: rgba(8,20,34,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 0 22px rgba(59,212,255,.5), inset 0 0 14px rgba(59,212,255,.12), 0 10px 26px rgba(0,0,0,.5); }
+    #tabbar a, #hbar a { flex-direction: row; justify-content: center; gap: 6px; padding: 8px 4px; font-size: 11.5px; font-weight: 700; line-height: 1.15; color: #cfeaff; text-shadow: 0 0 9px rgba(59,212,255,.75); position: relative; }
+    #tabbar a svg, #hbar a svg { width: 18px; height: 18px; flex: 0 0 18px; color: #3bd4ff; filter: drop-shadow(0 0 6px rgba(59,212,255,.95)); }
+    #tabbar a + a::before, #hbar a + a::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: linear-gradient(180deg, transparent, rgba(59,212,255,.7), transparent); box-shadow: 0 0 6px rgba(59,212,255,.7); }
+    #tabbar a.on, #hbar a.on { background: rgba(59,212,255,.2); box-shadow: 0 0 16px rgba(59,212,255,.6), inset 0 0 12px rgba(59,212,255,.3); color: #fff; }
 
     .toast { position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%); z-index: 200; background: #12202c; border: 1px solid var(--line); padding: 14px 22px; border-radius: 16px; max-width: 86%; text-align: center; }
   </style>
@@ -572,6 +593,14 @@
 
   <!-- ===== HOME ===== -->
   <section class="view" id="view-home">
+    <section id="xhero">
+      <h2 class="xh">Welcome to Your <em>Next</em> Home</h2>
+      <div class="xgl">
+        <div class="xl">I am looking for a <select id="hs-type" aria-label="Type"><option value="">Any Type</option><option value="house">House</option><option value="cottage">Cottage</option><option value="flat">Flat</option><option value="studio">Studio</option></select></div>
+        <div class="xl">in <select id="hs-loc" aria-label="Location"><option value="">Any Location</option></select></div>
+        <div class="xl">at the price of <select id="hs-price" aria-label="Price"><option value="">Any Price</option><option value="0-300">Under $300</option><option value="300-500">$300 – $500</option><option value="500-800">$500 – $800</option><option value="800-99999">$800+</option></select></div>
+      </div>
+    </section>
     <div class="hero"></div>
     <div class="intro">
       <div class="biglogo"><div></div></div>
@@ -779,6 +808,8 @@
     <a href="#/list" data-t="list"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a>
     <a href="#/find" data-t="find"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Find a Rental</a>
   </nav>
+
+  <nav id="hbar"><a href="#" id="hb-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.300-4.300"/></svg>Search Properties</a><a href="#/list" id="hb-list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</a></nav>
 
   <nav id="xbar" class="hidden"><button type="button" data-q="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="9" r="5"/><path d="M11.500 12.500L4 20v-3l2-.5V15l2-.5.5-1.500"/></svg>List Your Property</button><button type="button" data-q="find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.300-4.300"/></svg>Find Your Rental</button><button type="button" data-q="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.500-8-11a4.500 4.500 0 018-2.800A4.500 4.500 0 0120 10c0 5.500-8 11-8 11z"/></svg>Saved</button></nav>
 
@@ -1057,15 +1088,34 @@
         <svg class="chev" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M9 5l7 7-7 7"/></svg></div>`;
     }
 
+
+    // ---- Welcome hero search (logged-out Home) ----
+    const heroF = { type: '', loc: '', price: '' };
+    const HERO_TYPE = { house: /house|home|villa|duplex|bungalow/i, cottage: /cottage/i, flat: /flat|apartment/i, studio: /studio|loft|room/i };
+    const passHero = (l) => {
+      if (heroF.type && !HERO_TYPE[heroF.type].test(l.title)) return false;
+      if (heroF.loc && String(l.area || '').split(',')[0].trim() !== heroF.loc) return false;
+      if (heroF.price) { const [a, b] = heroF.price.split('-').map(Number); const p = Number(l.price); if (p < a || p > b) return false; }
+      return true;
+    };
+    function fillHeroAreas() {
+      const sel = $('hs-loc'), cur = sel.value;
+      const areas = [...new Set(listings.map(l => String(l.area || '').split(',')[0].trim()).filter(Boolean))].sort();
+      sel.innerHTML = '<option value="">Any Location</option>' + areas.map(a => `<option value="${esc(a)}">${esc(a)}</option>`).join('');
+      sel.value = areas.includes(cur) ? cur : '';
+    }
+    const runHeroSearch = () => { heroF.type = $('hs-type').value; heroF.loc = $('hs-loc').value; heroF.price = $('hs-price').value; renderList(); $('rentals').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+    $('hb-search').onclick = (e) => { e.preventDefault(); runHeroSearch(); };
     function renderList() {
       const q = $('q').value.trim().toLowerCase();
       const max = Number($('price').value);
       $('price-label').textContent = money(max);
-      let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter) && passX(l));
+      let rows = listings.filter(l => (!q || (l.title + ' ' + l.area).toLowerCase().includes(q)) && Number(l.price) <= max && (statusFilter === 'All' || l.status === statusFilter) && passX(l) && passHero(l));
       if (userLoc) {
         if (radiusKm !== Infinity) rows = rows.filter(l => { const d = distKm(l); return d != null && d <= radiusKm; });
         rows = rows.map(l => ({ l, d: distKm(l) })).sort((a, b) => (a.d == null) - (b.d == null) || a.d - b.d).map(x => x.l);
       }
+      fillHeroAreas();
       $('list').dataset.mode = session ? 'n' : 'o'; if (window.syncSaved) syncSaved();
       $('list').innerHTML = rows.length ? rows.map(session ? cardHtml : rowHtml).join('') : '<div class="empty">No places match your search.</div>';
       bindRows($('list'));
@@ -1166,7 +1216,7 @@
       $('tabbar').classList.toggle('hidden', ['search', 'detail', 'pay', 'broker', 'login'].includes(v) || (session && v === 'home'));
      
       document.body.style.paddingBottom = ['search', 'detail', 'pay', 'broker', 'login'].includes(v) || (session && v === 'home') ? '0' : '';
-      document.body.classList.toggle('x4', !!session && v === 'home'); $('q').placeholder = session ? 'Search suburb, street...' : 'Search';
+      document.body.classList.toggle('x4', !!session && v === 'home'); document.body.classList.toggle('lo-hero', !session && v === 'home'); $('q').placeholder = session ? 'Search suburb, street...' : 'Search';
       document.body.classList.toggle('xbrk', v === 'broker' && isAdmin);
       $('xbar').classList.add('hidden');
       if (session && v === 'home') document.body.style.paddingBottom = '28px';
